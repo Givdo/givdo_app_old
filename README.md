@@ -1,2 +1,2 @@
-# givdo
-Givdo website
+# givdo-rails
+givdo rails web app

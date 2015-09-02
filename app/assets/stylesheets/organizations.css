@@ -1,0 +1,14 @@
+table.organizations {
+  margin: 0 auto;
+}
+
+td.organizations {
+  padding: 20px;
+}
+
+div.organizations {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+

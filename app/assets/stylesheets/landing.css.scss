@@ -1,0 +1,53 @@
+/* full page with background image */
+.landing-background {
+  background-image: url(image-path('landing.jpg'));      
+  background-size: cover;
+  background-repeat: no-repeat;    
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+}
+
+/* tagline text */
+.landing-tagline {
+  text-align: center; 
+  margin: 100px; 
+  color: white; 
+  font-size: 400%;
+  font-weight: 400;
+}
+
+/* contains the two large text boxes */
+.landing-container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* box for each of the main links to donor and nonprofit */
+.landing-box {
+  display: inline-block;
+  text-align: center;
+  background-color: #FF9933;
+  width: 350px;
+  height: 150px;
+  /*line-height: 150px;*/
+  margin-top: 100px;
+  border-radius: 25px;
+  border-color: transparent;
+  border-width: 4px;
+  border-style: solid;
+}
+
+/* text style for the boxes */
+.landing-text {
+  color: white;
+  font-size: 300%;
+}
+
+/* sized divider between the two text boxes */
+.landing-divider {
+  width: 150px;
+  display: inline-block;
+}

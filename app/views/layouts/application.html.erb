@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      <% if content_for?(:title) %>
+        <%= yield(:title) %>
+      <% else %>
+        Givdo
+      <% end %>
+    </title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= render "login/login_modal" %>
+    <%= render "login/sign_up_modal" %>
+    <div class="header">
+      <%= image_tag "givdo_logo.png", :height => "49px", :class => "logo" %>
+      <% if user_signed_in? %>
+      <span>Signed in as <%= current_user.email %></span>
+      <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'btn btn-small btn-danger' %>
+      <% else %>
+      <%= link_to "Login", "#login", "data-toggle" => "modal", :class => 'btn btn-small' %>
+      <%= link_to "Sign up", "#sign_up", "data-toggle" => "modal", :class => 'btn btn-small btn-success' %>
+      <% end %>
+    </div>
+    <% if flash[:alert] %>
+    <p class="alert">
+      <%= alert %>
+    </p>
+    <% end %>
+    <% if flash[:notice] %>
+    <p class="notice">
+      <%= notice %>
+    </p>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
