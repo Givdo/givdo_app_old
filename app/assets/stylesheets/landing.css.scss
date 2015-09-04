@@ -29,7 +29,7 @@
 .landing-box {
   display: inline-block;
   text-align: center;
-  background-color: #FF9933;
+  background-color: rgba(255,255,255,0.50);
   width: 350px;
   height: 150px;
   /*line-height: 150px;*/
@@ -42,7 +42,8 @@
 
 /* text style for the boxes */
 .landing-text {
-  color: white;
+  padding: 40px;
+  color: rgb(92,67,172);
   font-size: 300%;
 }
 
