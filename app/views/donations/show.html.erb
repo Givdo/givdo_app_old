@@ -1,0 +1,9 @@
+<% if current_user.id == @donation.user.id %>
+<p>
+You donated $<%= @donation.amount %> to <%= link_to @organization_name, @donation.organization %>!
+<p>
+<% else %>
+<p>
+Not authorized to view this page!
+</p>
+<% end %>

@@ -1,0 +1,20 @@
+development:
+  client_id: AXflIURRTcm6YCXeCmbvTp5YNh0kts9mHhHZNOG1IOSUY7yr3wZ9tzLuOD6ijaeu03H5GSBn43J8UwOA
+  secret: EABMGXE2huFruR9QkSeF-WQqz3aijpmk7H7agDwXyIGonzTQSjs1KfhyZ7xvl5sSoB_wiP66R5TpTkR1
+  paypal_host: https://www.sandbox.paypal.com
+  app_host: http://dbaafb50.ngrok.io
+  business: jermccormick-facilitator@gmail.com
+
+test:
+  client_id: AXflIURRTcm6YCXeCmbvTp5YNh0kts9mHhHZNOG1IOSUY7yr3wZ9tzLuOD6ijaeu03H5GSBn43J8UwOA
+  secret: EABMGXE2huFruR9QkSeF-WQqz3aijpmk7H7agDwXyIGonzTQSjs1KfhyZ7xvl5sSoB_wiP66R5TpTkR1
+  paypal_host: https://www.sandbox.paypal.com
+  app_host: http://dbaafb50.ngrok.io
+  business: jermccormick-facilitator@gmail.com
+
+production:
+  client_id: <%= ENV["PAYPAL_CLIENT_ID"] %>
+  secret: <%= ENV["PAYPAL_SECRET"] %>
+  paypal_host: https://www.paypal.com
+  app_host: http://givdo-alpha.openshift.com/
+  business: jermccormick-facilitator@gmail.com
