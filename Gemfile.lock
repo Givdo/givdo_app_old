@@ -78,6 +78,8 @@ GEM
       addressable
       faraday
       multi_json
+    local_time (1.0.3)
+      coffee-rails
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -174,6 +176,7 @@ DEPENDENCIES
   devise
   jquery-rails
   koala (~> 2.2)
+  local_time
   omniauth-facebook
   rails (= 4.2.1)
   sass-rails (~> 5.0)
