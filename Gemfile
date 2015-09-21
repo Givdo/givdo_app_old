@@ -12,9 +12,14 @@ gem 'sass-rails', '~> 5.0'
 # Devise authentication
 gem 'devise'
 
+# Facebook omniauth authentication
+gem 'omniauth-facebook' 
+
+# Facebook graph API gem
+gem "koala", "~> 2.2"
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-#gem 'jquery-ui-rails'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
@@ -25,16 +30,12 @@ gem 'turbolinks'
 # Bootstrap
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-#gem 'twitter-bootstrap-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-# Facebook omniauth authentication
-gem 'omniauth-facebook' 
-
-# Facebook graph API gem
-gem "koala", "~> 2.2"
+# time zone conversion
+gem 'local_time'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # BROKEN
@@ -67,5 +68,3 @@ gem "koala", "~> 2.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   #gem 'spring'
 #end
-
-
