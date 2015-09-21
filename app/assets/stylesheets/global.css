@@ -10,11 +10,11 @@ body {
 }
 
 a:link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 a:visited {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .header-logo {
@@ -50,4 +50,17 @@ a:visited {
 
 .header a:hover {
   color: #0099FF
+}
+
+.margin10 {
+  margin: 10px 10px 10px 10px;
+}
+
+div.centered-parent {
+  position: relative; 
+  text-align: center;
+}
+
+div.centered-child {
+  display: inline-block;
 }
