@@ -1,9 +1,9 @@
-<% if current_user.id == @donation.user.id %>
-<p>
-You donated $<%= @donation.amount %> to <%= link_to @organization_name, @donation.organization %>!
-<p>
-<% else %>
-<p>
-Not authorized to view this page!
-</p>
-<% end %>
+<div class="margin10 centered-parent">
+  <div class="centered-child">
+    <h3>Donation <%= @donation.id %></h3>
+    <p>
+      You donated <i><%= number_to_currency(@donation.amount) %></i> to <i><%= @organization_graph['name'] %></i> on <i><%= local_time(@donation.created_at) %></i>.
+    </p>
+    <%= render 'organizations/show_compact', :organization => @donation.organization %>
+  </div>  
+</div>
