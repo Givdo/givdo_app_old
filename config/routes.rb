@@ -7,11 +7,7 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :donations
   end
-  
-  resources :users do
-    resources :donations
-  end
-  
+   
   resources :donations
   
   # The priority is based upon order of creation: first created -> highest priority.
