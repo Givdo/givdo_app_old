@@ -1,0 +1,20 @@
+<td-cards>
+	<td-card ng-repeat="card in cards" on-swipe-left="leftSwipe($index)" on-swipe-right="rightSwipe($index)">
+		<div class="title">
+			{{card.title}}
+		</div>
+		<div class="image">
+			<div class="no-text overlayBox">
+				<div class="noBox boxed">
+					Trash
+				</div>
+			</div>
+			<img ng-src="{{card.image}}">
+			<div class="yes-text overlayBox">
+				<div class="yesBox boxed" id="centerMe">
+					Save
+				</div>
+			</div>
+		</div>
+	</td-card>
+</td-cards>

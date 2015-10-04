@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('givdo', ['ionic', 'givdo.controllers'])
+angular.module('givdo', ['ionic', 'givdo.controllers', 'ionic.contrib.ui.tinderCards'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -48,6 +48,16 @@ angular.module('givdo', ['ionic', 'givdo.controllers'])
             'menuContent': {
                 templateUrl: 'templates/standard-signup.html', 
                 controller: 'AppCtrl'
+            }
+        }
+    })
+
+    .state('app.swipes', {
+        url: '/swipes',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/swipes.html', 
+                controller: 'SwipeCtrl'
             }
         }
     })
