@@ -105,5 +105,5 @@ angular.module('givdo', ['ionic', 'givdo.controllers', 'ionic.contrib.ui.tinderC
         }
     });
 // if none of the above states are matched, use this as the fallback
-$urlRouterProvider.otherwise('/app/social-login');
+$urlRouterProvider.otherwise('/app/social-signup');
 });
