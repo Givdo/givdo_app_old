@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>  
+    <title>
+      <% if content_for?(:title) %>
+        <%= yield(:title) %>
+      <% else %>
+        Givdo
+      <% end %>
+    </title>  
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>  
+  </head>
+  <body>      
+    <%= render "shared/header" %>    
+    <% if flash[:alert] %>
+    <p class="alert">
+      <%= alert %>
+    </p>
+    <% end %>    
+    <% if flash[:notice] %>
+    <p class="notice">
+      <%= notice %>
+    </p>
+    <% end %>    
+    <%= yield %>    
+  </body>
+</html>

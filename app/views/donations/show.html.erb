@@ -1,0 +1,9 @@
+<div class="margin10 centered-parent">
+  <div class="centered-child">
+    <h3>Donation <%= @donation.id %></h3>
+    <p>
+      You donated <i><%= number_to_currency(@donation.amount) %></i> to <i><%= @organization_graph['name'] %></i> on <i><%= local_time(@donation.created_at) %></i>.
+    </p>
+    <%= render 'organizations/show_compact', :organization => @donation.organization %>
+  </div>  
+</div>
