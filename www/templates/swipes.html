@@ -1,7 +1,25 @@
+<div class="margin-top-40 donate_amt">
+	<button class="button button-outline button-energized">
+	  .10
+	</button>
+	<button class="button button-outline button-energized">
+	  .25
+	</button>
+	<button class="button button-outline button-energized">
+	  .50
+	</button>
+	<button class="button button-outline button-energized">
+	  1.00
+	</button>
+	<button class="button button-outline button-energized">
+	  5.00
+	</button>
+</div>
+
 <td-cards>
 	<td-card ng-repeat="card in cards" on-swipe-left="leftSwipe($index)" on-swipe-right="rightSwipe($index)">
 		<div class="title">
-			{{card.title}}
+			{{card.name}}
 		</div>
 		<div class="image">
 			<div class="no-text overlayBox">
@@ -9,7 +27,7 @@
 					Trash
 				</div>
 			</div>
-			<img ng-src="{{card.image}}">
+			<img ng-src="{{card.picture}}">
 			<div class="yes-text overlayBox">
 				<div class="yesBox boxed" id="centerMe">
 					Save
@@ -18,3 +36,12 @@
 		</div>
 	</td-card>
 </td-cards>
+
+<div class="margin-top-40 donate_amt">
+	<button class="button button-outline button-energized">
+	  Donate
+	</button>
+	<button class="button button-outline button-energized">
+	  Volunteer
+	</button>
+</div>

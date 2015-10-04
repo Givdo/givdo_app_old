@@ -1,24 +1,31 @@
 angular.module('givdo.controllers', [])
 
-.controller("SwipeCtrl", function($scope) {
-  $scope.cards = [
-    {
-      title: "Card 1",
-      image: "http://www.arizona-leisure.com/gfx/gallery/sunsets/sedona-sunset.jpg"
-    },
-    {
-      title: "Card 2",
-      image: "http://www.porathcontractors.com/gallery/albums/projects/Sunset.sized.jpg"
-    }
-  ];
+.controller("SwipeCtrl", function($scope, $http) {
+  $http.get('http://localhost:3000/organizations').then(function(response){
+      console.log('success', response);
+      $scope.cards = response.data;
+  }, function(error) {
+    console.log('error', error);
+    });
+
+  // $scope.cards = [
+  //   {
+  //     title: "Card 1",
+  //     image: "http://www.arizona-leisure.com/gfx/gallery/sunsets/sedona-sunset.jpg"
+  //   },
+  //   {
+  //     title: "Card 2",
+  //     image: "http://www.porathcontractors.com/gallery/albums/projects/Sunset.sized.jpg"
+  //   }
+  // ];
 
   $scope.leftSwipe = function(index) {
     //alert(index);
-  }
+  };
 
   $scope.rightSwipe = function(index) {
     //alert(index);
-  }
+  };
 })
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
