@@ -28,7 +28,8 @@ td-card {
 td-card .image {
     position: absolute;
     top: 40px;
-    width: 100%;
+    width: 100px;
+    height: 100px;
 }
 
 td-card img {
@@ -51,7 +52,7 @@ td-card img {
 
 .boxed {
     height: 50px;
-    width: 100px;
+    width: 143px;
     padding: 10px;
     border-radius: 6px;
     font-size: 30px;
