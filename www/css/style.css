@@ -1,11 +1,20 @@
 .donate_amt {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 60px;
+}
+
+.givcoin {
+    margin-top: 50px;
+    margin-left: 80%;
+    border-radius: 0px;
+    text-align: center;
+    border-width: 2px;
 }
 
 .coin {
-    border-width: 2.5pt;
-    box-shadow: 0px 1px 20px rgba(0,0,0,0.4);
+    border-radius: 100px;
+    width: 50px;
+    height: 50px;
 }
 /* Card styling */
 
@@ -16,9 +25,9 @@ td-cards {
 td-card {
     position: absolute;
     left: 50%;
-    margin: 20px -50px 40px -170px;
-    width: 90%;
-    height: 60%;
+    margin: 20px -50px 40px -160px;
+    width: 85%;
+    height: 70%;
     border: 1px solid #999;
     box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
     border-radius: 6px;
@@ -32,7 +41,7 @@ td-card {
 
 td-card .image {
     /*position: absolute;*/
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 35%;
     width: 100px;
     height: 100px;
@@ -93,20 +102,19 @@ td-card img {
 }
 
 #toggle {
-    margin-top: 350px;
-    font-size: 25pt;
-    border-height: 50px;
-    border-width: 3px;
-    box-shadow: 0px 1px 20px rgba(0,0,0,0.4);
+    margin-top: 500px;
+    font-size: 20pt;
+    border-width: 2px;
     margin-left: 15px;
     margin-right: 10px;
+    text-align: center;
 }
 
 .mission {
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 20px;
-    height: 200px;
+    height: 263px;
     text-overflow: ellipsis;
     white-space: normal;
     overflow: hidden;
@@ -117,4 +125,74 @@ td-card img {
     text-align: center;
     padding-top: 15px;
     font-size: 130%;
+}
+
+.givdo-button {
+    font-size: 20pt;
+    border-width: 2px;
+    margin-left: 5px;
+    margin-right: 10px;
+    padding: 5px 1
+    0px 5px 10px;
+    background-color: white;
+    color: #FF9933;
+    font-weight: bold;
+    text-align: center;
+    border: 3px #FF9933 solid;
+}
+
+.givdo-button-selected {
+    background-color: #FF9933;
+    color: white;
+}
+
+.main-logo {
+    padding-top: 100px;
+}
+
+.sign-up-email {
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 150%;
+}
+
+.email {
+    width: 300px;
+    height: 50px;
+    font-size: 110%;
+    font-color: black;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.sign-up-facebook {
+  padding-top: 150px;  
+  font-size: 150%;
+  text-align: center;
+}
+
+.facebook {
+    color: white;
+    background-color: #3b5998;
+     width: 300px;
+     height: 50px;
+     font-size: 110%;
+}
+
+.email-text {
+    font-color: black;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.profile-pic {
+    height: 100px;
+    width: 100px;
+    margin-top: 50px;
+}
+
+h3.name {
+    margin: 100px, 0, 0, 80px;
+    text-align: center;
 }
