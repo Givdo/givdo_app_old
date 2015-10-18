@@ -1,7 +1,7 @@
 angular.module('givdo.controllers', [])
 
 .controller("SwipeCtrl", function($scope, $http) {
-  $http.get('http://localhost:3000/organizations').then(function(response){
+  $http.get('http://localhost:3000/api/v1/organizations').then(function(response){
       console.log('success', response);
       $scope.cards = response.data;
   }, function(error) {
