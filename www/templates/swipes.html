@@ -1,41 +1,35 @@
 <div class="margin-top-40 donate_amt">
-	<button class="button button-outline button-energized">
-	  .10
+	<button class="button button-outline button-energized coin">
+	  1
 	</button>
-	<button class="button button-outline button-energized">
-	  .25
+	<button class="button button-outline button-energized coin">
+	  2
 	</button>
-	<button class="button button-outline button-energized">
-	  .50
+	<button class="button button-outline button-energized coin">
+	  3
 	</button>
-	<button class="button button-outline button-energized">
-	  1.00
+	<button class="button button-outline button-energized coin">
+	  4
 	</button>
-	<button class="button button-outline button-energized">
-	  5.00
+	<button class="button button-outline button-energized coin">
+	  5
 	</button>
 </div>
 
 <td-cards>
 	<td-card ng-repeat="card in cards" on-swipe-left="leftSwipe($index)" on-swipe-right="rightSwipe($index)">
+		<div class="image">
+			<img ng-src="{{card.picture}}">
+		</div>
 		<div class="title">
 			{{card.name}}
 		</div>
-		<div class="image">
-			<div class="no-text overlayBox">
-				<div class="noBox boxed">
-					Not Now
-				</div>
-			</div>
-			<img ng-src="{{card.picture}}">
-			<div class="yes-text overlayBox">
-				<div class="yesBox boxed" id="centerMe">
-					Donate
-				</div>
-			</div>
+		<div class="location">
+		{{card.city}}
+		{{card.state}}
 		</div>
 		<div class="mission">
-			{{card.mission}}
+		{{card.mission}}
 		</div>
 	</td-card>
 </td-cards>
