@@ -1,9 +1,23 @@
 angular.module('givdo.controllers', [])
 
+.directive("centerCards", function() {
+  var this_height;
+  var this_width;
+
+  return function(scope, element, attrs) {
+    this_height = $(element).height();
+    this_width = $(element).width();
+
+    $(element).css("margin-left", -(this_width / 2 + 10));
+    $(element).css("margin-top", -(this_height / 2));
+  }
+})
+
 .controller("SwipeCtrl", function($scope, $http) {
   $http.get('http://localhost:3000/api/v1/organizations').then(function(response){
       console.log('success', response);
       $scope.cards = response.data;
+
   }, function(error) {
     console.log('error', error);
     });

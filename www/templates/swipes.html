@@ -17,7 +17,7 @@
 </div>
 
 <td-cards>
-	<td-card ng-repeat="card in cards" on-swipe-left="leftSwipe($index)" on-swipe-right="rightSwipe($index)">
+	<td-card ng-repeat="card in cards" on-swipe-left="leftSwipe($index)" on-swipe-right="rightSwipe($index)" center-cards>
 		<div class="image">
 			<img ng-src="{{card.picture}}">
 		</div>
@@ -25,11 +25,11 @@
 			{{card.name}}
 		</div>
 		<div class="location">
-		{{card.city}}
-		{{card.state}}
+			{{card.city}}
+			{{card.state}}
 		</div>
 		<div class="mission">
-		{{card.mission}}
+			{{card.mission | limitTo: 200}}{{card.mission.length > 200 ? '...' : ''}}
 		</div>
 	</td-card>
 </td-cards>
