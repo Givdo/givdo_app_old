@@ -29,6 +29,7 @@ module.exports = function(config) {
       // Givdo
       'www/js/app.js',
       'www/js/controllers.js',
+      'www/js/givdo.auth.js',
 
       'specs/spec-helper.js',
       'specs/unit/**/*.spec.js'
