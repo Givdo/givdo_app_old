@@ -32,7 +32,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
 });
 
-gulp.task('bower', function () {
+gulp.task('wiredep', function () {
   gulp.src('./www/index.html')
   .pipe(wiredep({
     exclude: "www/lib/angular/angular.js"
