@@ -2,7 +2,7 @@ angular.module('givdo.auth', ['ng-token-auth'])
 
 .config(function ($authProvider, $stateProvider) {
   $authProvider.configure({
-    apiUrl: 'http://localhost:3000',
+    apiUrl: 'http://localhost:3000/api/v1',
     storage: 'localStorage',
     validateOnPageLoad: false
   });
@@ -24,7 +24,16 @@ angular.module('givdo.auth', ['ng-token-auth'])
     });
 })
 
-.controller('EmailLoginCtrl', ['$scope', function ($scope) {
+.controller('EmailLoginCtrl', ['$scope', '$auth', '$ionicPopup', function ($scope, $auth, $ionicPopup) {
+  $scope.loginData = {};
+  $scope.login = function() {
+    $auth.submitLogin($scope.loginData).then(null, function () {
+      $ionicPopup.alert({
+        title: 'Login Failed',
+        template: 'Please, check your credentials and try again.'
+      });
+    });
+  };
 }])
 
 .factory('$authLock', ['$rootScope', '$ionicHistory', '$state', '$auth', function ($rootScope, $ionicHistory, $state, $auth) {

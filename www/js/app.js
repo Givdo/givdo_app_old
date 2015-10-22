@@ -101,6 +101,6 @@ angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.controllers', 'ionic.cont
       }
     }
   });
-// if none of the above states are matched, use this as the fallback
-$urlRouterProvider.otherwise('/app/social-signup');
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/social-signup');
 });
