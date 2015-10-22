@@ -34,6 +34,16 @@ angular.module('givdo.auth', ['ng-token-auth'])
       });
     });
   };
+
+  $scope.newAccount = {};
+  $scope.createAccount = function () {
+    $auth.submitRegistration($scope.newAccount).then(null, function () {
+      $ionicPopup.alert({
+        title: 'Registration Failed',
+        template: 'Please, your data and try again.'
+      });
+    });
+  };
 }])
 
 .factory('$authLock', ['$rootScope', '$ionicHistory', '$state', '$auth', function ($rootScope, $ionicHistory, $state, $auth) {

@@ -17,6 +17,26 @@
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
       </form>
+      <div class="item item-divider">
+        Create an Account
+      </div>
+      <form ng-submit="createAccount()">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" ng-model="newAccount.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="newAccount.password">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password Confirmation</span>
+          <input type="password" ng-model="newAccount.password_confirmation">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Create an Account</button>
+        </label>
+      </form>
     </div>
   </ion-content>
 </ion-view>
