@@ -1,106 +1,109 @@
-// Givdo App
+(function () {
+  'use strict';
 
-angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.controllers', 'ionic.contrib.ui.tinderCards'])
-.run(function($ionicPlatform, $ionicModal, $authLock) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.controllers', 'ionic.contrib.ui.tinderCards'])
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+    .run(['$ionicPlatform', '$ionicModal', '$authLock', function ($ionicPlatform, $authLock) {
+      $ionicPlatform.ready(function () {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+          cordova.plugins.Keyboard.disableScroll(true);
 
-    $authLock('app.playlists');
-  });
-})
+        }
+        if (window.StatusBar) {
+          // org.apache.cordova.statusbar required
+          StatusBar.styleDefault();
+        }
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+        $authLock('app.playlists');
+      });
+    }])
 
-  .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-  })
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+      $stateProvider
 
-  .state('app.social_signup', {
-    url: '/social-signup',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/social-signup.html',
-        controller: 'AppCtrl'
-      }
-    }
-  })
+        .state('app', {
+          url: '/app',
+          abstract: true,
+          templateUrl: 'templates/menu.html',
+          controller: 'AppCtrl'
+        })
 
-  .state('app.standard_signup', {
-    url: '/standard-signup',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/standard-signup.html',
-        controller: 'AppCtrl'
-      }
-    }
-  })
+        .state('app.social_signup', {
+          url: '/social-signup',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/social-signup.html',
+              controller: 'AppCtrl'
+            }
+          }
+        })
 
-  .state('app.swipes', {
-    url: '/swipes',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/swipes.html',
-        controller: 'SwipeCtrl'
-      }
-    }
-  })
+        .state('app.standard_signup', {
+          url: '/standard-signup',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/standard-signup.html',
+              controller: 'AppCtrl'
+            }
+          }
+        })
 
-  .state('app.home', {
-    url: '/home',
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-  })
+        .state('app.swipes', {
+          url: '/swipes',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/swipes.html',
+              controller: 'SwipeCtrl'
+            }
+          }
+        })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
+        .state('app.home', {
+          url: '/home',
+          templateUrl: 'templates/menu.html',
+          controller: 'AppCtrl'
+        })
 
-  .state('app.browse', {
-    url: '/browse',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/browse.html'
-      }
-    }
-  })
-  .state('app.playlists', {
-    url: '/playlists',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlists.html',
-        controller: 'PlaylistsCtrl'
-      }
-    }
-  })
+        .state('app.search', {
+          url: '/search',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/search.html'
+            }
+          }
+        })
 
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/social-signup');
-});
+        .state('app.browse', {
+          url: '/browse',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/browse.html'
+            }
+          }
+        })
+        .state('app.playlists', {
+          url: '/playlists',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/playlists.html',
+              controller: 'PlaylistsCtrl'
+            }
+          }
+        })
+
+        .state('app.single', {
+          url: '/playlists/:playlistId',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/playlist.html',
+              controller: 'PlaylistCtrl'
+            }
+          }
+        });
+      // if none of the above states are matched, use this as the fallback
+      $urlRouterProvider.otherwise('/app/social-signup');
+    }]);
+})();
