@@ -15,6 +15,8 @@
       };
     }])
 
+    .controller('AppCtrl', [function () { }])
+
     .controller("SwipeCtrl", ['$stateProvider', '$urlRouterProvider', function ($scope, $http) {
       $http.get('http://localhost:3000/api/v1/organizations').then(function (response) {
         $scope.cards = response.data;
@@ -28,8 +30,6 @@
         //alert(index);
       };
     }])
-
-    .controller('AppCtrl', [function () { }])
 
     .controller('PlaylistsCtrl', ['$scope', function ($scope) {
       $scope.playlists = [

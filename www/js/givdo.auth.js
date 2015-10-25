@@ -51,7 +51,7 @@
       };
     }])
 
-    .factory('$authLock', ['$rootScope', '$ionicHistory', '$state', '$auth', function ($rootScope, $ionicHistory, $state, $auth) {
+    .factory('authLock', ['$rootScope', '$ionicHistory', '$state', '$auth', function ($rootScope, $ionicHistory, $state, $auth) {
       var setup = function (login, logout) {
         $rootScope.$on('auth:registration-email-success', login);
         $rootScope.$on('auth:login-success', login);

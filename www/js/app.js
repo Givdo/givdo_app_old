@@ -3,7 +3,7 @@
 
   angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.controllers', 'ionic.contrib.ui.tinderCards'])
 
-    .run(['$ionicPlatform', '$ionicModal', '$authLock', function ($ionicPlatform, $authLock) {
+    .run(['$ionicPlatform', 'authLock', function ($ionicPlatform, authLock) {
       $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -17,7 +17,7 @@
           StatusBar.styleDefault();
         }
 
-        $authLock('app.playlists');
+        authLock('app.playlists');
       });
     }])
 
