@@ -8,6 +8,7 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "ionic-ion-tinder-cards": "*",
-    "ng-token-auth": "~0.0.28"
+    "ng-token-auth": "~0.0.28",
+    "angular-resource": "~1.4.7"
   }
 }

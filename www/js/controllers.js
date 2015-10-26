@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.controllers', [])
+  angular.module('givdo.controllers', ['givdo.api'])
 
     .directive("centerCards", [function () {
       var this_height, this_width;
@@ -17,9 +17,9 @@
 
     .controller('AppCtrl', [function () { }])
 
-    .controller("SwipeCtrl", ['$stateProvider', '$urlRouterProvider', function ($scope, $http) {
-      $http.get('http://localhost:3000/api/v1/organizations').then(function (response) {
-        $scope.cards = response.data;
+    .controller("SwipeCtrl", ['$scope', 'Organization', function ($scope, Organization) {
+      Organization.query(function (organizations) {
+        $scope.cards = organizations;
       });
 
       $scope.leftSwipe = function (index) {

@@ -1,9 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.auth', ['ng-token-auth'])
-
-    .constant('GivdoApiURL', 'http://givdo-app.ngrok.com/api/v1')
+  angular.module('givdo.auth', ['ng-token-auth', 'givdo.config'])
 
     .config(['$authProvider', '$stateProvider', 'GivdoApiURL', function ($authProvider, $stateProvider, GivdoApiURL) {
       $authProvider.configure({

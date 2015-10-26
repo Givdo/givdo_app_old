@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.controllers', 'ionic.contrib.ui.tinderCards'])
+  angular.module('givdo', ['ionic', 'ionic.contrib.ui.tinderCards', 'givdo.auth', 'givdo.controllers'])
 
     .run(['$ionicPlatform', 'authLock', function ($ionicPlatform, authLock) {
       $ionicPlatform.ready(function () {
