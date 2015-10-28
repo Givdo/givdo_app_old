@@ -1,5 +1,7 @@
 <ion-view view-title="Activity">
   <ion-content>
+    <span><p ng-bind="message"></p></span>
+    <form><div id="payment-container"></div></form>
     <ion-list>
       <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
         {{playlist.title}}

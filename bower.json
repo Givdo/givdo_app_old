@@ -9,6 +9,7 @@
     "jquery": "~2.1.4",
     "ionic-ion-tinder-cards": "*",
     "ng-token-auth": "~0.0.28",
-    "angular-resource": "~1.4.7"
+    "angular-resource": "~1.4.7",
+    "braintree-web": "2.8.0"
   }
 }

@@ -31,15 +31,18 @@
       };
     }])
 
-    .controller('PlaylistsCtrl', ['$scope', function ($scope) {
-      $scope.playlists = [
-        { title: 'Reggae', id: 1 },
-        { title: 'Chill', id: 2 },
-        { title: 'Dubstep', id: 3 },
-        { title: 'Indie', id: 4 },
-        { title: 'Rap', id: 5 },
-        { title: 'Cowbell', id: 6 }
-      ];
+    .controller('PlaylistsCtrl', ['$scope', '$http', function ($scope, $http) {
+      $scope.playlists = [];
+
+      $http.get('http://localhost:3000/api/v1/payments/token.json').then(function (response) {
+        braintree.setup(response.data.token, 'dropin', {
+          container: 'payment-container',
+          paymentMethodNounceReceived: function (event, nounce) {
+            // send the nounce to process the payment
+            console.log(nounce);
+          }
+        });
+      });
     }])
 
     .controller('PlaylistCtrl', [function () { }]);
