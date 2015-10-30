@@ -7,7 +7,8 @@
       $authProvider.configure({
         apiUrl: GivdoApiURL,
         storage: 'localStorage',
-        validateOnPageLoad: false
+        validateOnPageLoad: false,
+        omniauthWindowType: 'inAppBrowser'
       });
 
       $stateProvider.state('auth', {
@@ -16,6 +17,15 @@
         templateUrl: 'templates/auth/layout.html',
         controller: 'AppCtrl'
       })
+        .state('auth.login', {
+          url: '/login',
+          views: {
+            'content': {
+              templateUrl: 'templates/auth/login.html',
+              controller: 'FacebookLoginCtrl'
+            }
+          }
+        })
         .state('auth.email-login', {
           url: '/email-login',
           views: {
@@ -25,6 +35,12 @@
             }
           }
         });
+    }])
+
+    .controller('FacebookLoginCtrl', ['$scope', '$auth', function ($scope, $auth) {
+      $scope.facebookLogin = function() {
+        $auth.authenticate('facebook');
+      };
     }])
 
     .controller('EmailLoginCtrl', ['$scope', '$auth', '$ionicPopup', function ($scope, $auth, $ionicPopup) {
@@ -69,7 +85,7 @@
         setup(function (_, user) {
           moveTo(afterLoginState);
         }, function () {
-          moveTo('auth.email-login');
+          moveTo('auth.login');
         });
 
         return $auth.validateUser();

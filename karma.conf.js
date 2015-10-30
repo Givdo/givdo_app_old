@@ -22,14 +22,17 @@ module.exports = function(config) {
       'www/lib/ionic-ion-tinder-cards/ionic.tdcards.js',
       'www/lib/angular-cookie/angular-cookie.js',
       'www/lib/ng-token-auth/dist/ng-token-auth.js',
+      'www/lib/angular-resource/angular-resource.js',
 
       // Test dependency
       'www/lib/angular-mocks/angular-mocks.js',
 
       // Givdo
-      'www/js/app.js',
       'www/js/controllers.js',
+      'www/js/givdo.config.js',
+      'www/js/givdo.api.js',
       'www/js/givdo.auth.js',
+      'www/js/app.js',
 
       'specs/spec-helper.js',
       'specs/unit/**/*.spec.js'
