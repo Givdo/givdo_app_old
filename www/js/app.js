@@ -31,26 +31,6 @@
           controller: 'AppCtrl'
         })
 
-        .state('app.social_signup', {
-          url: '/social-signup',
-          views: {
-            'menuContent': {
-              templateUrl: 'templates/social-signup.html',
-              controller: 'AppCtrl'
-            }
-          }
-        })
-
-        .state('app.standard_signup', {
-          url: '/standard-signup',
-          views: {
-            'menuContent': {
-              templateUrl: 'templates/standard-signup.html',
-              controller: 'AppCtrl'
-            }
-          }
-        })
-
         .state('app.swipes', {
           url: '/swipes',
           views: {
@@ -104,6 +84,6 @@
           }
         });
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/app/social-signup');
+      $urlRouterProvider.otherwise('/app/swipes');
     }]);
 })();
