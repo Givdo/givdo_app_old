@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo', ['ionic', 'ionic.contrib.ui.tinderCards', 'givdo.auth', 'givdo.controllers'])
+  angular.module('givdo', ['ionic', 'ionic.contrib.ui.tinderCards', 'givdo.auth', 'givdo.quiz', 'givdo.controllers'])
 
     .run(['$ionicPlatform', 'authLock', function ($ionicPlatform, authLock) {
       $ionicPlatform.ready(function () {
@@ -29,6 +29,16 @@
           abstract: true,
           templateUrl: 'templates/menu.html',
           controller: 'AppCtrl'
+        })
+
+        .state('app.trivia', {
+          url: '/trivia/:triviaId',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/quiz/trivia.html',
+              controller: 'TriviaCtrl'
+            }
+          }
         })
 
         .state('app.swipes', {

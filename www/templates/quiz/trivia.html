@@ -1,0 +1,21 @@
+<ion-view view-title="Trivia">
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <strong>{{ trivia.question }}</strong>
+      </div>
+    </div>
+
+    <div class="list list-inset">
+      <label class="item" ng-repeat="option in trivia.options">
+        <input type="checkbox"  checklist-model="selectedOptions" checklist-value="option" class="pull-right">
+        {{ option.text }}
+      </label>
+    </div>
+
+    <div class="button-bar padding">
+      <button class="button button-assertive">Skip</button>
+      <button class="button button-balanced">Confirm</button>
+    </div>
+  </ion-content>
+</ion-view>
