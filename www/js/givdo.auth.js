@@ -8,7 +8,7 @@
         apiUrl: GivdoApiURL,
         storage: 'localStorage',
         validateOnPageLoad: false,
-        omniauthWindowType: 'inAppBrowser'
+        omniauthWindowType: window.cordova ? 'inAppBrowser' : 'newWindow'
       });
 
       $stateProvider.state('app.profile', {
