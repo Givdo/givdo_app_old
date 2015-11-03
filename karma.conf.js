@@ -28,11 +28,10 @@ module.exports = function(config) {
       'www/lib/angular-mocks/angular-mocks.js',
 
       // Givdo
-      'www/js/controllers.js',
       'www/js/givdo.api.js',
       'www/js/givdo.auth.js',
       'www/js/givdo.quiz.js',
-      'www/js/app.js',
+      'www/js/givdo.js',
 
       'specs/spec-helper.js',
       'specs/unit/**/*.spec.js'

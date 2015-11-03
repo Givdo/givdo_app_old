@@ -11,11 +11,20 @@
         omniauthWindowType: 'inAppBrowser'
       });
 
+      $stateProvider.state('app.profile', {
+        url: '/profile',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/auth/profile.html',
+            controller: 'ProfileCtrl'
+          }
+        }
+      });
+
       $stateProvider.state('auth', {
         url: '/auth',
         abstract: true,
-        templateUrl: 'templates/auth/layout.html',
-        controller: 'AppCtrl'
+        templateUrl: 'templates/auth/layout.html'
       })
         .state('auth.login', {
           url: '/login',
@@ -35,6 +44,10 @@
             }
           }
         });
+    }])
+
+    .controller('ProfileCtrl', ['$scope', function ($scope) {
+
     }])
 
     .controller('FacebookLoginCtrl', ['$scope', '$auth', function ($scope, $auth) {
