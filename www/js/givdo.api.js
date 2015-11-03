@@ -8,6 +8,12 @@
     }])
 
     .factory('Trivia', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      return $resource(GivdoApiURL + '/trivia/:triviaId', {triviaId: '@id'});
+      var Trivia = $resource(GivdoApiURL + '/trivia/:triviaId/:action', {triviaId: '@id'}, {
+        answer: {method: 'POST', params: {action: 'answer'}}
+      });
+      Trivia.prototype.$answer = function(option) {
+        return Trivia.answer({id: this.id, option_id: option.id}).$promise;
+      };
+      return Trivia;
     }]);
 })();

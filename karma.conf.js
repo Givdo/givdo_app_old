@@ -29,7 +29,6 @@ module.exports = function(config) {
 
       // Givdo
       'www/js/controllers.js',
-      'www/js/givdo.config.js',
       'www/js/givdo.api.js',
       'www/js/givdo.auth.js',
       'www/js/givdo.quiz.js',

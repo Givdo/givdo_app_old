@@ -22,4 +22,17 @@ describe('TriviaCtrl', function(){
       expect($scope.trivia).toEqual('trivia');
     });
   });
+
+  describe('submitAnswer', function () {
+    it('posts the answer with the option to the trivia', function () {
+      var trivia = jasmine.createSpyObj('trivia', ['$answer']);
+      Trivia.get.and.returnValue(trivia);
+
+      controller({});
+      $scope.answer.option = 'option';
+      $scope.submitAnswer();
+
+      expect(trivia.$answer).toHaveBeenCalledWith('option');
+    });
+  });
 });
