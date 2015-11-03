@@ -19,7 +19,16 @@
             controller: 'ProfileCtrl'
           }
         }
-      });
+      })
+        .state('app.account', {
+          url: '/account',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/auth/account.html',
+              controller: 'AccountCtrl'
+            }
+          }
+        });
 
       $stateProvider.state('auth', {
         url: '/auth',
@@ -47,7 +56,19 @@
     }])
 
     .controller('ProfileCtrl', ['$scope', function ($scope) {
+    }])
 
+    .controller('AccountCtrl', ['$scope', '$auth', '$ionicPopup', function ($scope, $auth, $ionicPopup) {
+      $scope.logout = function () {
+        $ionicPopup.confirm({
+          title: 'Logout?',
+          template: 'Are you sure you want to sign out Givdo?'
+        }).then(function (confirm) {
+          if (confirm) {
+            $auth.signOut();
+          }
+        });
+      };
     }])
 
     .controller('FacebookLoginCtrl', ['$scope', '$auth', function ($scope, $auth) {
