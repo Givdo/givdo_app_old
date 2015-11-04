@@ -1,14 +1,19 @@
 'use strict';
 
 describe('ChooseOrganizationCtrl', function(){
-  var $scope, $ionicSlideBoxDelegate, Organization, controller;
+  var $scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound, controller;
   beforeEach(inject(function ($rootScope, $controller) {
     $scope = $rootScope.$new();
+    $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update', 'currentIndex']);
+    $state = jasmine.createSpyObj('$state', ['go']);
     Organization = jasmine.createSpyObj('Organization', ['query']);
-    $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update']);
+    QuizRound = jasmine.createSpyObj('QuizRound', ['playFor']);
 
     controller = function () {
-      var controller = $controller('ChooseOrganizationCtrl', {$scope: $scope, Organization: Organization, $ionicSlideBoxDelegate: $ionicSlideBoxDelegate});
+      var controller = $controller('ChooseOrganizationCtrl', {
+        $scope: $scope, $ionicSlideBoxDelegate: $ionicSlideBoxDelegate, $state: $state,
+        Organization: Organization, QuizRound: QuizRound
+      });
       $scope.$digest();
       return controller;
     };
@@ -29,7 +34,7 @@ describe('ChooseOrganizationCtrl', function(){
     });
   });
 
-  describe('infinite pagination', function () {
+  describe('.slideChanged (infinite pagination)', function () {
     it('loads the next page when user approaches the end of the current', function () {
       controller();
 
@@ -65,6 +70,26 @@ describe('ChooseOrganizationCtrl', function(){
       expect($ionicSlideBoxDelegate.update).toHaveBeenCalled();
 
       expect($scope.organizations).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    });
+  });
+
+  describe('.selectOrganization', function () {
+    it('sets the current organization on the QuizRound', function () {
+      controller();
+      $scope.organizations = ['organization'];
+      $ionicSlideBoxDelegate.currentIndex.and.returnValue(0);
+
+      $scope.selectOrganization();
+
+      expect(QuizRound.playFor).toHaveBeenCalledWith('organization');
+    });
+
+    it('moves the app to the trivia state', function () {
+      controller();
+
+      $scope.selectOrganization();
+
+      expect($state.go).toHaveBeenCalledWith('app.quiz.trivia');
     });
   });
 });

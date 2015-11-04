@@ -35,6 +35,16 @@
       });
     }])
 
+    .service('QuizRound', [function () {
+      var playingForOrganization = null;
+
+      return {
+        playFor: function (organization) {
+          playingForOrganization = organization;
+        }
+      };
+    }])
+
     .controller('TriviaCtrl', ['$scope', '$stateParams', 'Trivia', function ($scope, $params, Trivia) {
       $scope.trivia = Trivia.get({triviaId: $params.triviaId});
       $scope.answer = {};
@@ -43,26 +53,33 @@
       };
     }])
 
-    .controller("ChooseOrganizationCtrl", ['$scope', '$ionicSlideBoxDelegate', 'Organization', function ($scope, $ionicSlideBoxDelegate, Organization) {
-      var perPage = 10;
-      var threshold = 3;
-      var nextPage = function () {
-        return Math.ceil($scope.organizations.length / perPage) + 1;
-      };
-      var loadNextPage = function () {
-        Organization.query({page: nextPage()}, function (organizations) {
-          $scope.organizations = $scope.organizations.concat(organizations);
-          $ionicSlideBoxDelegate.update();
-        });
-      };
+    .controller("ChooseOrganizationCtrl", ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {
+      var PerPage = 10,
+        Threshold = 3,
+        nextPage = function () {
+          return Math.ceil($scope.organizations.length / PerPage) + 1;
+        },
+        loadNextPage = function () {
+          Organization.query({page: nextPage()}, function (organizations) {
+            $scope.organizations = $scope.organizations.concat(organizations);
+            $ionicSlideBoxDelegate.update();
+          });
+        };
 
-      $scope.organizations = [];
       $scope.slideChanged = function (position) {
-        if ($scope.organizations.length - position < threshold) {
+        if ($scope.organizations.length - position < Threshold) {
           loadNextPage();
         }
       };
+      $scope.selectOrganization = function () {
+        var currentOrganization = $ionicSlideBoxDelegate.currentIndex();
+        var organization = $scope.organizations[currentOrganization];
 
+        QuizRound.playFor(organization);
+        $state.go('app.quiz.trivia');
+      };
+
+      $scope.organizations = [];
       loadNextPage();
     }]);
 })();
