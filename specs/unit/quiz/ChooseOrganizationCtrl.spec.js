@@ -89,7 +89,7 @@ describe('ChooseOrganizationCtrl', function(){
 
       $scope.selectOrganization();
 
-      expect($state.go).toHaveBeenCalledWith('app.quiz.trivia');
+      expect($state.go).toHaveBeenCalledWith('trivia');
     });
   });
 });

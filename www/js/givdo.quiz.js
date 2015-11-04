@@ -76,7 +76,7 @@
         var organization = $scope.organizations[currentOrganization];
 
         QuizRound.playFor(organization);
-        $state.go('app.quiz.trivia');
+        $state.go('trivia');
       };
 
       $scope.organizations = [];
