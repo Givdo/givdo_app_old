@@ -65,14 +65,16 @@
           template: 'Are you sure you want to sign out Givdo?'
         }).then(function (confirm) {
           if (confirm) {
-            $auth.signOut();
+            $auth.signOut().then(function () {
+              $auth.invalidateTokens();
+            });
           }
         });
       };
     }])
 
     .controller('FacebookLoginCtrl', ['$scope', '$auth', function ($scope, $auth) {
-      $scope.facebookLogin = function() {
+      $scope.facebookLogin = function () {
         $auth.authenticate('facebook');
       };
     }])
