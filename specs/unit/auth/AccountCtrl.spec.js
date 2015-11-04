@@ -2,7 +2,7 @@
 
 describe('AccountCtrl', function(){
   var $scope, $auth, $ionicPopup, controller, deferredIonicPopup;
-  beforeEach(inject(function($rootScope, $controller, $q){
+  beforeEach(inject(function ($rootScope, $controller, $q){
     $scope = $rootScope.$new();
     $auth = jasmine.createSpyObj('$auth service', ['signOut', 'invalidateTokens']);
     $ionicPopup = jasmine.createSpyObj('$ionicPopup', ['confirm']);

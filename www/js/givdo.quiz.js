@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('givdo.quiz', ['givdo.api'])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
       $stateProvider.state('quiz', {
         url: '/quiz',
         abstract: true,
@@ -43,13 +43,26 @@
       };
     }])
 
-    .controller("ChooseOrganizationCtrl", ['$scope', 'Organization', function ($scope, Organization) {
-      $scope.cards = Organization.query();
-
-      $scope.leftSwipe = function (index) {
+    .controller("ChooseOrganizationCtrl", ['$scope', '$ionicSlideBoxDelegate', 'Organization', function ($scope, $ionicSlideBoxDelegate, Organization) {
+      var perPage = 10;
+      var threshold = 3;
+      var nextPage = function () {
+        return Math.ceil($scope.organizations.length / perPage) + 1;
+      };
+      var loadNextPage = function () {
+        Organization.query({page: nextPage()}, function (organizations) {
+          $scope.organizations = $scope.organizations.concat(organizations);
+          $ionicSlideBoxDelegate.update();
+        });
       };
 
-      $scope.rightSwipe = function (index) {
+      $scope.organizations = [];
+      $scope.slideChanged = function (position) {
+        if ($scope.organizations.length - position < threshold) {
+          loadNextPage();
+        }
       };
+
+      loadNextPage();
     }]);
 })();

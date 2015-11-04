@@ -1,44 +1,25 @@
-<div class="donate_amt">
-	<button class="coin givdo-button">
-	  1
-	</button>
-	<button class="coin givdo-button">
-	  2
-	</button>
-	<button class="coin givdo-button">
-	  3
-	</button>
-	<button class="coin givdo-button">
-	  4
-	</button>
-	<button class="coin givdo-button givdo-button-selected">
-	  5
-	</button>
-</div>
+<ion-view>
+	<ion-content>
+		<ion-slide-box show-pager="false" does-continue="true" on-slide-changed="slideChanged($index)">
+			<ion-slide ng-repeat="organization in organizations">
+				<div class="list card">
+					<div class="item item-avatar">
+						<img ng-src="{{organization.picture}}">
+						<h2>{{ organization.name }}</h2>
+					 </div>
+					<div class="item item-text-wrap">
+						<p>{{ organization.mission }}</p>
+					</div>
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+	</ion-content>
 
-<td-cards>
-	<td-card ng-repeat="card in cards" on-swipe-left="leftSwipe($index)" on-swipe-right="rightSwipe($index)" center-cards>
-		<div class="image">
-			<img ng-src="{{card.picture}}">
+	<ion-footer-bar>
+		<div class="button-bar">
+			<button class="button button-balanced">
+				Play to Give!
+			</button>
 		</div>
-		<div class="title">
-			{{card.name}}
-		</div>
-		<div class="location">
-			{{card.city}}
-			{{card.state}}
-		</div>
-		<div class="mission">
-			{{card.mission | limitTo: 200}}{{card.mission.length > 200 ? '...' : ''}}
-		</div>
-	</td-card>
-</td-cards>
-
-<div class="margin-top-10" id="toggle">
-	<button class="givdo-button">
-	  Donate
-	</button>
-	<button class="givdo-button givdo-button-selected">
-	  Volunteer
-	</button>
-</div>
+	</ion-footer-bar>
+</ion-view>

@@ -1,7 +1,7 @@
 'use strict';
 
 describe('FacebookLoginCtrl', function(){
-  var $scope, $auth, controller, deferredIonicModal;
+  var $scope, $auth, controller;
   beforeEach(inject(function($rootScope, $controller){
     $scope = $rootScope.$new();
     $auth = jasmine.createSpyObj('$auth service', ['authenticate']);
