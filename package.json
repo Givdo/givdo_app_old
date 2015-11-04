@@ -22,9 +22,14 @@
     "wiredep": "^2.2.2"
   },
   "cordovaPlugins": [
-    "com.ionic.keyboard"
+    "com.ionic.keyboard",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-inappbrowser",
+    "org.apache.cordova.device",
+    "org.apache.cordova.console"
   ],
   "cordovaPlatforms": [
-    "ios"
+    "ios",
+    "android"
   ]
 }
