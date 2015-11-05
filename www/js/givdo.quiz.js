@@ -35,21 +35,26 @@
       });
     }])
 
-    .service('QuizRound', [function () {
+    .service('QuizRound', ['Trivia', function (Trivia) {
       var playingForOrganization = null;
 
       return {
         playFor: function (organization) {
           playingForOrganization = organization;
+        },
+        nextTrivia: function () {
+          return Trivia.raffle();
         }
       };
     }])
 
-    .controller('TriviaCtrl', ['$scope', '$stateParams', 'Trivia', function ($scope, $params, Trivia) {
-      $scope.trivia = Trivia.get({triviaId: $params.triviaId});
+    .controller('TriviaCtrl', ['$scope', '$stateParams', 'QuizRound', function ($scope, $params, QuizRound) {
+      $scope.trivia = QuizRound.nextTrivia();
       $scope.answer = {};
       $scope.submitAnswer = function () {
-        $scope.trivia.$answer($scope.answer.option);
+        $scope.trivia.$answer($scope.answer.option).then(function () {
+          $scope.trivia = QuizRound.nextTrivia();
+        });
       };
     }])
 

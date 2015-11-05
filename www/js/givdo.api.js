@@ -9,7 +9,8 @@
 
     .factory('Trivia', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
       var Trivia = $resource(GivdoApiURL + '/trivia/:triviaId/:action', {triviaId: '@id'}, {
-        answer: {method: 'POST', params: {action: 'answer'}}
+        answer: {method: 'POST', params: {action: 'answer'}},
+        raffle: {method: 'GET', params: {triviaId: 'raffle'}, isArray: false}
       });
       Trivia.prototype.$answer = function(option) {
         return Trivia.answer({id: this.id, option_id: option.id}).$promise;
