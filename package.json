@@ -30,6 +30,9 @@
   ],
   "cordovaPlatforms": [
     "ios",
-    "android"
+    {
+      "platform": "android",
+      "locator": "browser"
+    }
   ]
 }

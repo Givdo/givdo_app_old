@@ -1,17 +1,17 @@
 'use strict';
 
 describe('TriviaCtrl', function(){
-  var $scope, QuizRound, controller, trivia;
+  var $scope, $ionicLoading, QuizRound, controller;
   beforeEach(inject(function($rootScope, $controller, $q){
     $scope = $rootScope.$new();
-    trivia = jasmine.createSpyObj('trivia', ['$answer']);
-    trivia.$answer.and.returnValue($q.when());
+    $ionicLoading = jasmine.createSpyObj('$ionicLoading', ['show', 'hide']);
 
-    QuizRound = jasmine.createSpyObj('QuizRound', ['nextTrivia']);
-    QuizRound.nextTrivia.and.returnValue(trivia);
+    QuizRound = jasmine.createSpyObj('QuizRound', ['nextTrivia', 'answer']);
+    QuizRound.answer.and.returnValue($q.when());
+    QuizRound.nextTrivia.and.returnValue('trivia');
 
     controller = function () {
-      var controller = $controller('TriviaCtrl', {$scope: $scope, QuizRound: QuizRound});
+      var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound});
       $scope.$digest();
       return controller;
     };
@@ -21,29 +21,30 @@ describe('TriviaCtrl', function(){
     it('loads the trivia into the scope', function () {
       controller();
 
-      expect($scope.trivia).toBe(trivia);
+      expect($scope.trivia).toEqual('trivia');
     });
   });
 
   describe('submitAnswer', function () {
-    it('posts the answer with the option to the trivia', function () {
+    it('posts an answer with the option to the Quiz Round', function () {
       controller();
+
+      $scope.trivia = 'trivia';
       $scope.answer.option = 'option';
       $scope.submitAnswer();
 
-      expect(trivia.$answer).toHaveBeenCalledWith('option');
+      expect(QuizRound.answer).toHaveBeenCalledWith('trivia', 'option');
     });
 
-    it('gets the next trivia for the quiz', inject(function ($q) {
+    it('shows/hide the loading', function () {
       controller();
 
-      var trivia2 = 'trivia 2';
-      QuizRound.nextTrivia.and.returnValue(trivia2);
-
       $scope.submitAnswer();
+      expect($ionicLoading.show).toHaveBeenCalled();
+
       $scope.$digest();
 
-      expect($scope.trivia).toBe(trivia2);
-    }));
+      expect($ionicLoading.hide).toHaveBeenCalled();
+    });
   });
 });

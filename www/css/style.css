@@ -197,3 +197,10 @@ h3.name {
     margin: 100px, 0, 0, 80px;
     text-align: center;
 }
+
+.option.correct  * {
+    background-color: #98FB98 !important;
+}
+.option.incorrect  * {
+    background-color: #CD5C5C !important;
+}

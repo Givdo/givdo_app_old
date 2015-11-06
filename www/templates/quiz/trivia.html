@@ -7,13 +7,12 @@
     </div>
 
     <div class="list list-inset">
-      <ion-radio ng-repeat="option in trivia.options" ng-value="option" ng-model="answer.option">
+      <ion-radio class="option" ng-repeat="option in trivia.options" ng-value="option" ng-model="answer.option" ng-class="{'correct': option.correct, 'incorrect': (answer.answered && !option.correct)}">
         {{ option.text }}
       </ion-radio>
     </div>
 
     <div class="button-bar padding">
-      <button class="button button-assertive">Skip</button>
       <button class="button button-balanced" ng-click="submitAnswer()">Confirm</button>
     </div>
   </ion-content>
