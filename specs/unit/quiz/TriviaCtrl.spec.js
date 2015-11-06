@@ -45,6 +45,27 @@ describe('TriviaCtrl', function(){
       $scope.$digest();
 
       expect($ionicLoading.hide).toHaveBeenCalled();
+      expect($scope.answer.answered).toBeTruthy();
+    });
+  });
+
+  describe('next', function () {
+    it('loads the next trivia', function () {
+      controller();
+      QuizRound.nextTrivia.and.returnValue('trivia 2');
+
+      $scope.next();
+
+      expect($scope.trivia).toEqual('trivia 2');
+    });
+
+    it('it resets the answer object to not answered', function () {
+      controller();
+
+      $scope.answer = {something: 'really', different: true};
+      $scope.next();
+
+      expect($scope.answer).toEqual({answered: false});
     });
   });
 });
