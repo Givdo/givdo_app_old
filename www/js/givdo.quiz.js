@@ -60,9 +60,9 @@
 
     .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', function ($scope, $ionicLoading, QuizRound) {
       $scope.submitAnswer = function () {
-        $scope.answer.submitted = true;
         $ionicLoading.show();
         QuizRound.answer($scope.trivia, $scope.answer.option).then(function () {
+          $scope.answer.submitted = true;
           $ionicLoading.hide();
         });
       };

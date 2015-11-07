@@ -8,12 +8,13 @@
 
     <div class="list list-inset">
       <ion-radio-fix class="option"
+                 icon="ion-ios-circle-filled"
                  name="answer_option"
                  ng-model="answer.option"
                  ng-disabled="answer.submitted"
                  ng-repeat="option in trivia.options"
                   ng-value="option"
-                  ng-class="{'correct': option.correct}">
+                  ng-class="{'correct': option.correct, 'incorrect': (answer.submitted && !option.correct)}">
         {{ option.text }}
       </ion-radio-fix>
     </div>
