@@ -203,10 +203,10 @@ h3.name {
 }
 .option.incorrect > input:checked + .radio-content .item-content {
     -webkit-animation-name: flash-animation;
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 2s;
 
     animation-name: flash-animation;
-    animation-duration: 1s;
+    animation-duration: 2s;
 }
 
 @-webkit-keyframes flash-animation {
