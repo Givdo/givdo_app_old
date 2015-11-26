@@ -13,8 +13,18 @@
           }
         }
       })
+        .state('choose-friend', {
+          url: '/choose-friend',
+          parent: 'quiz',
+          views: {
+            'content': {
+              templateUrl: 'templates/quiz/choose-friend.html',
+              controller: 'ChooseFriendCtrl'
+            }
+          }
+        })
         .state('trivia', {
-          url: '/trivia/:triviaId',
+          url: '/trivia',
           parent: 'quiz',
           views: {
             'content': {
@@ -73,7 +83,14 @@
       $scope.next();
     }])
 
-    .controller("ChooseOrganizationCtrl", ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {
+    .controller('ChooseFriendCtrl', ['$scope', 'Friend', function ($scope, Friend) {
+      Friend.query(function (friends) {
+        $scope.friends = friends.list;
+        $scope.nextPage = friends.next_page;
+      });
+    }])
+
+    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {
       var PerPage = 10, Threshold = 3;
       var nextPage = function () {
         return Math.ceil($scope.organizations.length / PerPage) + 1;

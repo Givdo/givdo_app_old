@@ -3,6 +3,10 @@
 
   angular.module('givdo.api', ['ngResource', 'givdo.config'])
 
+    .factory('Friend', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
+      return $resource(GivdoApiURL + '/friends');
+    }])
+
     .factory('Organization', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
       return $resource(GivdoApiURL + '/organizations/:organization_id', {organizationId: '@id'});
     }])
