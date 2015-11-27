@@ -2,9 +2,14 @@
   'use strict';
 
   angular.module('givdo.api', ['ngResource', 'givdo.config'])
+    .config(['$httpProvider', function ($httpProvider) {
+      $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
+    }])
 
     .factory('Friend', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      return $resource(GivdoApiURL + '/friends');
+      return $resource(GivdoApiURL + '/friends', {}, {
+        query: {isArray: false}
+      });
     }])
 
     .factory('Organization', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {

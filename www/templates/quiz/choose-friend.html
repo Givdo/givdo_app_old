@@ -1,10 +1,15 @@
 <ion-view>
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="friend in friends" class="item-thumbnail-left">
+      <ion-item class="item-thumbnail-left"
+      	ng-repeat="friend in friends">
         <img ng-src="{{friend.picture.data.url}}">
         {{friend.name}}!
       </ion-item>
     </ion-list>
+	<ion-infinite-scroll
+		on-infinite="loadFriends()"
+		distance="10%">
+	</ion-infinite-scroll>
   </ion-content>
 </ion-view>

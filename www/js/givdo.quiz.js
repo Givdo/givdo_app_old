@@ -84,10 +84,13 @@
     }])
 
     .controller('ChooseFriendCtrl', ['$scope', 'Friend', function ($scope, Friend) {
-      Friend.query(function (friends) {
-        $scope.friends = friends.list;
-        $scope.nextPage = friends.next_page;
-      });
+      $scope.loadFriends = function() {
+        Friend.query({page: $scope.nextPage}, function (friends) {
+          $scope.friends = ($scope.friends || []).concat(friends.list);
+          $scope.nextPage = friends.next_page;
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        });
+      };
     }])
 
     .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {
