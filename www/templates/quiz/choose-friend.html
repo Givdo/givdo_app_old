@@ -1,13 +1,17 @@
 <ion-view>
   <ion-content>
     <ion-list>
+      <ion-item class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="filter.name" ng-model-options="{'debounce': 500}">
+      </ion-item>
       <ion-item class="item-thumbnail-left"
-      	ng-repeat="friend in friends">
+      	ng-repeat="friend in friends | filter:filter.name">
         <img ng-src="{{friend.picture.data.url}}">
         {{friend.name}}!
       </ion-item>
     </ion-list>
-	<ion-infinite-scroll
+	<ion-infinite-scroll ng-if="nextPage"
 		on-infinite="loadFriends()"
 		distance="10%">
 	</ion-infinite-scroll>

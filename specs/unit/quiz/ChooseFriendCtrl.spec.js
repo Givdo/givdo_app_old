@@ -11,7 +11,6 @@ describe('ChooseFriendCtrl', function(){
         $scope: $scope,
         Friend: Friend
       });
-      $scope.loadFriends(); // this is called automatically by ion-infinite-scroll
       $scope.$digest();
       return controller;
     };

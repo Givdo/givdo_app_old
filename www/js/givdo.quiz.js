@@ -84,6 +84,8 @@
     }])
 
     .controller('ChooseFriendCtrl', ['$scope', 'Friend', function ($scope, Friend) {
+      $scope.filter = {};
+
       $scope.loadFriends = function() {
         Friend.query({page: $scope.nextPage}, function (friends) {
           $scope.friends = ($scope.friends || []).concat(friends.list);
@@ -91,6 +93,8 @@
           $scope.$broadcast('scroll.infiniteScrollComplete');
         });
       };
+
+      $scope.loadFriends();
     }])
 
     .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {
