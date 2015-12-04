@@ -8,7 +8,7 @@
       <ion-item class="item-thumbnail-left"
       	ng-repeat="friend in friends | filter:filter.name">
         <img ng-src="{{friend.picture.data.url}}">
-        {{friend.name}}!
+        {{friend.name}}
       </ion-item>
     </ion-list>
 	<ion-infinite-scroll ng-if="nextPage"

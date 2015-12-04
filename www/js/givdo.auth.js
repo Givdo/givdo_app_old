@@ -1,130 +1,113 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.auth', ['ng-token-auth', 'givdo.config'])
+  angular.module('givdo.auth', ['givdo.config', 'ngCordova'])
+    .config(['$httpProvider', function ($httpProvider) {
+      $httpProvider.interceptors.push('sessionInterceptor');
+    }])
 
-    .config(['$authProvider', '$stateProvider', 'GivdoApiURL', function ($authProvider, $stateProvider, GivdoApiURL) {
-      $authProvider.configure({
-        apiUrl: GivdoApiURL,
-        storage: 'localStorage',
-        validateOnPageLoad: false,
-        omniauthWindowType: window.cordova ? 'inAppBrowser' : 'newWindow'
-      });
+    .factory('sessionInterceptor', ['GivdoApiURL', 'session', function (baseUrl, session) {
+      var shouldIntercept = function (config) {
+        return config.url.indexOf(baseUrl) === 0;
+      };
 
-      $stateProvider.state('app.profile', {
-        url: '/profile',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/auth/profile.html',
-            controller: 'ProfileCtrl'
+      return {
+        request: function (config) {
+          if (shouldIntercept(config) && session.token()) {
+            config.headers.Authorization = 'Token token="' + session.token() + '"';
           }
+          return config;
+        },
+        response: function (response) {
+          if (shouldIntercept(response.config) && response.status == 401) {
+            session.clear();
+          }
+          return response;
         }
-      })
-        .state('app.account', {
-          url: '/account',
-          views: {
-            'menuContent': {
-              templateUrl: 'templates/auth/account.html',
-              controller: 'AccountCtrl'
-            }
-          }
-        });
-
-      $stateProvider.state('auth', {
-        url: '/auth',
-        abstract: true,
-        templateUrl: 'templates/auth/layout.html'
-      })
-        .state('auth.login', {
-          url: '/login',
-          views: {
-            'content': {
-              templateUrl: 'templates/auth/login.html',
-              controller: 'FacebookLoginCtrl'
-            }
-          }
-        })
-        .state('auth.email-login', {
-          url: '/email-login',
-          views: {
-            'content': {
-              templateUrl: 'templates/auth/email-login.html',
-              controller: 'EmailLoginCtrl'
-            }
-          }
-        });
+      }
     }])
 
-    .controller('ProfileCtrl', ['$scope', function ($scope) {
-    }])
+    .factory('session', ['$rootScope', function ($rootScope) {
+      var token = null;
 
-    .controller('AccountCtrl', ['$scope', '$auth', '$ionicPopup', function ($scope, $auth, $ionicPopup) {
-      $scope.logout = function () {
-        $ionicPopup.confirm({
-          title: 'Logout?',
-          template: 'Are you sure you want to sign out Givdo?'
-        }).then(function (confirm) {
-          if (confirm) {
-            $auth.signOut().then(function () {
-              $auth.invalidateTokens();
-            });
+      return {
+        token: function (newToken) {
+          if (newToken !== undefined) {
+            token = newToken;
+            $rootScope.$emit('givdo:session:up');
           }
-        });
+          return token;
+        },
+        clear: function  () {
+          token = null;
+          $rootScope.$emit('givdo:session:down');
+        }
       };
     }])
 
-    .controller('FacebookLoginCtrl', ['$scope', '$auth', function ($scope, $auth) {
+    .factory('facebook', ['$cordovaFacebook', 'session', 'OauthCallback', function ($cordovaFacebook, session, OauthCallback) {
+      var facebookAuthData = function (authResponse) {
+        return {
+          provider: 'facebook',
+          uid: authResponse.userID,
+          access_token: authResponse.accessToken,
+          expires_in: authResponse.expiresIn
+        };
+      };
+
+      var login = function () {
+        return $cordovaFacebook.login(['email', 'user_friends', 'user_about_me'])
+          .then(function (data) {
+            return OauthCallback.authenticate(facebookAuthData(data.authResponse))
+              .then(function (auth) {
+                session.token(auth.token);
+              });
+          });
+      }
+
+      var checkStatus = function (success, fail) {
+        return $cordovaFacebook.getLoginStatus().then(success, fail);
+      };
+
+      return {
+        login: login,
+        checkStatus: checkStatus
+      };
+    }])
+
+    .factory('loginModal', ['$ionicModal', function ($ionicModal) {
+      var modal = $ionicModal.fromTemplateUrl('templates/auth/login.html', {animation: 'slide-in-up'});
+
+      return {
+        open: function () {
+          modal.then(function (modal) {
+            modal.show();
+          });
+        },
+        close: function () {
+          modal.then(function (modal) {
+            modal.hide();
+          });
+        }
+      };
+    }])
+
+    .factory('authLock', ['$rootScope', 'facebook', 'loginModal', function ($rootScope, facebook, loginModal) {
+      return function () {
+        $rootScope.$on('givdo:session:up', loginModal.close);
+        $rootScope.$on('givdo:session:down', loginModal.open);
+
+        facebook.checkStatus(loginModal.close, loginModal.open);
+      };
+    }])
+
+    .controller('FacebookLoginCtrl', ['$scope', 'facebook', function ($scope, facebook) {
       $scope.facebookLogin = function () {
-        $auth.authenticate('facebook');
-      };
-    }])
-
-    .controller('EmailLoginCtrl', ['$scope', '$auth', '$ionicPopup', function ($scope, $auth, $ionicPopup) {
-      $scope.loginData = {};
-      $scope.login = function () {
-        $auth.submitLogin($scope.loginData).then(null, function () {
-          $ionicPopup.alert({
-            title: 'Login Failed',
-            template: 'Please, check your credentials and try again.'
-          });
+        facebook.login().then(function (response) {
+          console.log("Facebook Login: %j", response);
+        }, function (err) {
+          console.log("Login error: %j", err);
         });
-      };
-
-      $scope.newAccount = {};
-      $scope.createAccount = function () {
-        $auth.submitRegistration($scope.newAccount).then(null, function () {
-          $ionicPopup.alert({
-            title: 'Registration Failed',
-            template: 'Please, your data and try again.'
-          });
-        });
-      };
-    }])
-
-    .factory('authLock', ['$rootScope', '$ionicHistory', '$state', '$auth', function ($rootScope, $ionicHistory, $state, $auth) {
-      var setup = function (login, logout) {
-        $rootScope.$on('auth:registration-email-success', login);
-        $rootScope.$on('auth:login-success', login);
-        $rootScope.$on('auth:validation-success', login);
-        $rootScope.$on('auth:validation-error', logout);
-        $rootScope.$on('auth:logout-success', logout);
-        $rootScope.$on('auth:invalid', logout);
-        $rootScope.$on('auth:session-expired', logout);
-      }, moveTo = function (nextState) {
-        $ionicHistory.nextViewOptions({
-          disableBack: true
-        });
-        $state.go(nextState, {}, {reload: true});
-      };
-
-      return function (afterLoginState) {
-        setup(function (_, user) {
-          moveTo(afterLoginState);
-        }, function () {
-          moveTo('auth.login');
-        });
-
-        return $auth.validateUser();
       };
     }]);
 })();

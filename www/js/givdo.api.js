@@ -6,10 +6,14 @@
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
     }])
 
-    .factory('Friend', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      return $resource(GivdoApiURL + '/friends', {}, {
-        query: {isArray: false}
+    .factory('OauthCallback', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
+      var OauthCallback = $resource(GivdoApiURL + '/oauth/:provider/callback', {}, {
+        callback: {method: 'POST', params: {provider: 'facebook'}, isArray: false}
       });
+      OauthCallback.authenticate = function (data) {
+        return OauthCallback.callback(data).$promise;
+      };
+      return OauthCallback;
     }])
 
     .factory('Organization', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
@@ -21,7 +25,7 @@
         answer: {method: 'POST', params: {action: 'answer'}},
         raffle: {method: 'GET', params: {triviaId: 'raffle'}, isArray: false}
       });
-      Trivia.prototype.$answer = function(option) {
+      Trivia.prototype.$answer = function (option) {
         return Trivia.answer({id: this.id, option_id: option.id}).$promise;
       };
       return Trivia;

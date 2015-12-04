@@ -1,64 +1,37 @@
 'use strict';
 
 describe('authLock', function () {
-  beforeEach(inject(function ($auth) {
-    spyOn($auth, 'validateUser');
-}));
-
-  it('validates the current session', inject(function ($auth, authLock) {
-    authLock('');
-
-    expect($auth.validateUser).toHaveBeenCalled();
+  beforeEach(inject(function (facebook) {
+    spyOn(facebook, 'checkStatus');
   }));
 
-  describe('listens to auth callbacks to switch between signed in/out states', function () {
-    var state, ionicHistory;
-    beforeEach(inject(function ($q, $state, $ionicHistory, authLock) {
-      state = $state;
-      ionicHistory = $ionicHistory;
+  it('validates the current session', inject(function (facebook, authLock, loginModal) {
+    authLock();
 
-      spyOn(state, 'go');
-      spyOn(ionicHistory, 'nextViewOptions');
+    expect(facebook.checkStatus).toHaveBeenCalledWith(loginModal.close, loginModal.open);
+  }));
 
-      authLock('welcome');
+  describe('listens to session callbacks to open or close the login modal', function () {
+    var loginModal;
+    beforeEach(inject(function (loginModal, authLock) {
+      spyOn(loginModal, 'open');
+      spyOn(loginModal, 'close');
+
+      authLock();
     }));
 
-    var assertSwitchesToLoggedInStateWhen = function (signal) {
-      describe('switches to logged in state when ' + signal, function () {
-        beforeEach(inject(function ($rootScope) {
-          $rootScope.$broadcast(signal, {user: 'email@domain.com'});
-          $rootScope.$digest();
-        }));
+    it('opens the login modal when session goes up', inject(function (loginModal, $rootScope) {
+      $rootScope.$broadcast('givdo:session:up');
+      $rootScope.$digest();
 
-        it('moves to the given welcome state without recording history', function () {
-          expect(ionicHistory.nextViewOptions).toHaveBeenCalledWith({disableBack: true});
-          expect(state.go).toHaveBeenCalledWith('welcome', {}, {reload: true});
-        });
-      });
-    };
+      expect(loginModal.close).toHaveBeenCalled();
+    }));
 
-    var assertSwitchesToLoggedOutStateWhen = function (signal) {
-      describe('switches to logged out state when ' + signal, function () {
-        beforeEach(inject(function ($rootScope) {
-          $rootScope.$broadcast(signal);
-          $rootScope.$digest();
-        }));
+    it('closes the login modal when session goes down', inject(function (loginModal, $rootScope) {
+      $rootScope.$broadcast('givdo:session:down');
+      $rootScope.$digest();
 
-        it('moves to the given welcome state without recording history', function () {
-          expect(ionicHistory.nextViewOptions).toHaveBeenCalledWith({disableBack: true});
-          expect(state.go).toHaveBeenCalledWith('auth.login', {}, {reload: true});
-        });
-      });
-    };
-
-    assertSwitchesToLoggedInStateWhen('auth:registration-email-success');
-    assertSwitchesToLoggedInStateWhen('auth:registration-email-success');
-    assertSwitchesToLoggedInStateWhen('auth:login-success');
-    assertSwitchesToLoggedInStateWhen('auth:validation-success');
-
-    assertSwitchesToLoggedOutStateWhen('auth:logout-success');
-    assertSwitchesToLoggedOutStateWhen('auth:invalid');
-    assertSwitchesToLoggedOutStateWhen('auth:session-expired');
-    assertSwitchesToLoggedOutStateWhen('auth:validation-error');
+      expect(loginModal.open).toHaveBeenCalled();
+    }));
   });
 });

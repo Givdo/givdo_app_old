@@ -16,7 +16,7 @@
           StatusBar.styleDefault();
         }
 
-        authLock('app.profile');
+        authLock();
       });
     }])
 

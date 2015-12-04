@@ -23,6 +23,8 @@ module.exports = function(config) {
       'www/lib/angular-cookie/angular-cookie.js',
       'www/lib/ng-token-auth/dist/ng-token-auth.js',
       'www/lib/angular-resource/angular-resource.js',
+      'www/lib/ngCordova/dist/ng-cordova.js',
+      'www/lib/ngCordova/dist/ng-cordova-mocks.js',
 
       // Test dependency
       'www/lib/angular-mocks/angular-mocks.js',
@@ -53,7 +55,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['story'],
 
 
     // web server port

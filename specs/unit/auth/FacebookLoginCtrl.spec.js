@@ -1,15 +1,18 @@
 'use strict';
 
 describe('FacebookLoginCtrl', function(){
-  var $scope, $auth, controller;
-  beforeEach(inject(function($rootScope, $controller){
+  var $scope, facebook, controller, loginDefer;
+  beforeEach(inject(function ($rootScope, $controller, $q) {
     $scope = $rootScope.$new();
-    $auth = jasmine.createSpyObj('$auth service', ['authenticate']);
+    loginDefer = $q.defer();
+    facebook = jasmine.createSpyObj('facebook service', ['login']);
+    facebook.login.and.returnValue(loginDefer.promise);
 
     controller = function () {
-      var controller = $controller('FacebookLoginCtrl', {$scope: $scope, $auth: $auth});
-      $scope.$digest();
-      return controller;
+      return $controller('FacebookLoginCtrl', {
+        $scope: $scope,
+        facebook: facebook
+      });
     };
   }));
 
@@ -19,7 +22,7 @@ describe('FacebookLoginCtrl', function(){
 
       $scope.facebookLogin();
 
-      expect($auth.authenticate).toHaveBeenCalledWith('facebook');
+      expect(facebook.login).toHaveBeenCalled();
     });
   });
 });
