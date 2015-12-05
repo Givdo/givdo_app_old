@@ -10,6 +10,7 @@
     "ionic-ion-tinder-cards": "*",
     "ng-token-auth": "~0.0.28",
     "angular-resource": "~1.4.7",
-    "ngCordova": "~0.1.23-alpha"
+    "ngCordova": "~0.1.23-alpha",
+    "angular-local-storage": "~0.2.3"
   }
 }

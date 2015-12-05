@@ -1,9 +1,10 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.auth', ['givdo.config', 'ngCordova'])
-    .config(['$httpProvider', function ($httpProvider) {
+  angular.module('givdo.auth', ['givdo.config', 'ngCordova', 'LocalStorageModule'])
+    .config(['$httpProvider', 'localStorageServiceProvider', function ($httpProvider, localStorageServiceProvider) {
       $httpProvider.interceptors.push('sessionInterceptor');
+      localStorageServiceProvider.setPrefix('givdo');
     }])
 
     .factory('sessionInterceptor', ['GivdoApiURL', 'session', function (baseUrl, session) {
@@ -27,19 +28,19 @@
       }
     }])
 
-    .factory('session', ['$rootScope', function ($rootScope) {
-      var token = null;
+    .factory('session', ['$rootScope', 'localStorageService', function ($rootScope, localStorageService) {
+      var SessionTokenKey = 'session.token';
 
       return {
         token: function (newToken) {
           if (newToken !== undefined) {
-            token = newToken;
+            localStorageService.set(SessionTokenKey, newToken);
             $rootScope.$emit('givdo:session:up');
           }
-          return token;
+          return localStorageService.get(SessionTokenKey);
         },
         clear: function  () {
-          token = null;
+          localStorageService.remove(SessionTokenKey);
           $rootScope.$emit('givdo:session:down');
         }
       };

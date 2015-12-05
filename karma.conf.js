@@ -25,6 +25,7 @@ module.exports = function(config) {
       'www/lib/angular-resource/angular-resource.js',
       'www/lib/ngCordova/dist/ng-cordova.js',
       'www/lib/ngCordova/dist/ng-cordova-mocks.js',
+      'www/lib/angular-local-storage/dist/angular-local-storage.js',
 
       // Test dependency
       'www/lib/angular-mocks/angular-mocks.js',
