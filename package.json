@@ -31,16 +31,11 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-inappbrowser",
     "cordova-plugin-disable-bitcode",
-    "cordova-plugin-facebook4",
     "org.apache.cordova.device",
     "org.apache.cordova.console",
     "cordova-plugin-console"
   ],
   "cordovaPlatforms": [
-    "ios",
-    {
-      "platform": "android",
-      "locator": "browser"
-    }
+    "ios"
   ]
 }

@@ -5,7 +5,7 @@
     <author email="contact@givdo.com" href="http://givdo.com/">Givdo Team</author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-navigation href="https://*/*" />
+    <allow-navigation href="*://*/*" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -68,32 +68,43 @@
                 <key>NSExceptionDomains</key>
                 <dict>
                     <key>facebook.com</key>
-                    <key>givdo.ngrok.com</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key>
+                        <true />
+                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                        <false />
+                    </dict>
                     <key>fbcdn.net</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key>
+                        <true />
+                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                        <false />
+                    </dict>
                     <key>akamaihd.net</key>
                     <dict>
                         <key>NSIncludesSubdomains</key>
-                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
                         <true />
+                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
                         <false />
                     </dict>
+                    <key>givdo.ngrok.com</key>
                     <dict>
                         <key>NSIncludesSubdomains</key>
-                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
                         <true />
+                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
                         <false />
+                        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                        <true />
                     </dict>
+                    <key>localhost</key>
                     <dict>
                         <key>NSIncludesSubdomains</key>
-                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
                         <true />
-                        <false />
-                    </dict>
-                    <dict>
-                        <key>NSIncludesSubdomains</key>
                         <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                        <true />
                         <false />
+                        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                        <true />
                     </dict>
                 </dict>
             </dict>
@@ -116,9 +127,9 @@
             </array>
         </config-file>
     </platform>
+    <plugin name="org.apache.cordova.console" spec="~0.2.13" />
     <plugin name="cordova-plugin-facebook4" spec="~1.0.0">
         <variable name="APP_ID" value="536213639869188" />
         <variable name="APP_NAME" value="Givdo Native" />
     </plugin>
-    <plugin name="org.apache.cordova.console" spec="~0.2.13" />
 </widget>
