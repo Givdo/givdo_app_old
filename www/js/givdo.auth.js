@@ -19,7 +19,7 @@
           }
           return config;
         },
-        response: function (response) {
+        responseError: function (response) {
           if (shouldIntercept(response.config) && response.status == 401) {
             session.clear();
           }

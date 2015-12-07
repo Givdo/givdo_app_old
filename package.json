@@ -15,9 +15,7 @@
     "node-sass": "^3.3.3",
     "plist": "^1.2.0",
     "bower": "^1.3.3",
-    "cordova-common": "^1.0.0",
     "cordova-config-utils": "^2.1.0",
-    "cordova-lib": "^5.4.1",
     "gulp-util": "^2.2.14",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.11",
@@ -35,7 +33,15 @@
     "cordova-plugin-disable-bitcode",
     "org.apache.cordova.device",
     "org.apache.cordova.console",
-    "cordova-plugin-console"
+    "cordova-plugin-console",
+    {
+      "locator": "https://github.com/Wizcorp/phonegap-facebook-plugin.git",
+      "id": "phonegap-facebook-plugin",
+      "variables": {
+        "APP_ID": "536213639869188",
+        "APP_NAME": "Givdo\\ Native"
+      }
+    }
   ],
   "cordovaPlatforms": [
     "ios"
