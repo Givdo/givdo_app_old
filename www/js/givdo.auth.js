@@ -47,27 +47,32 @@
     }])
 
     .factory('facebook', ['$cordovaFacebook', 'session', 'OauthCallback', function ($cordovaFacebook, session, OauthCallback) {
-      var facebookAuthData = function (authResponse) {
-        return {
+      var facebookAuth = function (authResponse) {
+        var data = {
           provider: 'facebook',
           uid: authResponse.userID,
           access_token: authResponse.accessToken,
           expires_in: authResponse.expiresIn
         };
+
+        return OauthCallback.authenticate(data).then(function (auth) {
+          session.token(auth.token);
+        });
       };
 
       var login = function () {
         return $cordovaFacebook.login(['email', 'user_friends', 'user_about_me'])
           .then(function (data) {
-            return OauthCallback.authenticate(facebookAuthData(data.authResponse))
-              .then(function (auth) {
-                session.token(auth.token);
-              });
+            return facebookAuth(data.authResponse);
           });
       }
 
-      var checkStatus = function (success, fail) {
-        return $cordovaFacebook.getLoginStatus().then(success, fail);
+      var checkStatus = function () {
+        return $cordovaFacebook.getLoginStatus().then(function (data) {
+          return facebookAuth(data.authResponse);
+        }).then(null, function () {
+          session.clear();
+        });
       };
 
       return {
@@ -98,7 +103,7 @@
         $rootScope.$on('givdo:session:up', loginModal.close);
         $rootScope.$on('givdo:session:down', loginModal.open);
 
-        facebook.checkStatus(loginModal.close, loginModal.open);
+        facebook.checkStatus();
       };
     }])
 

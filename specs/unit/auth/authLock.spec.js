@@ -8,7 +8,7 @@ describe('authLock', function () {
   it('validates the current session', inject(function (facebook, authLock, loginModal) {
     authLock();
 
-    expect(facebook.checkStatus).toHaveBeenCalledWith(loginModal.close, loginModal.open);
+    expect(facebook.checkStatus).toHaveBeenCalled();
   }));
 
   describe('listens to session callbacks to open or close the login modal', function () {

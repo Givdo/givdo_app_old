@@ -49,7 +49,7 @@ describe('sessionInterceptor', function () {
       };
 
       spyOn(session, 'clear');
-      sessionInterceptor.response(response);
+      sessionInterceptor.responseError(response);
 
       expect(session.clear).toHaveBeenCalled();
     }));
@@ -63,7 +63,7 @@ describe('sessionInterceptor', function () {
       };
 
       spyOn(session, 'clear');
-      sessionInterceptor.response(response);
+      sessionInterceptor.responseError(response);
 
       expect(session.clear).not.toHaveBeenCalled();
     }));
@@ -77,7 +77,7 @@ describe('sessionInterceptor', function () {
       };
 
       spyOn(session, 'clear');
-      sessionInterceptor.response(response);
+      sessionInterceptor.responseError(response);
 
       expect(session.clear).not.toHaveBeenCalled();
     }));
