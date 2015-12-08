@@ -39,14 +39,5 @@ describe('facebook', function () {
         expires_in: 'a few days bro'
       });
     }));
-
-    it('saves the oauth token when authenticated', inject(function ($rootScope, session) {
-      facebook.login();
-      deferredFacebookLogin.resolve({authResponse: {}});
-      deferredOauthCallback.resolve({token: 'some token'});
-      $rootScope.$digest();
-
-      expect(session.token()).toEqual('some token');
-    }));
   });
 });

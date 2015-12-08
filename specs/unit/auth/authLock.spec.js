@@ -1,15 +1,30 @@
 'use strict';
 
 describe('authLock', function () {
-  beforeEach(inject(function (facebook) {
+  var deferredFacebookStatus;
+  beforeEach(inject(function (facebook, $q) {
     spyOn(facebook, 'checkStatus');
+    deferredFacebookStatus = $q.defer();
+    facebook.checkStatus.and.returnValue(deferredFacebookStatus.promise);
   }));
 
-  it('validates the current session', inject(function (facebook, authLock, loginModal) {
-    authLock();
+  describe('initial check', function () {
+    it('validates the current session', inject(function (facebook, authLock, loginModal) {
+      authLock();
 
-    expect(facebook.checkStatus).toHaveBeenCalled();
-  }));
+      expect(facebook.checkStatus).toHaveBeenCalled();
+    }));
+
+    it('sets the user token to session', inject(function (facebook, authLock, loginModal, session, $rootScope) {
+      authLock();
+      spyOn(session, 'token');
+
+      deferredFacebookStatus.resolve({token: 'new token'});
+      $rootScope.$digest();
+
+      expect(session.token).toHaveBeenCalledWith('new token');
+    }));
+  });
 
   describe('listens to session callbacks to open or close the login modal', function () {
     var loginModal;

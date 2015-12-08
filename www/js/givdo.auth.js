@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.auth', ['givdo.config', 'ngCordova', 'LocalStorageModule'])
+  angular.module('givdo.auth', ['givdo.config', 'givdo.facebook', 'LocalStorageModule'])
     .config(['$httpProvider', 'localStorageServiceProvider', function ($httpProvider, localStorageServiceProvider) {
       $httpProvider.interceptors.push('sessionInterceptor');
       localStorageServiceProvider.setPrefix('givdo');
@@ -40,44 +40,10 @@
           return localStorageService.get(SessionTokenKey);
         },
         clear: function  () {
+          debugger;
           localStorageService.remove(SessionTokenKey);
           $rootScope.$emit('givdo:session:down');
         }
-      };
-    }])
-
-    .factory('facebook', ['$cordovaFacebook', 'session', 'OauthCallback', function ($cordovaFacebook, session, OauthCallback) {
-      var facebookAuth = function (authResponse) {
-        var data = {
-          provider: 'facebook',
-          uid: authResponse.userID,
-          access_token: authResponse.accessToken,
-          expires_in: authResponse.expiresIn
-        };
-
-        return OauthCallback.authenticate(data).then(function (auth) {
-          session.token(auth.token);
-        });
-      };
-
-      var login = function () {
-        return $cordovaFacebook.login(['email', 'user_friends', 'user_about_me'])
-          .then(function (data) {
-            return facebookAuth(data.authResponse);
-          });
-      }
-
-      var checkStatus = function () {
-        return $cordovaFacebook.getLoginStatus().then(function (data) {
-          return facebookAuth(data.authResponse);
-        }).then(null, function () {
-          session.clear();
-        });
-      };
-
-      return {
-        login: login,
-        checkStatus: checkStatus
       };
     }])
 
@@ -98,19 +64,25 @@
       };
     }])
 
-    .factory('authLock', ['$rootScope', 'facebook', 'loginModal', function ($rootScope, facebook, loginModal) {
+    .factory('authLock', ['$rootScope', 'facebook', 'session', 'loginModal', function ($rootScope, facebook, session, loginModal) {
       return function () {
         $rootScope.$on('givdo:session:up', loginModal.close);
         $rootScope.$on('givdo:session:down', loginModal.open);
 
-        facebook.checkStatus();
+        facebook.checkStatus().then(function (auth) {
+          session.token(auth.token);
+        }, function () {
+          session.clear();
+        });
       };
     }])
 
-    .controller('FacebookLoginCtrl', ['$scope', 'facebook', function ($scope, facebook) {
+    // TODO: extract this to givdo.facebook
+    .controller('FacebookLoginCtrl', ['$scope', 'facebook', 'session', function ($scope, facebook, session) {
       $scope.facebookLogin = function () {
-        facebook.login().then(function (response) {
-          console.log("Facebook Login: %j", response);
+        facebook.login().then(function (auth) {
+          console.log("Facebook Login: %j", auth);
+          session.token(auth.token);
         }, function (err) {
           console.log("Login error: %j", err);
         });
