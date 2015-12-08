@@ -27,6 +27,6 @@
         templateUrl: 'templates/menu.html'
       });
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/app/quiz/choose-organization');
+      $urlRouterProvider.otherwise('/app/quiz/play');
     }]);
 })();

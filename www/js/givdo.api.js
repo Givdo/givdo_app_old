@@ -6,8 +6,14 @@
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
     }])
 
-    .factory('OauthCallback', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      var OauthCallback = $resource(GivdoApiURL + '/oauth/:provider/callback', {}, {
+    .factory('givdoResource', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
+      return function (path, params, actions) {
+        return $resource(GivdoApiURL + path, params, actions);
+      };
+    }])
+
+    .factory('OauthCallback', ['givdoResource', function (resource) {
+      var OauthCallback = resource('/oauth/:provider/callback', {}, {
         callback: {method: 'POST', params: {provider: 'facebook'}, isArray: false}
       });
       OauthCallback.authenticate = function (data) {
@@ -16,12 +22,12 @@
       return OauthCallback;
     }])
 
-    .factory('Organization', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      return $resource(GivdoApiURL + '/organizations/:organization_id', {organizationId: '@id'});
+    .factory('Organization', ['givdoResource', function (resource) {
+      return resource('/organizations/:organization_id', {organizationId: '@id'});
     }])
 
-    .factory('Trivia', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      var Trivia = $resource(GivdoApiURL + '/trivia/:triviaId/:action', {triviaId: '@id'}, {
+    .factory('Trivia', ['givdoResource', function (resource) {
+      var Trivia = resource('/trivia/:triviaId/:action', {triviaId: '@id'}, {
         answer: {method: 'POST', params: {action: 'answer'}},
         raffle: {method: 'GET', params: {triviaId: 'raffle'}, isArray: false}
       });

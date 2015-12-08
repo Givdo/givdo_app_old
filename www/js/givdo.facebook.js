@@ -5,7 +5,6 @@
 
   .factory('facebook', ['$cordovaFacebook', 'OauthCallback', function ($cordovaFacebook, OauthCallback) {
     var facebookAuth = function (authResponse) {
-      debugger;
       var data = {
         provider: 'facebook',
         uid: authResponse.userID,

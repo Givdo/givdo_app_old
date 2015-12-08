@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.quiz', ['givdo.api'])
+  angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook'])
     .config(['$stateProvider', function ($stateProvider) {
       $stateProvider.state('quiz', {
         url: '/quiz',
@@ -13,13 +13,22 @@
           }
         }
       })
-        .state('choose-friend', {
-          url: '/choose-friend',
+        .state('play', {
+          url: '/play',
           parent: 'quiz',
           views: {
             'content': {
-              templateUrl: 'templates/quiz/choose-friend.html',
-              controller: 'ChooseFriendCtrl'
+              templateUrl: 'templates/quiz/new-game.html'
+            }
+          }
+        })
+        .state('invites', {
+          url: '/invites',
+          parent: 'quiz',
+          views: {
+            'content': {
+              templateUrl: 'templates/quiz/invites.html',
+              controller: 'InvitesCtrl'
             }
           }
         })
@@ -68,6 +77,18 @@
       };
     }])
 
+    .controller('InvitesCtrl', ['$scope', 'facebook', function ($scope, facebook) {
+      $scope.invites = [];
+
+      $scope.inviteFriend = function () {
+        facebook.inviteFriends().then(function (response) {
+          console.log(response);
+        }, function (err) {
+          console.log(err);
+        });
+      };
+    }])
+
     .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', function ($scope, $ionicLoading, QuizRound) {
       $scope.submitAnswer = function () {
         $ionicLoading.show();
@@ -81,20 +102,6 @@
         $scope.answer = {submitted: false};
       };
       $scope.next();
-    }])
-
-    .controller('ChooseFriendCtrl', ['$scope', 'Friend', function ($scope, Friend) {
-      $scope.filter = {};
-
-      $scope.loadFriends = function() {
-        Friend.query({page: $scope.nextPage}, function (friends) {
-          $scope.friends = ($scope.friends || []).concat(friends.list);
-          $scope.nextPage = friends.next_page;
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
-      };
-
-      $scope.loadFriends();
     }])
 
     .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {

@@ -2,15 +2,15 @@
   <ion-content class="has-header">
     <ion-slide-box show-pager="false" does-continue="true" on-slide-changed="slideChanged($index)">
       <ion-slide ng-repeat="organization in organizations">
-        <div class="list card">
-          <div class="item item-avatar">
+        <ion-list type="card">
+          <ion-item class="item-avatar">
             <img ng-src="{{organization.picture}}">
             <h2>{{ organization.name }}</h2>
-           </div>
-          <div class="item item-text-wrap">
+          </ion-item>
+          <ion-item class="item-text-wrap">
             <p>{{ organization.mission }}</p>
-          </div>
-        </div>
+          </ion-item>
+        </ion-list>
       </ion-slide>
     </ion-slide-box>
   </ion-content>
