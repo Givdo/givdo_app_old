@@ -22,6 +22,12 @@
       return OauthCallback;
     }])
 
+    .factory('Game', ['givdoResource', function (resource) {
+      return resource('/games/:game_id/:action', {inviteId: '@id'}, {
+        invite: {method: 'POST', params: {action: 'invite'}}
+      });
+    }])
+
     .factory('Organization', ['givdoResource', function (resource) {
       return resource('/organizations/:organization_id', {organizationId: '@id'});
     }])

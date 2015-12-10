@@ -18,17 +18,8 @@
           parent: 'quiz',
           views: {
             'content': {
-              templateUrl: 'templates/quiz/new-game.html'
-            }
-          }
-        })
-        .state('invites', {
-          url: '/invites',
-          parent: 'quiz',
-          views: {
-            'content': {
-              templateUrl: 'templates/quiz/invites.html',
-              controller: 'InvitesCtrl'
+              templateUrl: 'templates/quiz/new-game.html',
+              controller: 'NewGameCtrl'
             }
           }
         })
@@ -77,12 +68,10 @@
       };
     }])
 
-    .controller('InvitesCtrl', ['$scope', 'facebook', function ($scope, facebook) {
-      $scope.invites = [];
-
-      $scope.inviteFriend = function () {
-        facebook.inviteFriends().then(function (response) {
-          console.log(response);
+    .controller('NewGameCtrl', ['$scope', 'facebook', function ($scope, facebook) {
+      $scope.inviteFriends = function () {
+        facebook.gameInvite('Come play with me!').then(function (game) {
+          console.log(game);
         }, function (err) {
           console.log(err);
         });
