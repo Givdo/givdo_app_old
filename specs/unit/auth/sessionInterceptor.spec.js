@@ -40,6 +40,19 @@ describe('sessionInterceptor', function () {
   });
 
   describe('response interception', function () {
+    it('rejects the response', inject(function ($rootScope, sessionInterceptor) {
+      var response = {
+        status: 422,
+        config: {url: 'anything'}
+      };
+      var fail = jasmine.createSpy();
+
+      sessionInterceptor.responseError(response).then(null, fail);
+      $rootScope.$digest();
+
+      expect(fail).toHaveBeenCalled();
+    }));
+
     it('clears the session when it is a 401 coming from the givdo api', inject(function (GivdoApiURL, session, sessionInterceptor) {
       var response = {
         status: 401,

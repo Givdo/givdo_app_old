@@ -7,7 +7,7 @@
       localStorageServiceProvider.setPrefix('givdo');
     }])
 
-    .factory('sessionInterceptor', ['GivdoApiURL', 'session', function (baseUrl, session) {
+    .factory('sessionInterceptor', ['GivdoApiURL', 'session', '$q', function (baseUrl, session, $q) {
       var shouldIntercept = function (config) {
         return config.url.indexOf(baseUrl) === 0;
       };
@@ -23,7 +23,7 @@
           if (shouldIntercept(response.config) && response.status == 401) {
             session.clear();
           }
-          return response;
+          return $q.reject(response);
         }
       }
     }])
@@ -77,14 +77,10 @@
       };
     }])
 
-    // TODO: extract this to givdo.facebook
     .controller('FacebookLoginCtrl', ['$scope', 'facebook', 'session', function ($scope, facebook, session) {
       $scope.facebookLogin = function () {
         facebook.login().then(function (auth) {
-          console.log("Facebook Login: %j", auth);
           session.token(auth.token);
-        }, function (err) {
-          console.log("Login error: %j", err);
         });
       };
     }]);

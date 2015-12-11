@@ -9,7 +9,8 @@ describe('facebook.login', function () {
 
     deferredOauthCallback = $q.defer();
     spyOn(OauthCallback, 'authenticate');
-    OauthCallback.authenticate.and.returnValue(deferredOauthCallback.promise);
+    deferredOauthCallback.$promise = deferredOauthCallback.promise;
+    OauthCallback.authenticate.and.returnValue(deferredOauthCallback);
 
     facebook = $injector.get('facebook');
   }));

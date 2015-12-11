@@ -12,7 +12,7 @@
           expires_in: authResponse.expiresIn
         };
 
-        return OauthCallback.authenticate(data);
+        return OauthCallback.authenticate(data).$promise;
       };
     }])
 

@@ -13,13 +13,9 @@
     }])
 
     .factory('OauthCallback', ['givdoResource', function (resource) {
-      var OauthCallback = resource('/oauth/:provider/callback', {}, {
-        callback: {method: 'POST', params: {provider: 'facebook'}, isArray: false}
+      return resource('/oauth/:provider/callback', {}, {
+        authenticate: {method: 'POST', params: {provider: 'facebook'}, isArray: false}
       });
-      OauthCallback.authenticate = function (data) {
-        return OauthCallback.callback(data).$promise;
-      };
-      return OauthCallback;
     }])
 
     .factory('Game', ['givdoResource', function (resource) {
