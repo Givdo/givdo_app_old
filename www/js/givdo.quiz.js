@@ -46,7 +46,7 @@
     }])
 
     .service('QuizRound', ['Trivia', function (Trivia) {
-      var playingForOrganization = null;
+      var currentGame, currentOrganization;
       var revealAnser = function (trivia, answer) {
         (trivia.options || []).forEach(function (option) {
           option.correct = option.id === answer.correct_option_id;
@@ -54,8 +54,11 @@
       };
 
       return {
+        start: function (game) {
+          currentGame = game;
+        },
         playFor: function (organization) {
-          playingForOrganization = organization;
+          currentOrganization = organization;
         },
         nextTrivia: function () {
           return Trivia.raffle();
@@ -68,13 +71,13 @@
       };
     }])
 
-    .controller('NewGameCtrl', ['$scope', 'facebook', function ($scope, facebook) {
+    .controller('NewGameCtrl', ['$scope', '$state', 'facebook', 'QuizRound', function ($scope, $state, facebook, QuizRound) {
       $scope.inviteFriends = function () {
-        facebook.gameInvite('Come play with me!').then(function (game) {
-          console.log(game);
-        }, function (err) {
-          console.log(err);
-        });
+        facebook.gameInvite('Come play with me for a fairer world!')
+          .then(function (game) {
+            QuizRound.start(game);
+            $state.go('choose-organization');
+          });
       };
     }])
 
