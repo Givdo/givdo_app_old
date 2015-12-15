@@ -8,9 +8,8 @@ describe('facebook.gameInvite', function () {
     $cordovaFacebook.showDialog.and.returnValue(deferredFacebookDialog.promise);
 
     deferredGameInvite = $q.defer();
-    deferredGameInvite.$promise = deferredGameInvite.promise;
-    spyOn(Game, 'invite');
-    Game.invite.and.returnValue(deferredGameInvite);
+    spyOn(Game, 'create');
+    Game.create.and.returnValue(deferredGameInvite.promise);
 
     facebook = $injector.get('facebook');
   }));
@@ -53,7 +52,7 @@ describe('facebook.gameInvite', function () {
     deferredGameInvite.resolve({id: 'game id'});
     $rootScope.$digest();
 
-    expect(Game.invite).toHaveBeenCalledWith({provider: 'facebook', invitees: ['facebook-id-1', 'facebook-id-2']});
+    expect(Game.create).toHaveBeenCalledWith({provider: 'facebook', invitees: ['facebook-id-1', 'facebook-id-2']});
     expect(succeeds).toHaveBeenCalledWith({id: 'game id'});
   }));
 });

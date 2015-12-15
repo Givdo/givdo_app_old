@@ -64,20 +64,25 @@
           return Trivia.raffle();
         },
         answer: function (trivia, option) {
-          return trivia.$answer(option).then(function (answer) {
+          return trivia.$answer(option, currentOrganization, currentGame).then(function (answer) {
             revealAnser(trivia, answer);
           });
         }
       };
     }])
 
-    .controller('NewGameCtrl', ['$scope', '$state', 'facebook', 'QuizRound', function ($scope, $state, facebook, QuizRound) {
+    .controller('NewGameCtrl', ['$scope', '$state', 'facebook', 'Game', 'QuizRound', function ($scope, $state, facebook, Game, QuizRound) {
+      var playGame = function (game) {
+        QuizRound.start(game);
+        $state.go('choose-organization');
+      };
+
+      $scope.playSingle = function () {
+        Game.create().then(playGame);
+      };
       $scope.inviteFriends = function () {
         facebook.gameInvite('Come play with me for a fairer world!')
-          .then(function (game) {
-            QuizRound.start(game);
-            $state.go('choose-organization');
-          });
+          .then(playGame);
       };
     }])
 

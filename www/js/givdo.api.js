@@ -19,9 +19,12 @@
     }])
 
     .factory('Game', ['givdoResource', function (resource) {
-      return resource('/games/:game_id/:action', {inviteId: '@id'}, {
-        invite: {method: 'POST', params: {action: 'invite'}}
-      });
+      var Game = resource('/games/:game_id/:action', {gameId: '@id'});
+      Game.create = function (params) {
+        var game = new Game(params);
+        return game.$save();
+      };
+      return Game;
     }])
 
     .factory('Organization', ['givdoResource', function (resource) {
