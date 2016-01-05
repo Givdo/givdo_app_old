@@ -9,16 +9,24 @@ describe('QuizRound', function(){
   });
 
   describe('answer', function () {
-    it('reveals the correct answer', inject(function (Trivia, QuizRound, $rootScope, $q) {
-      var wrongOption = {id: 11}, correctOption = {id: 10}, answer = {correct_option_id: 10};
-      var trivia = {
-        options: [correctOption, wrongOption],
+    var wrongOption, correctOption, answer, trivia, game;
+    beforeEach(inject(function ($q, $rootScope, QuizRound) {
+      wrongOption = {id: 11}, correctOption = {id: 10}, answer = {correct_option_id: 10};
+      trivia = {options: [correctOption, wrongOption]};
+      game = {
         $answer: jasmine.createSpy().and.returnValue($q.when(answer))
-      };
+      }
+      QuizRound.start(game);
 
-      QuizRound.answer(trivia, null);
+      QuizRound.answer(trivia, correctOption);
       $rootScope.$digest();
+    }));
 
+    it('answers the trivia with the given option', inject(function () {
+      expect(game.$answer).toHaveBeenCalledWith(trivia, correctOption);
+    }));
+
+    it('reveals the correct answer', inject(function () {
       expect(wrongOption.correct).toBeFalsy();
       expect(correctOption.correct).toBeTruthy();
     }));

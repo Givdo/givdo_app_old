@@ -40,7 +40,6 @@
           return localStorageService.get(SessionTokenKey);
         },
         clear: function  () {
-          debugger;
           localStorageService.remove(SessionTokenKey);
           $rootScope.$emit('givdo:session:down');
         }

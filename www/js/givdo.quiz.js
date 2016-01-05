@@ -64,7 +64,7 @@
           return Trivia.raffle();
         },
         answer: function (trivia, option) {
-          return trivia.$answer(option, currentOrganization, currentGame).then(function (answer) {
+          return currentGame.$answer(trivia, option).then(function (answer) {
             revealAnser(trivia, answer);
           });
         }

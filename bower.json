@@ -2,11 +2,10 @@
   "name": "Givdo",
   "private": "true",
   "devDependencies": {
-    "ionic": "~1.2.4",
     "angular-mocks": "~1.4.8"
   },
   "dependencies": {
-    "ionic-ion-tinder-cards": "*",
+    "ionic": "~1.2.4",
     "ng-token-auth": "~0.0.28",
     "angular-resource": "~1.4.7",
     "ngCordova": "~0.1.23-alpha",

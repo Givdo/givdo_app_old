@@ -19,10 +19,15 @@
     }])
 
     .factory('Game', ['givdoResource', function (resource) {
-      var Game = resource('/games/:game_id/:action', {gameId: '@id'});
+      var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
+        answer: {method: 'POST', params: {action: 'answers'}}
+      });
       Game.create = function (params) {
         var game = new Game(params);
         return game.$save();
+      };
+      Game.prototype.$answer = function (trivia, option) {
+        return Game.answer({id: this.id, trivia_id: trivia.id, option_id: option.id}).$promise;
       };
       return Game;
     }])
@@ -33,12 +38,8 @@
 
     .factory('Trivia', ['givdoResource', function (resource) {
       var Trivia = resource('/trivia/:triviaId/:action', {triviaId: '@id'}, {
-        answer: {method: 'POST', params: {action: 'answer'}},
         raffle: {method: 'GET', params: {triviaId: 'raffle'}, isArray: false}
       });
-      Trivia.prototype.$answer = function (option) {
-        return Trivia.answer({id: this.id, option_id: option.id}).$promise;
-      };
       return Trivia;
     }]);
 })();

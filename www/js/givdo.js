@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo', ['ionic', 'ionic.contrib.ui.tinderCards', 'givdo.auth', 'givdo.quiz'])
+  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz'])
     .run(['$ionicPlatform', 'authLock', function ($ionicPlatform, authLock) {
       $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

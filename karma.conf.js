@@ -16,10 +16,9 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // External Dependencies
-      'www/lib/ionic/js/ionic.bundle.js',
+      'www/lib/ionic/release/js/ionic.bundle.js',
       'www/lib/jquery/dist/jquery.js',
       'www/lib/collide/collide.js',
-      'www/lib/ionic-ion-tinder-cards/ionic.tdcards.js',
       'www/lib/angular-cookie/angular-cookie.js',
       'www/lib/ng-token-auth/dist/ng-token-auth.js',
       'www/lib/angular-resource/angular-resource.js',
