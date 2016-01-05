@@ -25,11 +25,21 @@ describe('facebook.checkStatus', function () {
     expect(fails).toHaveBeenCalled();
   }));
 
+  it('fails the promise when facebook status is not connected', inject(function ($rootScope) {
+    var fails = jasmine.createSpy();
+
+    facebook.checkStatus().then(null, fails);
+    deferredFacebookCheckStatus.resolve({status: 'unknown'});
+    $rootScope.$digest();
+
+    expect(fails).toHaveBeenCalled();
+  }));
+
   it('fails the promise when givdo oauth fails', inject(function ($rootScope) {
     var fails = jasmine.createSpy();
 
     facebook.checkStatus().then(null, fails);
-    deferredFacebookCheckStatus.resolve({authResponse: {}});
+    deferredFacebookCheckStatus.resolve({status: 'connected', authResponse: {}});
     deferredOauthCallback.reject();
     $rootScope.$digest();
 
@@ -40,7 +50,7 @@ describe('facebook.checkStatus', function () {
     var succeeds = jasmine.createSpy();
 
     facebook.checkStatus().then(succeeds);
-    deferredFacebookCheckStatus.resolve({authResponse: {userID: '123', accessToken: 'facebook access token', expiresIn: '123'}});
+    deferredFacebookCheckStatus.resolve({status: 'connected', authResponse: {userID: '123', accessToken: 'facebook access token', expiresIn: '123'}});
     deferredOauthCallback.resolve({token: 'my token'});
     $rootScope.$digest();
 

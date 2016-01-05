@@ -3,8 +3,13 @@
 
   angular.module('givdo.facebook', ['givdo.api', 'ngCordova'])
 
-    .factory('facebookAuth', ['OauthCallback', function (OauthCallback) {
-      return function (authResponse) {
+    .factory('facebookAuth', ['OauthCallback', '$q', function (OauthCallback, $q) {
+      return function (facebookData) {
+        if (facebookData.status !== 'connected') {
+          return $q.reject();
+        }
+
+        var authResponse = facebookData.authResponse;
         var data = {
           provider: 'facebook',
           uid: authResponse.userID,
@@ -18,17 +23,13 @@
 
     .factory('facebookCheckStatus', ['$cordovaFacebook', 'facebookAuth', function ($cordovaFacebook, facebookAuth) {
       return function () {
-        return $cordovaFacebook.getLoginStatus().then(function (data) {
-          return facebookAuth(data.authResponse);
-        });
+        return $cordovaFacebook.getLoginStatus().then(facebookAuth);
       };
     }])
 
     .factory('facebookLogin', ['$cordovaFacebook', 'facebookAuth', function ($cordovaFacebook, facebookAuth) {
       return function () {
-        return $cordovaFacebook.login(['email', 'user_friends', 'user_about_me']).then(function (data) {
-          return facebookAuth(data.authResponse);
-        });
+        return $cordovaFacebook.login(['email', 'user_friends', 'user_about_me']).then(facebookAuth);
       };
     }])
 

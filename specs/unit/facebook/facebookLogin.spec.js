@@ -31,6 +31,16 @@ describe('facebook.login', function () {
     expect(fails).toHaveBeenCalled();
   }));
 
+  it('fails the promise when facebook status is not connected', inject(function ($rootScope) {
+    var fails = jasmine.createSpy();
+
+    facebook.login().then(null, fails);
+    deferredFacebookLogin.resolve({status: 'unknown'});
+    $rootScope.$digest();
+
+    expect(fails).toHaveBeenCalled();
+  }));
+
   it('fails the promise when givdo oauth fails', inject(function ($rootScope) {
     var fails = jasmine.createSpy();
 
@@ -46,7 +56,7 @@ describe('facebook.login', function () {
     var succeeds = jasmine.createSpy();
 
     facebook.login().then(succeeds);
-    deferredFacebookLogin.resolve({authResponse: {userID: '123', accessToken: 'facebook access token', expiresIn: '123'}});
+    deferredFacebookLogin.resolve({status: 'connected', authResponse: {userID: '123', accessToken: 'facebook access token', expiresIn: '123'}});
     deferredOauthCallback.resolve({token: 'my token'});
     $rootScope.$digest();
 
