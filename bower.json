@@ -2,15 +2,18 @@
   "name": "Givdo",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.1.0",
-    "angular-mocks": "1.4.3"
+    "ionic": "~1.2.4",
+    "angular-mocks": "~1.4.8"
   },
   "dependencies": {
-    "jquery": "~2.1.4",
     "ionic-ion-tinder-cards": "*",
     "ng-token-auth": "~0.0.28",
     "angular-resource": "~1.4.7",
     "ngCordova": "~0.1.23-alpha",
-    "angular-local-storage": "~0.2.3"
+    "angular-local-storage": "~0.2.3",
+    "jquery": "~2.1.4"
+  },
+  "resolutions": {
+    "angular": "1.4.3"
   }
 }
