@@ -39,7 +39,7 @@
           method: 'apprequests',
           message: message
         }).then(function (response) {
-          return Game.create({provider: 'facebook', invitees: response.to});
+          return Game.create({provider: 'facebook', invitees: response.to}).$promise;
         });
       };
     }])

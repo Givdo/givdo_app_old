@@ -9,7 +9,7 @@ describe('facebook.gameInvite', function () {
 
     deferredGameInvite = $q.defer();
     spyOn(Game, 'create');
-    Game.create.and.returnValue(deferredGameInvite.promise);
+    Game.create.and.returnValue({$promise: deferredGameInvite.promise});
 
     facebook = $injector.get('facebook');
   }));

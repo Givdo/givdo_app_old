@@ -22,12 +22,9 @@
       var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
         raffle: {method: 'GET', params: {action: 'raffle'}, isArray: false},
         single: {method: 'GET', params: {action: 'single'}, isArray: false},
-        answer: {method: 'POST', params: {action: 'answers'}}
+        answer: {method: 'POST', params: {action: 'answers'}},
+        create: {method: 'POST'}
       });
-      Game.create = function (params) {
-        var game = new Game(params);
-        return game.$save();
-      };
       Game.prototype.$answer = function (trivia, option) {
         return Game.answer({id: this.id, trivia_id: trivia.id, option_id: option.id}).$promise;
       };
