@@ -78,7 +78,7 @@
       };
 
       $scope.playSingle = function () {
-        Game.create().then(playGame);
+        Game.single(playGame);
       };
       $scope.inviteFriends = function () {
         facebook.gameInvite('Come play with me for a fairer world!')

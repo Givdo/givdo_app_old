@@ -21,6 +21,7 @@
     .factory('Game', ['givdoResource', function (resource) {
       var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
         raffle: {method: 'GET', params: {action: 'raffle'}, isArray: false},
+        single: {method: 'GET', params: {action: 'single'}, isArray: false},
         answer: {method: 'POST', params: {action: 'answers'}}
       });
       Game.create = function (params) {
