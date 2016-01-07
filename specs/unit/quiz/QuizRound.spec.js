@@ -2,9 +2,12 @@
 
 describe('QuizRound', function(){
   describe('nextTrivia', function () {
-    it('raffles the trivia using the service', inject(function (Trivia, QuizRound) {
-      spyOn(Trivia, 'raffle').and.returnValue('trivia');
-      expect(QuizRound.nextTrivia()).toBe('trivia');
+    it('raffles the trivia using the service', inject(function (QuizRound, $q) {
+      var game = jasmine.createSpyObj('current game', ['$raffle']);
+      game.$raffle.and.returnValue($q.when('trivia'));
+
+      QuizRound.start(game);
+      expect(QuizRound.nextTrivia()).toResolveTo('trivia');
     }));
   });
 

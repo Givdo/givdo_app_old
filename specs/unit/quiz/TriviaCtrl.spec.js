@@ -8,7 +8,7 @@ describe('TriviaCtrl', function(){
 
     QuizRound = jasmine.createSpyObj('QuizRound', ['nextTrivia', 'answer']);
     QuizRound.answer.and.returnValue($q.when());
-    QuizRound.nextTrivia.and.returnValue('trivia');
+    QuizRound.nextTrivia.and.returnValue($q.when('trivia'));
 
     controller = function () {
       var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound});
@@ -50,14 +50,15 @@ describe('TriviaCtrl', function(){
   });
 
   describe('next', function () {
-    it('loads the next trivia', function () {
+    it('loads the next trivia', inject(function ($q, $rootScope) {
       controller();
-      QuizRound.nextTrivia.and.returnValue('trivia 2');
+      QuizRound.nextTrivia.and.returnValue($q.when('trivia 2'));
 
       $scope.next();
+      $rootScope.$digest();
 
       expect($scope.trivia).toEqual('trivia 2');
-    });
+    }));
 
     it('it resets the answer object to not submitted', function () {
       controller();

@@ -45,7 +45,7 @@
         });
     }])
 
-    .service('QuizRound', ['Trivia', function (Trivia) {
+    .service('QuizRound', [function () {
       var currentGame, currentOrganization;
       var revealAnser = function (trivia, answer) {
         (trivia.options || []).forEach(function (option) {
@@ -61,7 +61,7 @@
           currentOrganization = organization;
         },
         nextTrivia: function () {
-          return Trivia.raffle();
+          return currentGame.$raffle();
         },
         answer: function (trivia, option) {
           return currentGame.$answer(trivia, option).then(function (answer) {
@@ -95,7 +95,9 @@
         });
       };
       $scope.next = function () {
-        $scope.trivia = QuizRound.nextTrivia();
+        QuizRound.nextTrivia().then(function (trivia) {
+          $scope.trivia = trivia;
+        });
         $scope.answer = {submitted: false};
       };
       $scope.next();

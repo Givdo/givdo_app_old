@@ -20,6 +20,7 @@
 
     .factory('Game', ['givdoResource', function (resource) {
       var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
+        raffle: {method: 'GET', params: {action: 'raffle'}, isArray: false},
         answer: {method: 'POST', params: {action: 'answers'}}
       });
       Game.create = function (params) {
@@ -34,12 +35,5 @@
 
     .factory('Organization', ['givdoResource', function (resource) {
       return resource('/organizations/:organization_id', {organizationId: '@id'});
-    }])
-
-    .factory('Trivia', ['givdoResource', function (resource) {
-      var Trivia = resource('/trivia/:triviaId/:action', {triviaId: '@id'}, {
-        raffle: {method: 'GET', params: {triviaId: 'raffle'}, isArray: false}
-      });
-      return Trivia;
     }]);
 })();
