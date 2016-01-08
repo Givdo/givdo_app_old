@@ -63,10 +63,10 @@
           $state.go('trivia');
         },
         nextTrivia: function () {
-          return currentGame.$raffle();
+          return currentGame.$raffle().$promise;
         },
         answer: function (trivia, option) {
-          return currentGame.$answer(trivia, option).then(function (answer) {
+          return currentGame.$answer(trivia, option).$promise.then(function (answer) {
             revealAnser(trivia, answer);
           });
         }

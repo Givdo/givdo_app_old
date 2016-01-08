@@ -19,14 +19,22 @@
     }])
 
     .factory('Game', ['givdoResource', function (resource) {
+      var GameTrivia = resource('/games/:game_id/raffle');
       var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
-        raffle: {method: 'GET', params: {action: 'raffle'}, isArray: false},
+        raffle: {method: 'GET', params: {action: 'raffle', game_id: '@id'}, isArray: false},
         single: {method: 'GET', params: {action: 'single'}, isArray: false},
         answer: {method: 'POST', params: {action: 'answers'}},
         create: {method: 'POST'}
       });
+      Game.prototype.$raffle = function () {
+        return GameTrivia.get({game_id: this.id});
+      };
       Game.prototype.$answer = function (trivia, option) {
-        return Game.answer({id: this.id, trivia_id: trivia.id, option_id: option.id}).$promise;
+        return Game.answer({
+          id: this.id,
+          trivia_id: trivia.id,
+          option_id: option.id
+        });
       };
       return Game;
     }])

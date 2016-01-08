@@ -24,7 +24,7 @@ describe('QuizRound', function(){
   describe('nextTrivia', function () {
     it('raffles the trivia using the service', inject(function (QuizRound, $q) {
       var game = jasmine.createSpyObj('current game', ['$raffle']);
-      game.$raffle.and.returnValue($q.when('trivia'));
+      game.$raffle.and.returnValue({$promise: $q.when('trivia')});
 
       QuizRound.start(game);
       expect(QuizRound.nextTrivia()).toResolveTo('trivia');
@@ -37,7 +37,7 @@ describe('QuizRound', function(){
       wrongOption = {id: 11}, correctOption = {id: 10}, answer = {correct_option_id: 10};
       trivia = {options: [correctOption, wrongOption]};
       game = {
-        $answer: jasmine.createSpy().and.returnValue($q.when(answer))
+        $answer: jasmine.createSpy().and.returnValue({$promise: $q.when(answer)})
       }
       QuizRound.start(game);
 
