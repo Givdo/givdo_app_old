@@ -1,10 +1,9 @@
 'use strict';
 
 describe('NewGameCtrl', function(){
-  var $scope, $state, facebook, QuizRound, inviteDefer, controller;
+  var $scope, facebook, QuizRound, inviteDefer, controller;
   beforeEach(inject(function ($rootScope, $controller, $q) {
     $scope = $rootScope.$new();
-    $state = jasmine.createSpyObj('$state', ['go']);
     QuizRound = jasmine.createSpyObj('quiz round', ['start']);
     facebook = jasmine.createSpyObj('facebook service', ['gameInvite']);
     inviteDefer = $q.defer();
@@ -14,7 +13,6 @@ describe('NewGameCtrl', function(){
       return $controller('NewGameCtrl', {
         $scope: $scope,
         facebook: facebook,
-        $state: $state,
         QuizRound: QuizRound
       });
     };
@@ -37,7 +35,6 @@ describe('NewGameCtrl', function(){
       $rootScope.$digest();
 
       expect(QuizRound.start).toHaveBeenCalledWith('game');
-      expect($state.go).toHaveBeenCalledWith('choose-organization');
     }));
   });
 });

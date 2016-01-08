@@ -1,17 +1,16 @@
 'use strict';
 
 describe('ChooseOrganizationCtrl', function(){
-  var $scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound, controller;
+  var $scope, $ionicSlideBoxDelegate, Organization, QuizRound, controller;
   beforeEach(inject(function ($rootScope, $controller) {
     $scope = $rootScope.$new();
     $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update', 'currentIndex']);
-    $state = jasmine.createSpyObj('$state', ['go']);
     Organization = jasmine.createSpyObj('Organization', ['query']);
     QuizRound = jasmine.createSpyObj('QuizRound', ['playFor']);
 
     controller = function () {
       var controller = $controller('ChooseOrganizationCtrl', {
-        $scope: $scope, $ionicSlideBoxDelegate: $ionicSlideBoxDelegate, $state: $state,
+        $scope: $scope, $ionicSlideBoxDelegate: $ionicSlideBoxDelegate,
         Organization: Organization, QuizRound: QuizRound
       });
       $scope.$digest();
@@ -82,14 +81,6 @@ describe('ChooseOrganizationCtrl', function(){
       $scope.selectOrganization();
 
       expect(QuizRound.playFor).toHaveBeenCalledWith('organization');
-    });
-
-    it('moves the app to the trivia state', function () {
-      controller();
-
-      $scope.selectOrganization();
-
-      expect($state.go).toHaveBeenCalledWith('trivia');
     });
   });
 });

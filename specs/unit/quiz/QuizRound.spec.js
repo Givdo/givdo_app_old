@@ -1,6 +1,26 @@
 'use strict';
 
 describe('QuizRound', function(){
+  beforeEach(inject(function ($state) {
+    spyOn($state, 'go');
+  }));
+
+  describe('playFor', function () {
+    it('moves the state to choose the organization', inject(function (QuizRound, $state) {
+      QuizRound.playFor({});
+
+      expect($state.go).toHaveBeenCalledWith('trivia');
+    }));
+  });
+
+  describe('start', function () {
+    it('moves the state to choose the organization', inject(function (QuizRound, $state) {
+      QuizRound.start({});
+
+      expect($state.go).toHaveBeenCalledWith('choose-organization');
+    }));
+  });
+
   describe('nextTrivia', function () {
     it('raffles the trivia using the service', inject(function (QuizRound, $q) {
       var game = jasmine.createSpyObj('current game', ['$raffle']);

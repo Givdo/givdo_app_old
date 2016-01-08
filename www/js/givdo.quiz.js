@@ -45,7 +45,7 @@
         });
     }])
 
-    .service('QuizRound', [function () {
+    .service('QuizRound', ['$state', function ($state) {
       var currentGame, currentOrganization;
       var revealAnser = function (trivia, answer) {
         (trivia.options || []).forEach(function (option) {
@@ -56,9 +56,11 @@
       return {
         start: function (game) {
           currentGame = game;
+          $state.go('choose-organization');
         },
         playFor: function (organization) {
           currentOrganization = organization;
+          $state.go('trivia');
         },
         nextTrivia: function () {
           return currentGame.$raffle();
@@ -71,18 +73,13 @@
       };
     }])
 
-    .controller('NewGameCtrl', ['$scope', '$state', 'facebook', 'Game', 'QuizRound', function ($scope, $state, facebook, Game, QuizRound) {
-      var playGame = function (game) {
-        QuizRound.start(game);
-        $state.go('choose-organization');
-      };
-
+    .controller('NewGameCtrl', ['$scope', 'facebook', 'Game', 'QuizRound', function ($scope, facebook, Game, QuizRound) {
       $scope.playSingle = function () {
-        Game.single(playGame);
+        Game.single(QuizRound.start);
       };
       $scope.inviteFriends = function () {
         facebook.gameInvite('Come play with me for a fairer world!')
-          .then(playGame);
+          .then(QuizRound.start);
       };
     }])
 
@@ -103,7 +100,7 @@
       $scope.next();
     }])
 
-    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, $state, Organization, QuizRound) {
+    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, Organization, QuizRound) {
       var PerPage = 10, Threshold = 3;
       var nextPage = function () {
         return Math.ceil($scope.organizations.length / PerPage) + 1;
@@ -125,7 +122,6 @@
         var organization = $scope.organizations[currentOrganization];
 
         QuizRound.playFor(organization);
-        $state.go('trivia');
       };
 
       $scope.organizations = [];
