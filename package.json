@@ -45,5 +45,8 @@
   ],
   "cordovaPlatforms": [
     "ios"
-  ]
+  ],
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  }
 }
