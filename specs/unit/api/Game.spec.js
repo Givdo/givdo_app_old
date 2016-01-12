@@ -46,4 +46,16 @@ describe('Game', function(){
       $http.flush();
     });
   });
+
+  describe('$playFor', function () {
+    it('posts the answer to the answer method of the trivia', function () {
+      var response = {player: 'Carlos', organization: 'Save the Penguins'};
+      $http.expectPATCH('http://test.com/api/v1/games/10/player', {organization_id: 15}).respond(response);
+
+      var game = new Game({id: 10});
+
+      var result = game.$playFor({id: 15});
+      $http.flush();
+    });
+  });
 });

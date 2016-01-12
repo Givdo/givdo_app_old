@@ -7,10 +7,14 @@ angular.module('givdo-test.custom-matchers', [])
   .factory('toResolveTo', ['$rootScope', function ($rootScope) {
     return function (util, customEqualityTesters) {
       return {
-        compare: function (actual, expected) {
+        compare: function (promise, expected) {
           var result = {};
-          actual.then(function (value) {
-            result.pass = util.equals(value, expected, customEqualityTesters);
+          promise.then(function (actual) {
+            result.pass = util.equals(actual, expected, customEqualityTesters);
+
+            if (!result.pass) {
+              result.message = 'Expected ' + angular.toJson(promise) + ' to resolve to ' + angular.toJson(expected) + ' but resolved to ' + angular.toJson(actual);
+            }
           });
           $rootScope.$digest();
           return result;

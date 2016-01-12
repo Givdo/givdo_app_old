@@ -52,15 +52,19 @@
           option.correct = option.id === answer.correct_option_id;
         });
       };
+      var play = function (game) {
+        currentGame = game;
+        if (game.player && game.player.organization) {
+          $state.go('trivia');
+        } else {
+          $state.go('choose-organization');
+        }
+      }
 
       return {
-        start: function (game) {
-          currentGame = game;
-          $state.go('choose-organization');
-        },
+        start: play,
         playFor: function (organization) {
-          currentOrganization = organization;
-          $state.go('trivia');
+          return currentGame.$playFor(organization).$promise.then(play);
         },
         nextTrivia: function () {
           return currentGame.$raffle().$promise;

@@ -21,11 +21,15 @@
     .factory('Game', ['givdoResource', function (resource) {
       var GameTrivia = resource('/games/:game_id/raffle');
       var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
-        raffle: {method: 'GET', params: {action: 'raffle', game_id: '@id'}, isArray: false},
+        raffle: {method: 'GET', params: {action: 'raffle'}, isArray: false},
         single: {method: 'GET', params: {action: 'single'}, isArray: false},
         answer: {method: 'POST', params: {action: 'answers'}},
+        update_player: {method: 'PATCH', params: {action: 'player'}},
         create: {method: 'POST'}
       });
+      Game.prototype.$playFor = function (organization) {
+        return Game.update_player({game_id: this.id}, {organization_id: organization.id});
+      };
       Game.prototype.$raffle = function () {
         return GameTrivia.get({game_id: this.id});
       };
