@@ -2,6 +2,13 @@
   'use strict';
 
   angular.module('givdo.facebook', ['givdo.api', 'ngCordova'])
+    .config(['$cordovaFacebookProvider', function ($cordovaFacebookProvider) {
+      if (!window.cordova) {
+        ionic.Platform.ready(function () {
+          $cordovaFacebookProvider.browserInit('1552682881720831', 'v2.5');
+        });
+      }
+    }])
 
     .factory('facebookAuth', ['OauthCallback', '$q', function (OauthCallback, $q) {
       return function (facebookData) {

@@ -59,7 +59,7 @@
         } else {
           $state.go('choose-organization');
         }
-      }
+      };
 
       return {
         start: play,
