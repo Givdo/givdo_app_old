@@ -17,14 +17,16 @@ module.exports = function(config) {
     files: [
       // External Dependencies
       'www/lib/ionic/release/js/ionic.bundle.js',
-      'www/lib/jquery/dist/jquery.js',
-      'www/lib/collide/collide.js',
-      'www/lib/angular-cookie/angular-cookie.js',
-      'www/lib/ng-token-auth/dist/ng-token-auth.js',
-      'www/lib/angular-resource/angular-resource.js',
+      'www/lib/angular-animate/angular-animate.js',
+      'www/lib/angular-sanitize/angular-sanitize.js',
+      'www/lib/angular-ui-router/release/angular-ui-router.js',
+      'www/lib/ionic/release/js/ionic.js',
+      'www/lib/ionic/release/js/ionic-angular.js',
       'www/lib/ngCordova/dist/ng-cordova.js',
-      'www/lib/ngCordova/dist/ng-cordova-mocks.js',
+      'www/lib/angular-resource/angular-resource.js',
       'www/lib/angular-local-storage/dist/angular-local-storage.js',
+      'www/lib/ngCordova/dist/ng-cordova-mocks.js',
+      'www/vendor/facebookConnectPlugin.js',
 
       // Test dependency
       'www/lib/angular-mocks/angular-mocks.js',
