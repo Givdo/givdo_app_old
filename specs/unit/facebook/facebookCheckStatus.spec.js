@@ -9,8 +9,7 @@ describe('facebook.checkStatus', function () {
 
     deferredOauthCallback = $q.defer();
     spyOn(OauthCallback, 'authenticate');
-    deferredOauthCallback.$promise = deferredOauthCallback.promise;
-    OauthCallback.authenticate.and.returnValue(deferredOauthCallback);
+    OauthCallback.authenticate.and.returnValue(deferredOauthCallback.promise);
 
     facebook = $injector.get('facebook');
   }));
@@ -54,7 +53,7 @@ describe('facebook.checkStatus', function () {
     deferredOauthCallback.resolve({token: 'my token'});
     $rootScope.$digest();
 
-    expect(OauthCallback.authenticate).toHaveBeenCalledWith({uid: '123', access_token: 'facebook access token', provider: 'facebook', expires_in: '123'});
+    expect(OauthCallback.authenticate).toHaveBeenCalledWith('facebook', {uid: '123', access_token: 'facebook access token', expires_in: '123'});
     expect(succeeds).toHaveBeenCalledWith({token: 'my token'});
   }));
 });

@@ -1,14 +1,15 @@
 'use strict';
 
 describe('TriviaCtrl', function(){
-  var $scope, $ionicLoading, QuizRound, controller;
+  var $scope, $ionicLoading, QuizRound, trivia, controller;
   beforeEach(inject(function($rootScope, $controller, $q){
     $scope = $rootScope.$new();
+    trivia = jasmine.createSpyObj('trivia', ['relation']);
     $ionicLoading = jasmine.createSpyObj('$ionicLoading', ['show', 'hide']);
 
     QuizRound = jasmine.createSpyObj('QuizRound', ['nextTrivia', 'answer']);
     QuizRound.answer.and.returnValue($q.when());
-    QuizRound.nextTrivia.and.returnValue($q.when('trivia'));
+    QuizRound.nextTrivia.and.returnValue(trivia);
 
     controller = function () {
       var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound});
@@ -21,7 +22,7 @@ describe('TriviaCtrl', function(){
     it('loads the trivia into the scope', function () {
       controller();
 
-      expect($scope.trivia).toEqual('trivia');
+      expect($scope.trivia).toBe(trivia);
     });
   });
 
@@ -29,11 +30,10 @@ describe('TriviaCtrl', function(){
     it('posts an answer with the option to the Quiz Round', function () {
       controller();
 
-      $scope.trivia = 'trivia';
       $scope.answer.option = 'option';
       $scope.submitAnswer();
 
-      expect(QuizRound.answer).toHaveBeenCalledWith('trivia', 'option');
+      expect(QuizRound.answer).toHaveBeenCalledWith(trivia, 'option');
     });
 
     it('shows/hide the loading', function () {
@@ -52,12 +52,13 @@ describe('TriviaCtrl', function(){
   describe('next', function () {
     it('loads the next trivia', inject(function ($q, $rootScope) {
       controller();
-      QuizRound.nextTrivia.and.returnValue($q.when('trivia 2'));
+      var anotherTrivia = jasmine.createSpyObj('another trivia', ['relation']);
+      QuizRound.nextTrivia.and.returnValue(anotherTrivia);
 
       $scope.next();
       $rootScope.$digest();
 
-      expect($scope.trivia).toEqual('trivia 2');
+      expect($scope.trivia).toBe(anotherTrivia);
     }));
 
     it('it resets the answer object to not submitted', function () {

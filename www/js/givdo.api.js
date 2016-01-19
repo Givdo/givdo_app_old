@@ -1,49 +1,41 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.api', ['ngResource', 'givdo.config'])
+  angular.module('givdo.api', ['json-api-client', 'givdo.config'])
     .config(['$httpProvider', function ($httpProvider) {
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
     }])
 
-    .factory('givdoResource', ['$resource', 'GivdoApiURL', function ($resource, GivdoApiURL) {
-      return function (path, params, actions) {
-        return $resource(GivdoApiURL + path, params, actions);
+    .factory('OauthCallback', ['$http', 'GivdoApiURL', function ($http, GivdoApiURL) {
+      return {
+        authenticate: function (provider, data) {
+          return $http.post(GivdoApiURL + '/oauth/' + provider + '/callback', data).then(function (result) {
+            return result.data;
+          });
+        }
       };
     }])
 
-    .factory('OauthCallback', ['givdoResource', function (resource) {
-      return resource('/oauth/:provider/callback', {}, {
-        authenticate: {method: 'POST', params: {provider: 'facebook'}, isArray: false}
+    .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+      var GameRepo = repository({
+        singlePlayer: {url: GivdoApiURL + '/games/single'},
+        create: {url: GivdoApiURL + '/games', method: 'POST', data: true}
       });
+
+      GameRepo.answer = function (game, trivia, option) {
+        return game.perform('answers', {data: {trivia_id: trivia.id, option_id: option.id}, method: 'POST'});
+      };
+
+      GameRepo.playFor = function (game, organization) {
+        return game.perform('player', {data: {organization_id: organization.id}, method: 'PATCH'});
+      };
+
+      return GameRepo;
     }])
 
-    .factory('Game', ['givdoResource', function (resource) {
-      var GameTrivia = resource('/games/:game_id/raffle');
-      var Game = resource('/games/:game_id/:action', {game_id: '@id'}, {
-        raffle: {method: 'GET', params: {action: 'raffle'}, isArray: false},
-        single: {method: 'GET', params: {action: 'single'}, isArray: false},
-        answer: {method: 'POST', params: {action: 'answers'}},
-        update_player: {method: 'PATCH', params: {action: 'player'}},
-        create: {method: 'POST'}
+    .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+      return repository({
+        query: {url: GivdoApiURL + '/organizations', collection: true}
       });
-      Game.prototype.$playFor = function (organization) {
-        return Game.update_player({game_id: this.id}, {organization_id: organization.id});
-      };
-      Game.prototype.$raffle = function () {
-        return GameTrivia.get({game_id: this.id});
-      };
-      Game.prototype.$answer = function (trivia, option) {
-        return Game.answer({
-          id: this.id,
-          trivia_id: trivia.id,
-          option_id: option.id
-        });
-      };
-      return Game;
-    }])
-
-    .factory('Organization', ['givdoResource', function (resource) {
-      return resource('/organizations/:organization_id', {organizationId: '@id'});
     }]);
 })();

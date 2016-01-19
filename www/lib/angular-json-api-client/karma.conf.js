@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Aug 27 2015 15:36:15 GMT-0300 (BRT)
+// Generated on Tue Jan 19 2016 20:10:10 GMT-0200 (BRST)
 
 module.exports = function(config) {
   config.set({
@@ -15,39 +15,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // External Dependencies
-      'www/lib/ionic/release/js/ionic.bundle.js',
-      'www/lib/angular-animate/angular-animate.js',
-      'www/lib/angular-sanitize/angular-sanitize.js',
-      'www/lib/angular-ui-router/release/angular-ui-router.js',
-      'www/lib/ionic/release/js/ionic.js',
-      'www/lib/ionic/release/js/ionic-angular.js',
-      'www/lib/ngCordova/dist/ng-cordova.js',
-      'www/lib/angular-resource/angular-resource.js',
-      'www/lib/angular-local-storage/dist/angular-local-storage.js',
-      'www/lib/ngCordova/dist/ng-cordova-mocks.js',
-      'www/lib/underscore/underscore.js',
-      'www/lib/angular-json-api-client/dist/angular-json-api-client.js',
-      'www/vendor/facebookConnectPlugin.js',
-
-      // Test dependency
-      'www/lib/angular-mocks/angular-mocks.js',
-
-      // Givdo
-      'www/js/givdo.api.js',
-      'www/js/givdo.facebook.js',
-      'www/js/givdo.auth.js',
-      'www/js/givdo.quiz.js',
-      'www/js/givdo.js',
-
-      'specs/spec-helper.js',
-      'specs/unit/**/*.spec.js'
+      'bower_components/underscore/underscore.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'dist/*.js',
+      'spec/specHelper.js',
+      'spec/**/*.spec.js'
     ],
 
 
     // list of files to exclude
     exclude: [
-      'yes'
     ],
 
 
@@ -60,7 +38,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['story'],
+    reporters: ['progress'],
 
 
     // web server port
@@ -87,6 +65,10 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    singleRun: true,
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
   })
 }

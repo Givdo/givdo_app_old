@@ -2,7 +2,7 @@
   <ion-content class="has-header">
     <div class="card">
       <div class="item item-text-wrap">
-        <strong>{{ trivia.question }}</strong>
+        <strong>{{ trivia.attr('question') }}</strong>
       </div>
     </div>
 
@@ -12,10 +12,10 @@
                  name="answer_option"
                  ng-model="answer.option"
                  ng-disabled="answer.submitted"
-                 ng-repeat="option in trivia.options"
+                 ng-repeat="option in options"
                   ng-value="option"
                   ng-class="{'correct': option.correct, 'incorrect': (answer.submitted && !option.correct)}">
-        {{ option.text }}
+        {{ option.attr('text') }}
       </ion-radio-fix>
     </div>
 

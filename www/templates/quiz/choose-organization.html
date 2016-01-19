@@ -4,11 +4,11 @@
       <ion-slide ng-repeat="organization in organizations">
         <ion-list type="card">
           <ion-item class="item-avatar">
-            <img ng-src="{{organization.picture}}">
-            <h2>{{ organization.name }}</h2>
+            <img ng-src="{{organization.attr('picture')}}">
+            <h2>{{ organization.attr('name') }}</h2>
           </ion-item>
           <ion-item class="item-text-wrap">
-            <p>{{ organization.mission }}</p>
+            <p>{{ organization.attr('mission') }}</p>
           </ion-item>
         </ion-list>
       </ion-slide>

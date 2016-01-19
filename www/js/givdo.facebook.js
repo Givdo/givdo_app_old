@@ -18,13 +18,12 @@
 
         var authResponse = facebookData.authResponse;
         var data = {
-          provider: 'facebook',
           uid: authResponse.userID,
           access_token: authResponse.accessToken,
           expires_in: authResponse.expiresIn
         };
 
-        return OauthCallback.authenticate(data).$promise;
+        return OauthCallback.authenticate('facebook', data);
       };
     }])
 
@@ -40,13 +39,13 @@
       };
     }])
 
-    .factory('facebookGameInvite', ['$cordovaFacebook', 'Game', function ($cordovaFacebook, Game) {
+    .factory('facebookGameInvite', ['$cordovaFacebook', 'GameRepo', function ($cordovaFacebook, GameRepo) {
       return function (message) {
         return $cordovaFacebook.showDialog({
           method: 'apprequests',
           message: message
         }).then(function (response) {
-          return Game.create({provider: 'facebook', invitees: response.to}).$promise;
+          return GameRepo.create({provider: 'facebook', invitees: response.to});
         });
       };
     }])

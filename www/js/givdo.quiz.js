@@ -45,16 +45,17 @@
         });
     }])
 
-    .service('QuizRound', ['$state', function ($state) {
+    .service('QuizRound', ['$state', 'GameRepo', function ($state, GameRepo) {
       var currentGame, currentOrganization;
       var revealAnser = function (trivia, answer) {
-        (trivia.options || []).forEach(function (option) {
-          option.correct = option.id === answer.correct_option_id;
+        (trivia.relation('options') || []).forEach(function (option) {
+          option.correct = option.id === answer.attr('correct_option_id');
         });
       };
       var play = function (game) {
         currentGame = game;
-        if (game.player && game.player.organization) {
+        var player = game.relation('player');
+        if (player && player.attr('organization')) {
           $state.go('trivia');
         } else {
           $state.go('choose-organization');
@@ -64,22 +65,23 @@
       return {
         start: play,
         playFor: function (organization) {
-          return currentGame.$playFor(organization).$promise.then(play);
+          return GameRepo.playFor(currentGame, organization).then(play);
         },
         nextTrivia: function () {
-          return currentGame.$raffle().$promise;
+          return currentGame.relation('trivia');
         },
         answer: function (trivia, option) {
-          return currentGame.$answer(trivia, option).$promise.then(function (answer) {
+          return GameRepo.answer(currentGame, trivia, option).then(function (answer) {
             revealAnser(trivia, answer);
+            currentGame = answer.relation('game');
           });
         }
       };
     }])
 
-    .controller('NewGameCtrl', ['$scope', 'facebook', 'Game', 'QuizRound', function ($scope, facebook, Game, QuizRound) {
+    .controller('NewGameCtrl', ['$scope', 'facebook', 'GameRepo', 'QuizRound', function ($scope, facebook, GameRepo, QuizRound) {
       $scope.playSingle = function () {
-        Game.single(QuizRound.start);
+        GameRepo.singlePlayer().then(QuizRound.start);
       };
       $scope.inviteFriends = function () {
         facebook.gameInvite('Come play with me for a fairer world!')
@@ -96,21 +98,20 @@
         });
       };
       $scope.next = function () {
-        QuizRound.nextTrivia().then(function (trivia) {
-          $scope.trivia = trivia;
-        });
         $scope.answer = {submitted: false};
+        $scope.trivia = QuizRound.nextTrivia();
+        $scope.options = $scope.trivia.relation('options');
       };
       $scope.next();
     }])
 
-    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'Organization', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, Organization, QuizRound) {
+    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound) {
       var PerPage = 10, Threshold = 3;
       var nextPage = function () {
         return Math.ceil($scope.organizations.length / PerPage) + 1;
       };
       var loadNextPage = function () {
-        Organization.query({page: nextPage()}, function (organizations) {
+        OrganizationRepo.query({page: nextPage()}).then(function (organizations) {
           $scope.organizations = $scope.organizations.concat(organizations);
           $ionicSlideBoxDelegate.update();
         });
