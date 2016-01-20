@@ -23,7 +23,6 @@ module.exports = function(config) {
       'www/lib/ionic/release/js/ionic.js',
       'www/lib/ionic/release/js/ionic-angular.js',
       'www/lib/ngCordova/dist/ng-cordova.js',
-      'www/lib/angular-resource/angular-resource.js',
       'www/lib/angular-local-storage/dist/angular-local-storage.js',
       'www/lib/ngCordova/dist/ng-cordova-mocks.js',
       'www/lib/underscore/underscore.js',

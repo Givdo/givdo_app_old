@@ -7,7 +7,6 @@
   "dependencies": {
     "ionic": "~1.2.4",
     "ngCordova": "~0.1.23-alpha",
-    "angular-resource": "~1.4.7",
     "angular-local-storage": "~0.2.3",
     "angular-json-api-client": "~0.1.2"
   },
