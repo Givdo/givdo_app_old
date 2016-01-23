@@ -23,7 +23,7 @@
       });
 
       GameRepo.answer = function (game, trivia, option) {
-        return game.perform('answers', {data: {trivia_id: trivia.id, option_id: option.id}, method: 'POST'});
+        return game.perform('answers', {data: {trivia_id: trivia.id, trivia_option_id: option.id}, method: 'POST'});
       };
 
       GameRepo.playFor = function (game, organization) {

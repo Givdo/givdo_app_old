@@ -51,7 +51,7 @@ describe('GameRepo', function() {
       GameRepo.answer(game, {id: 15}, {id: 20});
 
       expect(game.perform).toHaveBeenCalledWith('answers', {data: {
-        trivia_id: 15, option_id: 20
+        trivia_id: 15, trivia_option_id: 20
       }, method: 'POST'});
     });
   });
