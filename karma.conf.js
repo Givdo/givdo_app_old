@@ -36,6 +36,7 @@ module.exports = function(config) {
       'www/js/givdo.api.js',
       'www/js/givdo.facebook.js',
       'www/js/givdo.auth.js',
+      'www/js/givdo.ui.js',
       'www/js/givdo.quiz.js',
       'www/js/givdo.js',
 

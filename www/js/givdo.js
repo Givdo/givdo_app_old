@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz'])
+  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz', 'givdo.ui'])
     .run(['$ionicPlatform', 'authLock', function ($ionicPlatform, authLock) {
       $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -9,7 +9,6 @@
         if (window.cordova && window.cordova.plugins.Keyboard) {
           cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
           cordova.plugins.Keyboard.disableScroll(true);
-
         }
         if (window.StatusBar) {
           // org.apache.cordova.statusbar required
