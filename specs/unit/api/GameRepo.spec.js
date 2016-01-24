@@ -46,11 +46,11 @@ describe('GameRepo', function() {
 
   describe('answer', function () {
     it('posts the answer to the answer method of the trivia', function () {
-      var game = jasmine.createSpyObj('game', ['perform']);
+      var game = jasmine.createSpyObj('game', ['load']);
 
       GameRepo.answer(game, {id: 15}, {id: 20});
 
-      expect(game.perform).toHaveBeenCalledWith('answers', {data: {
+      expect(game.load).toHaveBeenCalledWith('answers', {data: {
         trivia_id: 15, trivia_option_id: 20
       }, method: 'POST'});
     });
@@ -58,11 +58,11 @@ describe('GameRepo', function() {
 
   describe('playFor', function () {
     it('patches the player with the organization id', function () {
-      var game = jasmine.createSpyObj('game', ['perform']);
+      var game = jasmine.createSpyObj('game', ['load']);
 
       GameRepo.playFor(game, {id: 15});
 
-      expect(game.perform).toHaveBeenCalledWith('player', {
+      expect(game.load).toHaveBeenCalledWith('player', {
         data: {organization_id: 15},
         method: 'PATCH'
       });

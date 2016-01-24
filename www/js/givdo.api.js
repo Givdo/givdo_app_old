@@ -23,11 +23,11 @@
       });
 
       GameRepo.answer = function (game, trivia, option) {
-        return game.perform('answers', {data: {trivia_id: trivia.id, trivia_option_id: option.id}, method: 'POST'});
+        return game.load('answers', {data: {trivia_id: trivia.id, trivia_option_id: option.id}, method: 'POST'});
       };
 
       GameRepo.playFor = function (game, organization) {
-        return game.perform('player', {data: {organization_id: organization.id}, method: 'PATCH'});
+        return game.load('player', {data: {organization_id: organization.id}, method: 'PATCH'});
       };
 
       return GameRepo;
