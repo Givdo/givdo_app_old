@@ -19,7 +19,8 @@ describe('facebook.gameInvite', function () {
 
     expect($cordovaFacebook.showDialog).toHaveBeenCalledWith({
       method: 'apprequests',
-      message: 'Come play with me'
+      message: 'Come play with me',
+      max_recipients: 1
     });
   }));
 

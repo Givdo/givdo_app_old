@@ -43,7 +43,8 @@
       return function (message) {
         return $cordovaFacebook.showDialog({
           method: 'apprequests',
-          message: message
+          message: message,
+          max_recipients: 1
         }).then(function (response) {
           return GameRepo.create({provider: 'facebook', invitees: response.to});
         });
