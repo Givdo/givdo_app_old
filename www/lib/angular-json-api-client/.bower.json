@@ -1,6 +1,6 @@
 {
   "name": "angular-json-api-client",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "authors": [
     "Carlos Palhares <chjunior@gmail.com>"
   ],
@@ -30,13 +30,13 @@
     "angular": "~1.4.8",
     "angular-mocks": "~1.4.8"
   },
-  "_release": "0.1.2",
+  "_release": "0.1.5",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.2",
-    "commit": "48534998e057002235c3688a125b83ab4cd70eb4"
+    "tag": "v0.1.5",
+    "commit": "4f083e143d330a3c1dd82e2c27cc8299bbac634b"
   },
   "_source": "git://github.com/xjunior/angular-json-api-client.git",
-  "_target": "~0.1.2",
+  "_target": "~0.1.5",
   "_originalSource": "angular-json-api-client"
 }

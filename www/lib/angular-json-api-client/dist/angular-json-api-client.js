@@ -5,7 +5,7 @@
     .factory('resource', ['$q', function ($q) {
       var resource = function (transport, data, included) {
         var mapIncluded = function (records) {
-          return _.map(records, function (record) {
+          return _.map(_.compact(records), function (record) {
             var data = _.findWhere(included, record);
             return resource(transport, angular.merge(record, data), included);
           });
@@ -78,13 +78,15 @@
     .factory('repository', ['transport', function (transport) {
       var createMethod = function (config) {
         return function (params) {
-          var options = _.extend({}, config);
-          if (options.data) {
-            options.data = params;
-          } else {
-            options.params = params;
+          var paramsOptions = {};
+          if (params) {
+            if (config.data) {
+              paramsOptions.data = params;
+            } else {
+              paramsOptions.params = params;
+            }
           }
-          return transport.load(options.url, options);
+          return transport.load(config.url, angular.merge({}, config, paramsOptions));
         };
       };
 
