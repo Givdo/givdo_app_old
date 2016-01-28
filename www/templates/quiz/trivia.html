@@ -14,7 +14,7 @@
                  ng-disabled="answer.submitted"
                  ng-repeat="option in options"
                   ng-value="option"
-                  ng-class="{'correct': option.correct, 'incorrect': (answer.submitted && !option.correct)}">
+                  ng-class="{'correct': option.attr('correct'), 'incorrect': (answer.submitted && !option.attr('correct'))}">
         {{ option.attr('text') }}
       </ion-radio-fix>
     </div>

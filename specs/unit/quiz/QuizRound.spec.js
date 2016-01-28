@@ -2,7 +2,7 @@
 
 describe('QuizRound', function(){
   var game, player, GameRepo;
-  beforeEach(inject(function ($state, QuizRound, _GameRepo_) {
+  beforeEach(inject(function ($state, _GameRepo_) {
     spyOn($state, 'go');
 
     GameRepo = _GameRepo_;
@@ -12,18 +12,67 @@ describe('QuizRound', function(){
     game.relation.and.returnValue(player);
   }));
 
+  var playerState = function (organization, finished) {
+    player.attr.and.callFake(function (attr) {
+      if (attr == 'organization') {
+        return organization;
+      } else if (attr == 'finished?') {
+        return finished;
+      }
+    });
+  };
+  var gameState = function (trivia) {
+    game.relation.and.callFake(function (relation) {
+      if (relation == 'trivia') {
+        return trivia || {};
+      } else if (relation == 'player') {
+        return player;
+      };
+    });
+  };
+
+  describe('continue', function () {
+    it('moves the user to the game result when the player have finished playing', inject(function ($state, QuizRound) {
+      playerState(null, true);
+      gameState();
+
+      QuizRound.start(game);
+
+      expect($state.go).toHaveBeenCalledWith('result', {}, {reload: true});
+    }));
+
+    it('moves the user to the trivia when player have not finished and user has organization', inject(function ($state, QuizRound) {
+      playerState('organization name', false);
+      gameState();
+
+      QuizRound.start(game);
+
+      expect($state.go).toHaveBeenCalledWith('trivia', {}, {reload: true});
+    }));
+
+    it('moves the user to select an organization when user does not have one', inject(function ($state, QuizRound) {
+      playerState(null, false);
+      gameState();
+
+      QuizRound.start(game);
+
+      expect($state.go).toHaveBeenCalledWith('choose-organization', {}, {reload: true});
+    }));
+  });
+
   describe('playFor', function () {
     var deferredPlayFor;
     beforeEach(inject(function (QuizRound, $q) {
       deferredPlayFor = $q.defer();
       spyOn(GameRepo, 'playFor');
+      playerState('organization name', false)
+      gameState();
       GameRepo.playFor.and.returnValue(deferredPlayFor.promise);
 
       QuizRound.start(game);
     }));
 
     it('moves the state to trivia once player\'s organization is set', inject(function (QuizRound, $state, $rootScope) {
-      player.attr.and.returnValue('organization name');
       game.relation.and.returnValue(player);
       $state.go.calls.reset();
       QuizRound.playFor({id: 15});
@@ -32,37 +81,18 @@ describe('QuizRound', function(){
 
       expect(GameRepo.playFor).toHaveBeenCalledWith(game, {id: 15});
       expect(player.attr).toHaveBeenCalledWith('organization');
-      expect($state.go).toHaveBeenCalledWith('trivia');
+      expect($state.go).toHaveBeenCalledWith('trivia', {}, {reload: true});
     }));
   });
 
-  describe('start', function () {
-    it('moves the state to choose the organization when no player organization is set', inject(function (QuizRound, $state) {
-      player.attr.and.returnValue(undefined);
-
-      QuizRound.start(game);
-
-      expect($state.go).toHaveBeenCalledWith('choose-organization');
-    }));
-
-    it('moves the state to play trivia when a player\'s organization is set', inject(function (QuizRound, $state) {
-      player.attr.and.returnValue('organization name');
-
-      QuizRound.start(game);
-
-      expect($state.go).toHaveBeenCalledWith('trivia');
-    }));
-  });
-
-  describe('nextTrivia', function () {
+  describe('trivia', function () {
     beforeEach(inject(function (QuizRound) {
+      gameState('next trivia');
       QuizRound.start(game);
     }));
 
     it('raffles the trivia using the service', inject(function (QuizRound, $q) {
-      game.relation.and.returnValue('next trivia');
-
-      expect(QuizRound.nextTrivia()).toEqual('next trivia');
+      expect(QuizRound.trivia()).toEqual('next trivia');
       expect(game.relation).toHaveBeenCalledWith('trivia');
     }));
   });
@@ -70,26 +100,29 @@ describe('QuizRound', function(){
   describe('answer', function () {
     var wrongOption, correctOption, answer, trivia;
     beforeEach(inject(function ($q, $rootScope, QuizRound, GameRepo) {
-      wrongOption = {id: 11}, correctOption = {id: 10};
-      answer = jasmine.createSpyObj('answer', ['attr', 'relation']);
-      answer.attr.and.returnValue(10);
+      wrongOption = {id: 11, attributes: {}}, correctOption = {id: 10, attributes: {}};
       trivia = jasmine.createSpyObj('trivia', ['relation']);
       trivia.relation.and.returnValue([correctOption, wrongOption]);
-      spyOn(GameRepo, 'answer');
-      GameRepo.answer.and.returnValue($q.when(answer))
+      answer = jasmine.createSpyObj('answer', ['attr', 'relation']);
+      answer.attr.and.returnValue(10);
+      answer.relation.and.returnValue(game);
 
+      spyOn(GameRepo, 'answer');
+      GameRepo.answer.and.returnValue($q.when(answer));
+
+      gameState(trivia);
       QuizRound.start(game);
-      QuizRound.answer(trivia, correctOption);
+      QuizRound.answer(correctOption);
       $rootScope.$digest();
     }));
 
-    it('answers the trivia with the given option', inject(function () {
+    it('answers the current trivia with the given option', inject(function () {
       expect(GameRepo.answer).toHaveBeenCalledWith(game, trivia, correctOption);
     }));
 
     it('reveals the correct answer', inject(function () {
-      expect(wrongOption.correct).toBeFalsy();
-      expect(correctOption.correct).toBeTruthy();
+      expect(wrongOption.attributes.correct).toBeFalsy();
+      expect(correctOption.attributes.correct).toBeTruthy();
     }));
   });
 });

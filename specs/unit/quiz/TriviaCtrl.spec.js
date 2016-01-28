@@ -7,9 +7,9 @@ describe('TriviaCtrl', function(){
     trivia = jasmine.createSpyObj('trivia', ['relation']);
     $ionicLoading = jasmine.createSpyObj('$ionicLoading', ['show', 'hide']);
 
-    QuizRound = jasmine.createSpyObj('QuizRound', ['nextTrivia', 'answer']);
+    QuizRound = jasmine.createSpyObj('QuizRound', ['trivia', 'answer', 'continue']);
     QuizRound.answer.and.returnValue($q.when());
-    QuizRound.nextTrivia.and.returnValue(trivia);
+    QuizRound.trivia.and.returnValue(trivia);
 
     controller = function () {
       var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound});
@@ -24,6 +24,14 @@ describe('TriviaCtrl', function(){
 
       expect($scope.trivia).toBe(trivia);
     });
+
+    it('loads the trivia options into the scope', function () {
+      trivia.relation.and.returnValue(['option 1', 'option 2']);
+
+      controller();
+
+      expect($scope.options).toEqual(['option 1', 'option 2']);
+    });
   });
 
   describe('submitAnswer', function () {
@@ -33,7 +41,7 @@ describe('TriviaCtrl', function(){
       $scope.answer.option = 'option';
       $scope.submitAnswer();
 
-      expect(QuizRound.answer).toHaveBeenCalledWith(trivia, 'option');
+      expect(QuizRound.answer).toHaveBeenCalledWith('option');
     });
 
     it('shows/hide the loading', function () {
@@ -50,24 +58,12 @@ describe('TriviaCtrl', function(){
   });
 
   describe('next', function () {
-    it('loads the next trivia', inject(function ($q, $rootScope) {
+    it('continues the quiz round', inject(function ($q, $rootScope) {
       controller();
-      var anotherTrivia = jasmine.createSpyObj('another trivia', ['relation']);
-      QuizRound.nextTrivia.and.returnValue(anotherTrivia);
 
       $scope.next();
-      $rootScope.$digest();
 
-      expect($scope.trivia).toBe(anotherTrivia);
+      expect(QuizRound.continue).toHaveBeenCalled();
     }));
-
-    it('it resets the answer object to not submitted', function () {
-      controller();
-
-      $scope.answer = {something: 'really', different: true};
-      $scope.next();
-
-      expect($scope.answer).toEqual({submitted: false});
-    });
   });
 });

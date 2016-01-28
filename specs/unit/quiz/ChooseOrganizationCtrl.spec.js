@@ -8,7 +8,7 @@ describe('ChooseOrganizationCtrl', function(){
     $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update', 'currentIndex']);
     OrganizationRepo = jasmine.createSpyObj('OrganizationRepo', ['query']);
     QuizRound = jasmine.createSpyObj('QuizRound', ['playFor']);
-
+    QuizRound.playFor.and.returnValue($q.when());
 
     controller = function (organizations) {
       OrganizationRepo.query.and.returnValue($q.when(organizations || []));

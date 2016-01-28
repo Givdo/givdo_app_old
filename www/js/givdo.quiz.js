@@ -46,34 +46,46 @@
     }])
 
     .service('QuizRound', ['$state', 'GameRepo', function ($state, GameRepo) {
-      var currentGame, currentOrganization;
-      var revealAnser = function (trivia, answer) {
-        (trivia.relation('options') || []).forEach(function (option) {
-          option.correct = option.id === answer.attr('correct_option_id');
+      var currentGame, currentTrivia, currentPlayer;
+      var revealAnser = function (answer) {
+        (currentTrivia.relation('options') || []).forEach(function (option) {
+          option.attributes.correct = option.id == answer.attr('correct_option_id');
         });
       };
-      var play = function (game) {
+      var setCurrentGame = function (game) {
         currentGame = game;
-        var player = game.relation('player');
-        if (player && player.attr('organization')) {
-          $state.go('trivia');
+        currentTrivia = game.relation('trivia');
+        currentPlayer = game.relation('player');
+      };
+      var startGame = function(game) {
+        setCurrentGame(game);
+        continueGame();
+      };
+      var continueGame = function () {
+        if (currentPlayer.attr('finished?')) {
+          $state.go('result', {}, { reload: true });
+        } else if (currentPlayer.attr('organization')) {
+          $state.go('trivia', {}, { reload: true });
         } else {
-          $state.go('choose-organization');
+          $state.go('choose-organization', {}, { reload: true });
         }
+      };
+      var trivia = function () {
+        return currentTrivia;
       };
 
       return {
-        start: play,
+        continue: continueGame,
+        start: startGame,
         playFor: function (organization) {
-          return GameRepo.playFor(currentGame, organization).then(play);
+          return GameRepo.playFor(currentGame, organization).then(startGame);
         },
-        nextTrivia: function () {
-          return currentGame.relation('trivia');
-        },
-        answer: function (trivia, option) {
-          return GameRepo.answer(currentGame, trivia, option).then(function (answer) {
-            revealAnser(trivia, answer);
-            currentGame = answer.relation('game');
+        trivia: trivia,
+        answer: function (option) {
+          return GameRepo.answer(currentGame, currentTrivia, option).then(function (answer) {
+            revealAnser(answer);
+            setCurrentGame(answer.relation('game'));
+            return answer;
           });
         }
       };
@@ -92,17 +104,15 @@
     .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', function ($scope, $ionicLoading, QuizRound) {
       $scope.submitAnswer = function () {
         $ionicLoading.show();
-        QuizRound.answer($scope.trivia, $scope.answer.option).then(function () {
+        QuizRound.answer($scope.answer.option).then(function (answer) {
           $scope.answer.submitted = true;
           $ionicLoading.hide();
         });
       };
-      $scope.next = function () {
-        $scope.answer = {submitted: false};
-        $scope.trivia = QuizRound.nextTrivia();
-        $scope.options = $scope.trivia.relation('options');
-      };
-      $scope.next();
+      $scope.answer = {};
+      $scope.next = QuizRound.continue;
+      $scope.trivia = QuizRound.trivia();
+      $scope.options = $scope.trivia.relation('options');
     }])
 
     .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound) {
@@ -126,7 +136,7 @@
         var currentOrganization = $ionicSlideBoxDelegate.currentIndex();
         var organization = $scope.organizations[currentOrganization];
 
-        QuizRound.playFor(organization);
+        QuizRound.playFor(organization).then(QuizRound.continue);
       };
 
       $scope.organizations = [];
