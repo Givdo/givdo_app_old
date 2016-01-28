@@ -1,12 +1,23 @@
 <ion-view>
   <ion-content class="has-header">
-    <ion-list>
-      <ion-item class="positive">
-        {{ player.attr('name') }}
+    <div class="row">
+      <div class="col" ng-repeat="player in players | orderBy:'-attributes.score'" class="calm">
+        <ion-list>
+          <ion-item class="item-thumbnail-left">
+            <img ng-src="{{ player.attr('image') }}">
+            <h2>Name</h2>
+            <p>{{ player.attr('name') }}</p>
+          </ion-item>
+          <ion-item>
+            <h2>Score</h2>
+            <p>{{ player.attr('score') }}</p>
+          </ion-item>
+          <ion-item>
+            <h2>Organization</h2>
+            <p>{{ player.attr('organization') }}</p>
+          </ion-item>
+        </ion-list>
       </ion-item>
-      <ion-item ng-repeat="player in players | orderBy:'-attributes.score'" class="calm">
-        {{ player.attr('name') }}, <strong>{{ player.attr('score') }}</strong>
-      </ion-item>
-    </ion-list>
+    </div>
   </ion-content>
 </ion-view>
