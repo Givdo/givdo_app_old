@@ -23,6 +23,21 @@
             }
           }
         })
+        .state('show-game', {
+          url: '/game',
+          parent: 'quiz',
+          views: {
+            'content': {
+              templateUrl: 'templates/quiz/show-game.html',
+              controller: 'ShowGameCtrl'
+            }
+          },
+          resolve: {
+            game: function(QuizRound) {
+              return QuizRound.game();
+            }
+          }
+        })
         .state('trivia', {
           url: '/trivia',
           parent: 'quiz',
@@ -30,6 +45,11 @@
             'content': {
               templateUrl: 'templates/quiz/trivia.html',
               controller: 'TriviaCtrl'
+            }
+          },
+          resolve: {
+            trivia: function(QuizRound) {
+              return QuizRound.trivia();
             }
           }
         })
@@ -41,46 +61,55 @@
               templateUrl: 'templates/quiz/choose-organization.html',
               controller: 'ChooseOrganizationCtrl'
             }
+          },
+          resolve: {
+            game: function(QuizRound) {
+              return QuizRound.game();
+            }
           }
         });
     }])
 
-    .service('QuizRound', ['$state', 'GameRepo', function ($state, GameRepo) {
+    .service('QuizRound', ['$state', '$q', 'GameRepo', function ($state, $q, GameRepo) {
       var currentGame, currentTrivia, currentPlayer;
-      var revealAnser = function (answer) {
-        (currentTrivia.relation('options') || []).forEach(function (option) {
-          option.attributes.correct = option.id == answer.attr('correct_option_id');
-        });
-      };
       var setCurrentGame = function (game) {
         currentGame = game;
         currentTrivia = game.relation('trivia');
         currentPlayer = game.relation('player');
       };
-      var startGame = function(game) {
-        setCurrentGame(game);
-        continueGame();
+      var revealAnser = function (answer) {
+        (currentTrivia.relation('options') || []).forEach(function (option) {
+          option.attributes.correct = option.id == answer.attr('correct_option_id');
+        });
       };
-      var continueGame = function () {
-        if (currentPlayer.attr('finished?')) {
-          $state.go('result', {}, { reload: true });
-        } else if (currentPlayer.attr('organization')) {
-          $state.go('trivia', {}, { reload: true });
-        } else {
-          $state.go('choose-organization', {}, { reload: true });
+      var asPromised = function (value) {
+        if (value) {
+          return $q.resolve(value);
         }
+        return $q.reject();
       };
-      var trivia = function () {
-        return currentTrivia;
-      };
-
-      return {
-        continue: continueGame,
-        start: startGame,
-        playFor: function (organization) {
-          return GameRepo.playFor(currentGame, organization).then(startGame);
+      var self = {
+        trivia: function () {
+          return asPromised(currentTrivia);
         },
-        trivia: trivia,
+        game: function () {
+          return asPromised(currentGame);
+        },
+        continue: function (newGame) {
+          if (newGame) {
+            setCurrentGame(newGame);
+          }
+          if (currentPlayer.attr('finished?')) {
+            $state.go('show-game', {}, { reload: true });
+          } else if (currentPlayer.attr('organization')) {
+            $state.go('trivia', {}, { reload: true });
+          } else {
+            $state.go('choose-organization', {}, { reload: true });
+          }
+        },
+        playFor: function (organization) {
+          return GameRepo.playFor(currentGame, organization);
+        },
         answer: function (option) {
           return GameRepo.answer(currentGame, currentTrivia, option).then(function (answer) {
             revealAnser(answer);
@@ -89,30 +118,37 @@
           });
         }
       };
+
+      return self;
+    }])
+
+    .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', function ($scope, $stateParams, game) {
+      $scope.player = game.relation('player');
+      $scope.players = game.relation('players');
     }])
 
     .controller('NewGameCtrl', ['$scope', 'facebook', 'GameRepo', 'QuizRound', function ($scope, facebook, GameRepo, QuizRound) {
       $scope.playSingle = function () {
-        GameRepo.singlePlayer().then(QuizRound.start);
+        GameRepo.singlePlayer().then(QuizRound.continue);
       };
       $scope.inviteFriends = function () {
         facebook.gameInvite('Come play with me for a fairer world!')
-          .then(QuizRound.start);
+          .then(QuizRound.continue);
       };
     }])
 
-    .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', function ($scope, $ionicLoading, QuizRound) {
+    .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', 'trivia', function ($scope, $ionicLoading, QuizRound, trivia) {
       $scope.submitAnswer = function () {
         $ionicLoading.show();
-        QuizRound.answer($scope.answer.option).then(function (answer) {
+        QuizRound.answer($scope.answer.option).then(function () {
           $scope.answer.submitted = true;
           $ionicLoading.hide();
         });
       };
       $scope.answer = {};
       $scope.next = QuizRound.continue;
-      $scope.trivia = QuizRound.trivia();
-      $scope.options = $scope.trivia.relation('options');
+      $scope.trivia = trivia;
+      $scope.options = trivia.relation('options');
     }])
 
     .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound) {

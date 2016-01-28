@@ -4,7 +4,7 @@ describe('NewGameCtrl', function(){
   var $scope, facebook, QuizRound, inviteDefer, controller;
   beforeEach(inject(function ($rootScope, $controller, $q) {
     $scope = $rootScope.$new();
-    QuizRound = jasmine.createSpyObj('quiz round', ['start']);
+    QuizRound = jasmine.createSpyObj('quiz round', ['continue']);
     facebook = jasmine.createSpyObj('facebook service', ['gameInvite']);
     inviteDefer = $q.defer();
     facebook.gameInvite.and.returnValue(inviteDefer.promise);
@@ -34,7 +34,7 @@ describe('NewGameCtrl', function(){
       inviteDefer.resolve('game');
       $rootScope.$digest();
 
-      expect(QuizRound.start).toHaveBeenCalledWith('game');
+      expect(QuizRound.continue).toHaveBeenCalledWith('game');
     }));
   });
 });

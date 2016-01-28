@@ -36,16 +36,16 @@ describe('QuizRound', function(){
       playerState(null, true);
       gameState();
 
-      QuizRound.start(game);
+      QuizRound.continue(game);
 
-      expect($state.go).toHaveBeenCalledWith('result', {}, {reload: true});
+      expect($state.go).toHaveBeenCalledWith('show-game', {}, {reload: true});
     }));
 
     it('moves the user to the trivia when player have not finished and user has organization', inject(function ($state, QuizRound) {
       playerState('organization name', false);
       gameState();
 
-      QuizRound.start(game);
+      QuizRound.continue(game);
 
       expect($state.go).toHaveBeenCalledWith('trivia', {}, {reload: true});
     }));
@@ -54,7 +54,7 @@ describe('QuizRound', function(){
       playerState(null, false);
       gameState();
 
-      QuizRound.start(game);
+      QuizRound.continue(game);
 
       expect($state.go).toHaveBeenCalledWith('choose-organization', {}, {reload: true});
     }));
@@ -69,7 +69,7 @@ describe('QuizRound', function(){
       gameState();
       GameRepo.playFor.and.returnValue(deferredPlayFor.promise);
 
-      QuizRound.start(game);
+      QuizRound.continue(game);
     }));
 
     it('moves the state to trivia once player\'s organization is set', inject(function (QuizRound, $state, $rootScope) {
@@ -81,19 +81,28 @@ describe('QuizRound', function(){
 
       expect(GameRepo.playFor).toHaveBeenCalledWith(game, {id: 15});
       expect(player.attr).toHaveBeenCalledWith('organization');
-      expect($state.go).toHaveBeenCalledWith('trivia', {}, {reload: true});
     }));
   });
 
   describe('trivia', function () {
     beforeEach(inject(function (QuizRound) {
       gameState('next trivia');
-      QuizRound.start(game);
+      QuizRound.continue(game);
     }));
 
-    it('raffles the trivia using the service', inject(function (QuizRound, $q) {
-      expect(QuizRound.trivia()).toEqual('next trivia');
+    it('raffles the trivia using the service', inject(function (QuizRound) {
+      expect(QuizRound.trivia()).toResolveTo('next trivia');
       expect(game.relation).toHaveBeenCalledWith('trivia');
+    }));
+  });
+
+  describe('game', function () {
+    beforeEach(inject(function (QuizRound) {
+      QuizRound.continue(game);
+    }));
+
+    it('raffles the trivia using the service', inject(function (QuizRound) {
+      expect(QuizRound.game()).toResolveTo(game);
     }));
   });
 
@@ -111,7 +120,7 @@ describe('QuizRound', function(){
       GameRepo.answer.and.returnValue($q.when(answer));
 
       gameState(trivia);
-      QuizRound.start(game);
+      QuizRound.continue(game);
       QuizRound.answer(correctOption);
       $rootScope.$digest();
     }));

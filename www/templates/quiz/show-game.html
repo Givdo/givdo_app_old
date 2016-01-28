@@ -1,0 +1,12 @@
+<ion-view>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item class="positive">
+        {{ player.attr('name') }}
+      </ion-item>
+      <ion-item ng-repeat="player in players | orderBy:'-attributes.score'" class="calm">
+        {{ player.attr('name') }}, <strong>{{ player.attr('score') }}</strong>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -7,12 +7,11 @@ describe('TriviaCtrl', function(){
     trivia = jasmine.createSpyObj('trivia', ['relation']);
     $ionicLoading = jasmine.createSpyObj('$ionicLoading', ['show', 'hide']);
 
-    QuizRound = jasmine.createSpyObj('QuizRound', ['trivia', 'answer', 'continue']);
+    QuizRound = jasmine.createSpyObj('QuizRound', ['answer', 'continue']);
     QuizRound.answer.and.returnValue($q.when());
-    QuizRound.trivia.and.returnValue(trivia);
 
     controller = function () {
-      var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound});
+      var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound, trivia: trivia});
       $scope.$digest();
       return controller;
     };
