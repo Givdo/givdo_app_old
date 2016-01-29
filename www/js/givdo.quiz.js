@@ -13,6 +13,16 @@
           }
         }
       })
+        .state('game-history', {
+          url: '/game-history',
+          parent: 'quiz',
+          views: {
+            'content': {
+              templateUrl: 'templates/quiz/game-history.html',
+              controller: 'GameHistoryCtrl'
+            }
+          }
+        })
         .state('play', {
           url: '/play',
           parent: 'quiz',
@@ -69,6 +79,20 @@
           }
         });
     }])
+
+    .directive('gameScore', function() {
+      return {
+        restrict: 'E',
+        scope: {
+          game: '=game',
+          eventHandler: '&ngClick'
+        },
+        templateUrl: 'templates/quiz/directives/game-score.html',
+        link: function (scope, element) {
+          scope.players = scope.game.relation('players');
+        }
+      };
+    })
 
     .service('QuizRound', ['$state', '$q', 'GameRepo', function ($state, $q, GameRepo) {
       var currentGame, currentTrivia, currentPlayer;
@@ -149,6 +173,13 @@
       $scope.next = QuizRound.continue;
       $scope.trivia = trivia;
       $scope.options = trivia.relation('options');
+    }])
+
+    .controller('GameHistoryCtrl', ['$scope', 'GameRepo', 'QuizRound', function ($scope, GameRepo, QuizRound) {
+      GameRepo.query().then(function (games) {
+        $scope.games = games;
+      });
+      $scope.openGame = QuizRound.continue;
     }])
 
     .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound) {

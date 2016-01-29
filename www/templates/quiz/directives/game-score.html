@@ -1,0 +1,11 @@
+<div class="card" ng-click="eventHandler()">
+  <div class="row">
+    <div class="col" ng-repeat="player in players">
+      <ion-item class="item-thumbnail-left">
+        <img ng-src="{{ player.attr('image') }}">
+        <h2>{{ player.attr('name') }}</h2>
+        <strong>{{ player.attr('score') }}</strong>
+      </ion-item>
+    </div>
+  </div>
+</div>
