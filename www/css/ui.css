@@ -1,0 +1,45 @@
+.bar.bar-energized {
+    background-color: #564256 !important;
+}
+
+.profile-picture, .cover {
+    background-size: cover;
+    background-position: center;
+    height: 270px;
+    position: relative;
+}
+
+.profile-picture, .profile-name {
+    position: absolute;
+}
+
+.profile-picture {
+    border-radius: 100%;
+    border: solid 2px #fff;
+    width: 100px;
+    height: 100px;
+    bottom: 15px;
+    left: 15px;
+}
+.profile-name{
+    display: block;
+    color: #fff;
+    font-size: 25px;
+    bottom: 40px;
+    left: 132px;
+}
+.profile-contents{
+    padding: 10px;
+    color: #96939b;
+    font-size: 20px;
+
+}
+.profile-contents > img {
+    width: 82px;
+    margin: 18px 3px 12px;
+}
+.profile-contents > span {
+    display: block;
+    border-bottom: solid 1px #564256;
+    padding: 4px 0px 10px 0px;
+}
