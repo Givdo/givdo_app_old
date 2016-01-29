@@ -8,7 +8,7 @@
     "ionic": "~1.2.4",
     "ngCordova": "~0.1.23-alpha",
     "angular-local-storage": "~0.2.3",
-    "angular-json-api-client": "~0.1.5"
+    "angular-json-api-client": "~0.1.6"
   },
   "resolutions": {
     "angular": "1.4.3"
