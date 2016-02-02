@@ -197,28 +197,6 @@ h3.name {
     margin: 100px, 0, 0, 80px;
     text-align: center;
 }
-
 .full-width {
     width: 100%;
-}
-
-.option.correct  * {
-    background-color: #98FB98 !important;
-}
-.option.incorrect > input:checked + .radio-content .item-content {
-    -webkit-animation-name: flash-animation;
-    -webkit-animation-duration: 2s;
-
-    animation-name: flash-animation;
-    animation-duration: 2s;
-}
-
-@-webkit-keyframes flash-animation {
-    from { background-color: #CD5C5C; }
-    to   { background: default; }
-}
-
-@keyframes flash-animation {
-    from { background-color: #CD5C5C; }
-    to   { background: default; }
 }
