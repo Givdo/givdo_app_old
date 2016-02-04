@@ -5,7 +5,7 @@
     .config(['$cordovaFacebookProvider', function ($cordovaFacebookProvider) {
       if (!window.cordova) {
         ionic.Platform.ready(function () {
-          $cordovaFacebookProvider.browserInit('1552682881720831', 'v2.5');
+          $cordovaFacebookProvider.browserInit('536213639869188', 'v2.5');
         });
       }
     }])
