@@ -16,6 +16,12 @@
       };
     }])
 
+    .factory('UserRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+      return repository({
+        friends: {url: GivdoApiURL + '/friends', method: 'GET'}
+      });
+    }])
+
     .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       var GameRepo = repository({
         singlePlayer: {url: GivdoApiURL + '/games/single'},
