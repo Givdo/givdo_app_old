@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.user', ['givdo.api'])
+  angular.module('givdo.user', ['givdo.api', 'givdo.quiz'])
     .config(['$stateProvider', function ($stateProvider) {
       $stateProvider
         .state('friends', {
@@ -16,9 +16,14 @@
         });
     }])
 
-    .controller('FriendsCtrl', ['$scope', 'UserRepo', function ($scope, UserRepo) {
+    .controller('FriendsCtrl', ['$scope', 'UserRepo', 'GameRepo', 'QuizRound', function ($scope, UserRepo, GameRepo, QuizRound) {
       UserRepo.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
+
+      $scope.challenge = function (friend) {
+        GameRepo.create({provider: friend.attr('provider'), invitees: [friend.attr('uid')]})
+          .then(QuizRound.continue);
+      };
     }]);
 })();
