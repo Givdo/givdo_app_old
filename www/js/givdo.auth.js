@@ -76,10 +76,15 @@
       };
     }])
 
-    .controller('FacebookLoginCtrl', ['$scope', 'facebook', 'session', function ($scope, facebook, session) {
+    .controller('FacebookLoginCtrl', ['$scope', '$ionicPopup', 'facebook', 'session', function ($scope, $ionicPopup, facebook, session) {
       $scope.facebookLogin = function () {
         facebook.login().then(function (auth) {
           session.token(auth.token);
+        }, function (response) {
+          $ionicPopup.alert({
+           title: 'Uh, oh!',
+           template: response.data.error
+         });
         });
       };
     }]);
