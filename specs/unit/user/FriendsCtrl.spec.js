@@ -10,19 +10,16 @@ describe('FriendsCtrl', function(){
     friendsDefer = $q.defer();
     UserRepo.friends.and.returnValue(friendsDefer.promise);
 
-    controller = function () {
-      return $controller('FriendsCtrl', {
-        $scope: $scope,
-        QuizRound: QuizRound,
-        GameRepo: GameRepo,
-        UserRepo: UserRepo
-      });
-    };
+    controller = $controller('FriendsCtrl', {
+      $scope: $scope,
+      QuizRound: QuizRound,
+      GameRepo: GameRepo,
+      UserRepo: UserRepo
+    });
   }));
 
   describe('initialization', function () {
     it('loads the user friends into the scope', inject(function () {
-      controller();
       var friendsList = jasmine.createSpyObj('friends list', ['relation'])
       friendsList.relation.and.returnValue(['user 1', 'user 2']);
       friendsDefer.resolve(friendsList);
@@ -42,8 +39,6 @@ describe('FriendsCtrl', function(){
     }));
 
     it('creates a game with the friend user', inject(function () {
-      controller();
-
       $scope.challenge(friend);
 
       expect(GameRepo.create).toHaveBeenCalledWith({provider: 'facebook', invitees: ['facebook-123456']});

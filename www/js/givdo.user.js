@@ -22,8 +22,10 @@
       });
 
       $scope.challenge = function (friend) {
-        GameRepo.create({provider: friend.attr('provider'), invitees: [friend.attr('uid')]})
-          .then(QuizRound.continue);
+        GameRepo.create({
+          provider: friend.attr('provider'),
+          invitees: [friend.attr('uid')]
+        }).then(QuizRound.continue);
       };
     }]);
 })();
