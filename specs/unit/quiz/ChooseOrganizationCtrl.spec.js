@@ -1,10 +1,9 @@
 'use strict';
 
 describe('ChooseOrganizationCtrl', function(){
-  var $scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound, deferredQuery, controller;
+  var $scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound, controller;
   beforeEach(inject(function ($q, $rootScope, $controller) {
     $scope = $rootScope.$new();
-    deferredQuery = $q.defer();
     $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update', 'currentIndex']);
     OrganizationRepo = jasmine.createSpyObj('OrganizationRepo', ['query']);
     QuizRound = jasmine.createSpyObj('QuizRound', ['playFor']);
@@ -17,7 +16,6 @@ describe('ChooseOrganizationCtrl', function(){
         OrganizationRepo: OrganizationRepo, QuizRound: QuizRound
       });
       $scope.$digest();
-      OrganizationRepo.query.and.returnValue(deferredQuery.promise);
       return controller;
     };
   }));
@@ -26,7 +24,7 @@ describe('ChooseOrganizationCtrl', function(){
     it('loads the first page of Organizations into the scope', function () {
       controller([1, 2, 3]);
 
-      expect(OrganizationRepo.query).toHaveBeenCalledWith({page: 1});
+      expect(OrganizationRepo.query).toHaveBeenCalledWith();
       expect($scope.organizations).toEqual([1, 2, 3]);
       expect(OrganizationRepo.query).toHaveBeenCalled();
       expect($ionicSlideBoxDelegate.update).toHaveBeenCalled();
@@ -34,40 +32,42 @@ describe('ChooseOrganizationCtrl', function(){
   });
 
   describe('.slideChanged (infinite pagination)', function () {
-    it('loads the next page when user approaches the end of the current', function () {
-      controller([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    it('loads the next page when user approaches the end of the current', inject(function ($q, collection) {
+      var organizations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      organizations.next = jasmine.createSpy();
+      organizations.next.and.returnValue($q.when([10, 11, 12]));
+      controller(organizations);
 
-      $scope.slideChanged(7); // 8th organization, in a page of 10
-      deferredQuery.resolve([10, 11, 12]);
+      $scope.slideChanged(6); // 8th organization, in a page of 10
       $scope.$digest();
 
-      expect(OrganizationRepo.query).toHaveBeenCalledWith({page: 2});
+      expect(organizations.next).toHaveBeenCalled();
       expect($ionicSlideBoxDelegate.update).toHaveBeenCalled();
       expect($scope.organizations).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    });
+    }));
 
-    it('continuously try to load more when toward the end', function () {
-      controller([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    it('only try to load once toward the end', inject(function ($q) {
+      var page1 = [1, 2, 3, 4, 5, 6, 7, 8];
+      page1.next = jasmine.createSpy();
+      page1.next.and.returnValue($q.when([]));
+      controller(page1);
 
-      deferredQuery.resolve([]);
-
-      $scope.slideChanged(8); // 9th organization in 12
+      $scope.slideChanged(4); // 6th organization in 9
       $scope.$digest();
-      expect(OrganizationRepo.query).not.toHaveBeenCalledWith({page: 3});
+      expect(page1.next).not.toHaveBeenCalled();
       expect($ionicSlideBoxDelegate.update.calls.count()).toEqual(1);
 
-      $scope.slideChanged(9); // 10th organization in 12
+      $scope.slideChanged(5); // 7th organization in 9
       $scope.$digest();
-      expect(OrganizationRepo.query).toHaveBeenCalledWith({page: 3});
+      expect(page1.next).toHaveBeenCalled();
       expect($ionicSlideBoxDelegate.update.calls.count()).toEqual(2);
 
-      $scope.slideChanged(10); // 11th organization in 12
+      $scope.slideChanged(6); // 8th organization in 9
       $scope.$digest();
-      expect(OrganizationRepo.query).toHaveBeenCalledWith({page: 3});
-      expect($ionicSlideBoxDelegate.update.calls.count()).toEqual(3);
+      expect($ionicSlideBoxDelegate.update.calls.count()).toEqual(2);
 
-      expect($scope.organizations).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-    });
+      expect($scope.organizations).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    }));
   });
 
   describe('.selectOrganization', function () {

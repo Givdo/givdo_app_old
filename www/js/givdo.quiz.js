@@ -65,9 +65,9 @@
         })
         .state('choose-organization', {
           url: '/choose-organization',
-          parent: 'quiz',
+          parent: 'app',
           views: {
-            'content': {
+            'menuContent': {
               templateUrl: 'templates/quiz/choose-organization.html',
               controller: 'ChooseOrganizationCtrl'
             }
@@ -182,21 +182,21 @@
       $scope.openGame = QuizRound.continue;
     }])
 
-    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound) {
-      var PerPage = 10, Threshold = 3;
-      var nextPage = function () {
-        return Math.ceil($scope.organizations.length / PerPage) + 1;
+    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', '$ionicFilterBar', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound, $ionicFilterBar) {
+      var Threshold = 3;
+      var page;
+
+      var loadOrganizations = function (organizations) {
+        page = organizations;
+        $scope.organizations = $scope.organizations.concat(organizations);
+        $ionicSlideBoxDelegate.update();
       };
-      var loadNextPage = function () {
-        OrganizationRepo.query({page: nextPage()}).then(function (organizations) {
-          $scope.organizations = $scope.organizations.concat(organizations);
-          $ionicSlideBoxDelegate.update();
-        });
-      };
+      $scope.organizations = [];
+      OrganizationRepo.query().then(loadOrganizations);
 
       $scope.slideChanged = function (position) {
-        if ($scope.organizations.length - position < Threshold) {
-          loadNextPage();
+        if ($scope.organizations.length - position == Threshold) {
+          page.next().then(loadOrganizations);
         }
       };
       $scope.selectOrganization = function () {
@@ -205,8 +205,5 @@
 
         QuizRound.playFor(organization).then(QuizRound.continue);
       };
-
-      $scope.organizations = [];
-      loadNextPage();
     }]);
 })();
