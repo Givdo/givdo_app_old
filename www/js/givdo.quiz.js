@@ -192,9 +192,11 @@
         $ionicSlideBoxDelegate.update();
       };
       var search = function (searchText) {
-        $scope.organizations = [];
         var params = searchText ? {search: {name_cont: searchText}} : {};
-        OrganizationRepo.query(params).then(loadOrganizations);
+        OrganizationRepo.query(params).then(function (organizations) {
+          $scope.organizations = [];
+          loadOrganizations(organizations);
+        });
       };
       search();
 
