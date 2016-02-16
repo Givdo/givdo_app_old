@@ -24,7 +24,7 @@ describe('ChooseOrganizationCtrl', function(){
     it('loads the first page of Organizations into the scope', function () {
       controller([1, 2, 3]);
 
-      expect(OrganizationRepo.query).toHaveBeenCalledWith();
+      expect(OrganizationRepo.query).toHaveBeenCalledWith({});
       expect($scope.organizations).toEqual([1, 2, 3]);
       expect(OrganizationRepo.query).toHaveBeenCalled();
       expect($ionicSlideBoxDelegate.update).toHaveBeenCalled();

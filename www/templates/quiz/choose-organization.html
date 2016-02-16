@@ -1,4 +1,9 @@
 <ion-view>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-search" ng-click="searchOrganization()">
+    </button>
+  </ion-nav-buttons>
+
   <ion-content class="has-header">
     <ion-slide-box show-pager="false" does-continue="true" on-slide-changed="slideChanged($index)">
       <ion-slide ng-repeat="organization in organizations">

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook'])
+  angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook', 'jett.ionic.filter.bar'])
     .config(['$stateProvider', function ($stateProvider) {
       $stateProvider.state('quiz', {
         url: '/quiz',
@@ -191,17 +191,24 @@
         $scope.organizations = $scope.organizations.concat(organizations);
         $ionicSlideBoxDelegate.update();
       };
-      $scope.organizations = [];
-      OrganizationRepo.query().then(loadOrganizations);
+      var search = function (searchText) {
+        $scope.organizations = [];
+        var params = searchText ? {search: {name_cont: searchText}} : {};
+        OrganizationRepo.query(params).then(loadOrganizations);
+      };
+      search();
 
+      $scope.searchOrganization = function () {
+        $ionicFilterBar.show({debounce: true, search: search});
+      };
       $scope.slideChanged = function (position) {
         if ($scope.organizations.length - position == Threshold) {
           page.next().then(loadOrganizations);
         }
       };
       $scope.selectOrganization = function () {
-        var currentOrganization = $ionicSlideBoxDelegate.currentIndex();
-        var organization = $scope.organizations[currentOrganization];
+        var index = $ionicSlideBoxDelegate.currentIndex();
+        var organization = $scope.organizations[index];
 
         QuizRound.playFor(organization).then(QuizRound.continue);
       };

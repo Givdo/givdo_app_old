@@ -27,6 +27,7 @@ module.exports = function(config) {
       'www/lib/ngCordova/dist/ng-cordova-mocks.js',
       'www/lib/underscore/underscore.js',
       'www/lib/angular-json-api-client/dist/angular-json-api-client.js',
+      'www/lib/ionic-filter-bar/dist/ionic.filter.bar.js',
       'www/vendor/facebookConnectPlugin.js',
 
       // Test dependency

@@ -8,7 +8,8 @@
     "ionic": "~1.2.4",
     "ngCordova": "~0.1.23-alpha",
     "angular-local-storage": "~0.2.3",
-    "angular-json-api-client": "~0.2.0"
+    "angular-json-api-client": "~0.2.0",
+    "ionic-filter-bar": "https://github.com/ace-han/ionic-filter-bar.git#ce05d6c5023807504203f1601b771a3598896d5f"
   },
   "resolutions": {
     "angular": "1.4.3"
