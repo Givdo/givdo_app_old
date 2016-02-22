@@ -25,7 +25,7 @@
     .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       var GameRepo = repository({
         singlePlayer: {url: GivdoApiURL + '/games/single'},
-        create: {url: GivdoApiURL + '/games', method: 'POST', data: true},
+        versus: {url: GivdoApiURL + '/games/versus/{{id}}', method: 'GET'},
         query: {url: GivdoApiURL + '/games', method: 'GET'}
       });
 

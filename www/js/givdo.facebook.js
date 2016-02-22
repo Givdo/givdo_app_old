@@ -46,7 +46,7 @@
           message: message,
           max_recipients: 1
         }).then(function (response) {
-          return GameRepo.create({provider: 'facebook', invitees: response.to});
+          return GameRepo.versus({id: _.first(response.to)});
         });
       };
     }])

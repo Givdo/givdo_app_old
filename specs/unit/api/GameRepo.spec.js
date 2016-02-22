@@ -17,13 +17,13 @@ describe('GameRepo', function() {
       $http.verifyNoOutstandingRequest();
     });
 
-    describe('create', function () {
-      it('posts to create a new game', function () {
-        $http.expectPOST('http://test.com/api/v1/games', {param1: 'value 1', param2: 'value 2'}).respond({
+    describe('versus', function () {
+      it('gets the game versus the given user', function () {
+        $http.expectGET('http://test.com/api/v1/games/versus/12345?id=12345').respond({
           data: {id: 10}
         });
 
-        GameRepo.create({param1: 'value 1', param2: 'value 2'}).then(function (game) {
+        GameRepo.versus({id: '12345'}).then(function (game) {
           expect(game.id).toEqual(10);
         });
         $http.flush();
