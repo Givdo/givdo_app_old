@@ -9,13 +9,11 @@
     "elementtree": "^0.1.6"
   },
   "cordovaPlugins": [
-    "com.ionic.keyboard",
     "cordova-plugin-whitelist",
     "cordova-plugin-inappbrowser",
     "cordova-plugin-disable-bitcode",
-    "org.apache.cordova.device",
-    "org.apache.cordova.console",
     "cordova-plugin-console",
+    "cordova-plugin-device",
     {
       "locator": "https://github.com/Wizcorp/phonegap-facebook-plugin.git",
       "id": "phonegap-facebook-plugin",
@@ -23,7 +21,8 @@
         "APP_ID": "536213639869188",
         "APP_NAME": "Givdo\\ Native"
       }
-    }
+    },
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
     "ios"
