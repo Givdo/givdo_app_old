@@ -63,7 +63,7 @@
     padding: 4px 0px 10px 0px;
 }
 
-.new-game {
+.new-game, .welcome {
     background-color: #ff9933 !important;
 }
 .calm-item {
@@ -111,6 +111,29 @@
 }
 .badge-givdo img {
     width: 100%;
+}
+
+.welcome-box {
+    background: url('/img/welcome-screen-background.png');
+    height: 204px;
+    text-align: center;
+}
+
+.welcome-box > .profile-picture {
+    bottom: -118px !important;
+    position: relative;
+    margin: auto;
+    left: 0px;
+}
+
+.message-box {
+    background: #fff;
+    padding: 16px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 300;
+    color: #564256;
+    line-height: 27px;
 }
 
 

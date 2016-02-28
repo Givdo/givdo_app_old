@@ -28,6 +28,16 @@
             }
           }
         })
+        .state('welcome-ui', {
+          url: '/welcome-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/welcome.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('trivia-ui', {
           url: '/trivia-ui',
           parent: 'ui',
