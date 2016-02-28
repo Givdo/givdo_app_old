@@ -1,12 +1,14 @@
-<ion-view>
+<ion-view class="new-game">
   <ion-content class="has-header">
-    <img src="img/gdlogo.png" class="full-width">
 
+    <div class="title-box">
+      <img src="img/givdo-icon-white.png" class="half-width"><br>
+      Choose your mode</div>
     <ion-list type="list-inset">
-      <ion-item class="calm" ng-click="playSingle()">
+      <ion-item class="givdo-option" ng-click="playSingle()">
         Single Player
       </ion-item>
-      <ion-item class="positive" ng-click="inviteFriends()">
+      <ion-item class="givdo-option" ng-click="inviteFriends()">
         Multiplayers
       </ion-item>
     </ion-list>
