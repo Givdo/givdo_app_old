@@ -7,17 +7,16 @@
 
     <div class="title-box">{{ trivia.attr('question') }}</div>
     <ion-list type="list-inset">
-      <ion-item class="givdo-option" ng-repeat="option in options">
-        <ion-radio-fix class="option"
-                   icon="ion-ios-circle-filled"
-                   name="answer_option"
-                   ng-model="answer.option"
-                   ng-disabled="answer.submitted"
-                    ng-value="option"
-                    ng-class="{'correct': option.attr('correct'), 'incorrect': (answer.submitted && !option.attr('correct'))}">
-          {{ option.attr('text') }}
-        </ion-radio-fix>
-      </ion-item>
+      <ion-radio-fix class="givdo-option"
+                ng-repeat="option in options"
+                icon="ion-ios-circle-filled"
+                 name="answer_option"
+                 ng-model="answer.option"
+                 ng-disabled="answer.submitted"
+                  ng-value="option"
+                  ng-class="{'correct': option.attr('correct'), 'incorrect': (answer.submitted && !option.attr('correct'))}">
+        {{ option.attr('text') }}
+      </ion-radio-fix>
     </ion-list>
 
     <div class="button-bar padding">

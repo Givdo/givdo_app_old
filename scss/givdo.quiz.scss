@@ -1,7 +1,7 @@
-.option.correct  * {
+.givdo-option.correct * {
     background-color: #98FB98 !important;
 }
-.option.incorrect > input:checked + .radio-content .item-content {
+.givdo-option.incorrect > input:checked + .radio-content .item-content {
     -webkit-animation-name: flash-animation;
     -webkit-animation-duration: 2s;
 
