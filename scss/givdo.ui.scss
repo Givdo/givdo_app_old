@@ -2,7 +2,7 @@
     background-color: #564256 !important;
 }
 
-.profile-picture, .cover, .your, .opponent {
+.profile-picture, .cover, .player {
     background-size: cover;
     background-position: center;
     height: 270px;
@@ -13,7 +13,7 @@
     position: absolute;
 }
 
-.profile-picture, .your, .opponent {
+.profile-picture, .player {
     border-radius: 100%;
     border: solid 2px #fff;
     width: 100px;
@@ -22,22 +22,19 @@
     left: 15px;
 }
 
-.your, .opponent {
+.player {
     width: 60px;
     height: 60px;
     bottom: 0px;
     left: 0px;
+    float: right;
 }
-.your {
-    float: left;
+.player:first-child {
+  float: left;
 }
 
 .versus, .title-box {
     margin: 20px 10px;
-}
-
-.opponent {
-    float: right;
 }
 
 .profile-name{
@@ -85,7 +82,7 @@
 .card, .list-inset, .item {
     background: none !important;
 }
-/* list items 
+/* list items
 .item {
     color: #fff !important;
     border: solid 2px #fff !important;
