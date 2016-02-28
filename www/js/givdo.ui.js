@@ -38,6 +38,16 @@
             }
           }
         })
+        .state('no-guest-ui', {
+          url: '/no-guest-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/no-guest.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('trivia-ui', {
           url: '/trivia-ui',
           parent: 'ui',
