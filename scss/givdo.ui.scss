@@ -2,7 +2,7 @@
     background-color: #564256 !important;
 }
 
-.profile-picture, .cover {
+.profile-picture, .cover, .your, .opponent {
     background-size: cover;
     background-position: center;
     height: 270px;
@@ -13,7 +13,7 @@
     position: absolute;
 }
 
-.profile-picture {
+.profile-picture, .your, .opponent {
     border-radius: 100%;
     border: solid 2px #fff;
     width: 100px;
@@ -21,6 +21,25 @@
     bottom: 15px;
     left: 15px;
 }
+
+.your, .opponent {
+    width: 60px;
+    height: 60px;
+    bottom: 0px;
+    left: 0px;
+}
+.your {
+    float: left;
+}
+
+.versus, .title-box {
+    margin: 20px 10px;
+}
+
+.opponent {
+    float: right;
+}
+
 .profile-name{
     display: block;
     color: #fff;
@@ -42,4 +61,60 @@
     display: block;
     border-bottom: solid 1px #564256;
     padding: 4px 0px 10px 0px;
+}
+
+.new-game {
+    background-color: #ff9933 !important;
+}
+.calm-item {
+    background-color: none !important;
+}
+
+.title-box {
+    color: #fff;
+    text-align: center;
+    font-size: 21px;
+    line-height: 31px;
+}
+
+/* sizes */
+.half-width { width: 50%}
+
+
+
+.card, .list-inset, .item {
+    background: none !important;
+}
+/* list items 
+.item {
+    color: #fff !important;
+    border: solid 2px #fff !important;
+    margin: 11px !important;
+    font-weight: 700;
+
+}*/
+
+.givdo-option {
+    color: #fff !important;
+    margin: 10px !important;
+    border: solid 1px #fff !important;
+    margin: 11px !important;
+    font-weight: 400;
+}
+
+.badge-givdo {
+    width: 87px;
+    font-size: 14px;
+    text-align: center;
+    float: left;
+    margin: 9px;
+}
+.badge-givdo img {
+    width: 100%;
+}
+
+
+/* generic */
+.clearfix {
+    clear: both;
 }

@@ -17,6 +17,26 @@
               controller: 'ProfileCtrl'
             }
           }
+        })
+        .state('play-ui', {
+          url: '/play-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/new-game.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
+        .state('trivia-ui', {
+          url: '/trivia-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/trivia.html',
+              controller: 'ProfileCtrl'
+            }
+          }
         });
     }])
 
