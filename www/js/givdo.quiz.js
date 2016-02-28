@@ -43,9 +43,7 @@
             }
           },
           resolve: {
-            game: function(QuizRound) {
-              return QuizRound.game();
-            }
+            game: function(QuizRound) { return QuizRound.game(); }
           }
         })
         .state('trivia', {
@@ -58,9 +56,8 @@
             }
           },
           resolve: {
-            trivia: function(QuizRound) {
-              return QuizRound.trivia();
-            }
+            trivia: function(QuizRound) { return QuizRound.trivia(); },
+            game: function(QuizRound) { return QuizRound.game(); }
           }
         })
         .state('choose-organization', {
@@ -73,9 +70,7 @@
             }
           },
           resolve: {
-            game: function(QuizRound) {
-              return QuizRound.game();
-            }
+            game: function(QuizRound) { return QuizRound.game(); }
           }
         });
     }])
@@ -161,7 +156,7 @@
       };
     }])
 
-    .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', 'trivia', function ($scope, $ionicLoading, QuizRound, trivia) {
+    .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', 'trivia', 'game', function ($scope, $ionicLoading, QuizRound, trivia, game) {
       $scope.submitAnswer = function () {
         $ionicLoading.show();
         QuizRound.answer($scope.answer.option).then(function () {
@@ -173,6 +168,7 @@
       $scope.next = QuizRound.continue;
       $scope.trivia = trivia;
       $scope.options = trivia.relation('options');
+      $scope.players = game.relation('players');
     }])
 
     .controller('GameHistoryCtrl', ['$scope', 'GameRepo', 'QuizRound', function ($scope, GameRepo, QuizRound) {

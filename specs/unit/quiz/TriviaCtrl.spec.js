@@ -1,17 +1,18 @@
 'use strict';
 
 describe('TriviaCtrl', function(){
-  var $scope, $ionicLoading, QuizRound, trivia, controller;
+  var $scope, $ionicLoading, QuizRound, trivia, game, controller;
   beforeEach(inject(function($rootScope, $controller, $q){
     $scope = $rootScope.$new();
     trivia = jasmine.createSpyObj('trivia', ['relation']);
+    game = jasmine.createSpyObj('game', ['relation']);
     $ionicLoading = jasmine.createSpyObj('$ionicLoading', ['show', 'hide']);
 
     QuizRound = jasmine.createSpyObj('QuizRound', ['answer', 'continue']);
     QuizRound.answer.and.returnValue($q.when());
 
     controller = function () {
-      var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound, trivia: trivia});
+      var controller = $controller('TriviaCtrl', {$scope: $scope, $ionicLoading: $ionicLoading, QuizRound: QuizRound, trivia: trivia, game: game});
       $scope.$digest();
       return controller;
     };
