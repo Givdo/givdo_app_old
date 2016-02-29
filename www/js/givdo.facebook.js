@@ -44,7 +44,7 @@
         return $cordovaFacebook.showDialog({
           method: 'apprequests',
           message: message,
-          max_recipients: 1
+          max_recipients: '1'
         }).then(function (response) {
           return GameRepo.versus({id: _.first(response.to)});
         });
