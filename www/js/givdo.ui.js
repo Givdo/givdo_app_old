@@ -48,6 +48,16 @@
             }
           }
         })
+        .state('lost-ui', {
+          url: '/lost-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/lost.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('trivia-ui', {
           url: '/trivia-ui',
           parent: 'ui',
