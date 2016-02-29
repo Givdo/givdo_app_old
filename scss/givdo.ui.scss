@@ -8,7 +8,7 @@
     color: #fff !important;
 }
 .gold {
-    background-color: #ffcc00;
+    background-color: #ffcc00 !important;
     color: 564256 !important;
 }
 
@@ -229,7 +229,7 @@
 }
 /* snow (slow, snow.png) */
 .weather.snow:before, .weather.snow:after {
-    background-image: url(snow.png);
+    background-image: url(/img/stars.png);
     -webkit-animation-duration: 6s;
     animation-duration: 6s;
 }

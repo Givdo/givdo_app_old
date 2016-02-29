@@ -58,6 +58,16 @@
             }
           }
         })
+        .state('won-ui', {
+          url: '/won-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/won.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('trivia-ui', {
           url: '/trivia-ui',
           parent: 'ui',
