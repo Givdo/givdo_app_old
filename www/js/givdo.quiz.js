@@ -142,7 +142,7 @@
     }])
 
     .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', function ($scope, $stateParams, game) {
-      $scope.player = game.relation('player');
+      $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
     }])
 
