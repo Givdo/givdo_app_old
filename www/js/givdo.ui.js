@@ -78,6 +78,16 @@
             }
           }
         })
+        .state('activity-ui', {
+          url: '/activity-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/activity.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('trivia-ui', {
           url: '/trivia-ui',
           parent: 'ui',
