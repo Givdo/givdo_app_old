@@ -294,3 +294,28 @@
     from { background-position: 64px 64px; }
     to { background-position: 64px 1088px; }
 }
+
+
+
+
+
+/* FOOTER */
+.footer-button {
+    width: 19%;
+    padding: 4px;
+    text-align: center
+}
+
+.footer-last-game {
+    width: 24%;
+    text-align: center;
+    position: relative;
+}
+
+.bar-footer {
+    height: 49px !important;
+}
+
+.footer-button > img {
+    max-width: 50%;
+}
