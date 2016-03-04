@@ -35,7 +35,7 @@
 
 .profile-picture, .player {
     border-radius: 100%;
-    border: solid 2px #fff;
+    border: solid 2px #ff9933;
     width: 100px;
     height: 100px;
     bottom: 15px;
@@ -81,17 +81,18 @@
 }
 
 .new-game, .welcome, .no-guest {
-    background-color: #ff9933 !important;
+    background-color: #fff !important;
 }
 .calm-item {
     background-color: none !important;
 }
 
 .title-box {
-    color: #fff;
+    color: #564256;
     text-align: center;
     font-size: 21px;
     line-height: 31px;
+    font-weight: 300;
 }
 
 /* sizes */
@@ -126,9 +127,9 @@
 
 
 .givdo-option {
-    color: #fff !important;
+    color: #ff9933 !important;
     margin: 10px !important;
-    border: solid 1px #fff !important;
+    border: solid 1px #ff9933 !important;
     margin: 11px !important;
     font-weight: 400;
 }
@@ -220,6 +221,7 @@
     text-align: right;
     color: #ff9933;
     border-bottom: dotted 1px #666;
+    padding-bottom: 80px;
 }
 
 
