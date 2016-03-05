@@ -224,6 +224,25 @@
     padding-bottom: 80px;
 }
 
+/* Friends */
+.friend {
+    width: 86px;
+    height: 86px;
+    background-position: center;
+    background-size: cover;
+    float: left;
+    margin: 10px;
+    border-radius: 100%;
+    position: relative;
+    border: solid 2px #ccc;
+}
+
+.friend > img {
+    width: 41%;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
 
 /* Wheater CSS*/
 

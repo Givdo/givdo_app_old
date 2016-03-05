@@ -78,6 +78,16 @@
             }
           }
         })
+        .state('friends-ui', {
+          url: '/friends-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/friends.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('activity-ui', {
           url: '/activity-ui',
           parent: 'ui',
