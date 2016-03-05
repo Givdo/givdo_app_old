@@ -88,6 +88,16 @@
             }
           }
         })
+        .state('sponsor-ui', {
+          url: '/sponsor-ui',
+          parent: 'ui',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/ui/sponsor.html',
+              controller: 'ProfileCtrl'
+            }
+          }
+        })
         .state('activity-ui', {
           url: '/activity-ui',
           parent: 'ui',
