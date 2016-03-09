@@ -12,7 +12,7 @@
           url: '/profile',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/profile.html',
               controller: 'ProfileCtrl'
             }
@@ -22,7 +22,7 @@
           url: '/welcome-ui',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/welcome.html',
               controller: 'ProfileCtrl'
             }
@@ -32,7 +32,7 @@
           url: '/no-guest-ui',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/no-guest.html',
               controller: 'ProfileCtrl'
             }
@@ -42,7 +42,7 @@
           url: '/notifications-ui',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/notifications.html',
               controller: 'ProfileCtrl'
             }
@@ -52,7 +52,7 @@
           url: '/friends-ui',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/friends.html',
               controller: 'ProfileCtrl'
             }
@@ -62,7 +62,7 @@
           url: '/sponsor-ui',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/sponsor.html',
               controller: 'ProfileCtrl'
             }
@@ -72,7 +72,7 @@
           url: '/activity-ui',
           parent: 'ui',
           views: {
-            'menuContent': {
+            'content': {
               templateUrl: 'templates/ui/activity.html',
               controller: 'ProfileCtrl'
             }

@@ -3,21 +3,12 @@
 
   angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook', 'jett.ionic.filter.bar'])
     .config(['$stateProvider', function ($stateProvider) {
-      $stateProvider.state('quiz', {
-        url: '/quiz',
-        abstract: true,
-        parent: 'app',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/quiz/layout.html'
-          }
-        }
-      })
+      $stateProvider
         .state('game-history', {
           url: '/game-history',
-          parent: 'quiz',
+          parent: 'app',
           views: {
-            'content': {
+            'quiz-content': {
               templateUrl: 'templates/quiz/game-history.html',
               controller: 'GameHistoryCtrl'
             }
@@ -25,9 +16,9 @@
         })
         .state('play', {
           url: '/play',
-          parent: 'quiz',
+          parent: 'app',
           views: {
-            'content': {
+            'quiz-content': {
               templateUrl: 'templates/quiz/new-game.html',
               controller: 'NewGameCtrl'
             }
@@ -35,9 +26,9 @@
         })
         .state('show-game', {
           url: '/game',
-          parent: 'quiz',
+          parent: 'app',
           views: {
-            'content': {
+            'quiz-content': {
               templateUrl: 'templates/quiz/show-game.html',
               controller: 'ShowGameCtrl'
             }
@@ -48,9 +39,10 @@
         })
         .state('trivia', {
           url: '/trivia',
-          parent: 'quiz',
+          parent: 'app',
+          cache: false,
           views: {
-            'content': {
+            'quiz-content': {
               templateUrl: 'templates/quiz/trivia.html',
               controller: 'TriviaCtrl'
             }
@@ -64,7 +56,7 @@
           url: '/choose-organization',
           parent: 'app',
           views: {
-            'menuContent': {
+            'quiz-content': {
               templateUrl: 'templates/quiz/choose-organization.html',
               controller: 'ChooseOrganizationCtrl'
             }
@@ -119,11 +111,11 @@
             setCurrentGame(newGame);
           }
           if (currentPlayer.attr('finished?')) {
-            $state.go('show-game', {}, { reload: true });
+            $state.go('show-game', {}, {reload: true});
           } else if (currentPlayer.attr('organization')) {
-            $state.go('trivia', {}, { reload: true });
+            $state.go('trivia', {}, {reload: true});
           } else {
-            $state.go('choose-organization', {}, { reload: true });
+            $state.go('choose-organization', {}, {reload: true});
           }
         },
         playFor: function (organization) {
@@ -156,7 +148,8 @@
       };
     }])
 
-    .controller('TriviaCtrl', ['$scope', '$ionicLoading', 'QuizRound', 'trivia', 'game', function ($scope, $ionicLoading, QuizRound, trivia, game) {
+    .controller('TriviaCtrl', ['$scope', '$ionicLoading', '$ionicNavBarDelegate', 'QuizRound', 'trivia', 'game', function ($scope, $ionicLoading, $ionicNavBarDelegate, QuizRound, trivia, game) {
+      $ionicNavBarDelegate.showBackButton(false);
       $scope.submitAnswer = function () {
         $ionicLoading.show();
         QuizRound.answer($scope.answer.option).then(function () {

@@ -340,3 +340,28 @@
 .footer-button img {
     max-width: 50%;
 }
+.tab-item .icon {
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.notification-icon {
+  background-image: url('../img/notification.png');
+}
+.friends-icon {
+  background-image: url('../img/friends.png');
+}
+.giving-love-icon {
+  background-image: url('../img/giving-love.png');
+}
+.task-icon {
+  background-image: url('../img/task.png');
+}
+.organization-logo-icon {
+  background-image: url('../img/dog-rescue.jpg');
+  background-size: 70px 70px !important;
+  width: 70px;
+  height: 70px !important;
+  overflow-y: visible;
+  border: solid 3px #96939b;
+}

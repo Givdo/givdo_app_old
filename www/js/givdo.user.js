@@ -8,7 +8,7 @@
           url: '/friends',
           parent: 'app',
           views: {
-            'menuContent': {
+            'friends-content': {
               templateUrl: 'templates/user/friends.html',
               controller: 'FriendsCtrl'
             }
