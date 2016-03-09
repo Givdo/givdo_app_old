@@ -14,15 +14,15 @@
     "cordova-plugin-disable-bitcode",
     "cordova-plugin-console",
     "cordova-plugin-device",
+    "ionic-plugin-keyboard",
     {
-      "locator": "https://github.com/Wizcorp/phonegap-facebook-plugin.git",
-      "id": "phonegap-facebook-plugin",
       "variables": {
-        "APP_ID": "536213639869188",
-        "APP_NAME": "Givdo\\ Native"
-      }
-    },
-    "ionic-plugin-keyboard"
+        "APP_ID": "558889160934969",
+        "APP_NAME": "Givdo"
+      },
+      "locator": "cordova-plugin-facebook4",
+      "id": "cordova-plugin-facebook4"
+    }
   ],
   "cordovaPlatforms": [
     "ios"

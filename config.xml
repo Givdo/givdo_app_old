@@ -128,8 +128,8 @@
         </config-file>
     </platform>
     <plugin name="org.apache.cordova.console" spec="~0.2.13" />
-    <plugin name="phonegap-facebook-plugin" spec="https://github.com/Wizcorp/phonegap-facebook-plugin.git">
-        <variable name="APP_ID" value="536213639869188" />
-        <variable name="APP_NAME" value="Givdo Native" />
+    <plugin name="cordova-plugin-facebook4" spec="~1.6.3">
+        <variable name="APP_ID" value="558889160934969" />
+        <variable name="APP_NAME" value="Givdo" />
     </plugin>
 </widget>
