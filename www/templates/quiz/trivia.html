@@ -20,7 +20,7 @@
     </ion-list>
 
     <div class="button-bar padding">
-      <button class="button button-balanced" ng-hide="answer.submitted" ng-click="submitAnswer()">Confirm</button>
+      <button class="button button-balanced" ng-hide="answer.submitted" ng-click="submitAnswer()" ng-disabled="!answer.option">Confirm</button>
       <button class="button button-royal" ng-show="answer.submitted" ng-click="next()">More Givcoins!</button>
     </div>
   </ion-content>
