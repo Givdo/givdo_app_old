@@ -11,7 +11,7 @@
       <div class="message-box" ng-show="winner">Good job! You're getting closer to your next badge!</div>
       <div class="message-box" ng-hide="winner">But the points you won in this game still go to the charity you chose, so there is still reason to celebrate! Keep it up!</div>
       <div class="score">
-        <div class="score purple" ng-repeat="player in players | orderBy: '-attributes.score'">
+        <div class="score gray" ng-repeat="player in players | orderBy: '-attributes.score'">
           <div class="player" style="background-image: url('{{ player.attr('image') }}')"></div>
           <p>{{ player.attr('name') }}: {{ player.attr('score') }} points</p>
         </div>
