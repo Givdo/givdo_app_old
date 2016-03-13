@@ -15,11 +15,13 @@ describe('facebook.gameInvite', function () {
   }));
 
   it('creates the dialog with the given message', inject(function ($cordovaFacebook) {
-    facebook.gameInvite('Come play with me');
+    facebook.gameInvite('Come play with me', 'title');
 
     expect($cordovaFacebook.showDialog).toHaveBeenCalledWith({
       method: 'apprequests',
       message: 'Come play with me',
+      title: 'title',
+      action_type: 'turn',
       max_recipients: '1'
     });
   }));

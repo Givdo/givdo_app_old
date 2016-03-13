@@ -40,10 +40,12 @@
     }])
 
     .factory('facebookGameInvite', ['$cordovaFacebook', 'GameRepo', function ($cordovaFacebook, GameRepo) {
-      return function (message) {
+      return function (message, title) {
         return $cordovaFacebook.showDialog({
           method: 'apprequests',
           message: message,
+          title: title,
+          action_type:'turn',
           max_recipients: '1'
         }).then(function (response) {
           return GameRepo.versus({id: _.first(response.to)});

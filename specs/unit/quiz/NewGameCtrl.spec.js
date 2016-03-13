@@ -24,7 +24,7 @@ describe('NewGameCtrl', function(){
 
       $scope.inviteFriends();
 
-      expect(facebook.gameInvite).toHaveBeenCalledWith('Come play with me for a fairer world!');
+      expect(facebook.gameInvite).toHaveBeenCalledWith('Come play with me for a fairer world!', 'Give and Play');
     });
 
     it('starts the game and moves to the organization screen after invite', inject(function ($rootScope) {

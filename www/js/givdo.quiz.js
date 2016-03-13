@@ -143,7 +143,7 @@
         GameRepo.singlePlayer().then(QuizRound.continue);
       };
       $scope.inviteFriends = function () {
-        facebook.gameInvite('Come play with me for a fairer world!')
+        facebook.gameInvite('Come play with me for a fairer world!', 'Give and Play')
           .then(QuizRound.continue);
       };
     }])
