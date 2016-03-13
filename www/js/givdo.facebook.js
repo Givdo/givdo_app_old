@@ -45,8 +45,7 @@
           method: 'apprequests',
           message: message,
           title: title,
-          action_type:'turn',
-          max_recipients: '1'
+          actionType:'turn'
         }).then(function (response) {
           return GameRepo.versus({id: _.first(response.to)});
         });

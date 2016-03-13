@@ -20,7 +20,7 @@
         "APP_ID": "558889160934969",
         "APP_NAME": "Givdo"
       },
-      "locator": "cordova-plugin-facebook4",
+      "locator": "https://github.com/taina0407/cordova-plugin-facebook4.git",
       "id": "cordova-plugin-facebook4"
     }
   ],

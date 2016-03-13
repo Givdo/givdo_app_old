@@ -21,8 +21,7 @@ describe('facebook.gameInvite', function () {
       method: 'apprequests',
       message: 'Come play with me',
       title: 'title',
-      action_type: 'turn',
-      max_recipients: '1'
+      actionType: 'turn'
     });
   }));
 
