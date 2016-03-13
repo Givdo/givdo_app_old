@@ -1,6 +1,6 @@
 {
   "name": "givdo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "givdo: An Ionic project",
   "dependencies": {
     "cordova-common": "^1.0.0",
