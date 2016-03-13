@@ -16,16 +16,9 @@
         });
     }])
 
-    .controller('FriendsCtrl', ['$scope', 'UserRepo', 'GameRepo', 'QuizRound', function ($scope, UserRepo, GameRepo, QuizRound) {
+    .controller('FriendsCtrl', ['$scope', 'UserRepo', function ($scope, UserRepo) {
       UserRepo.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
-
-      $scope.challenge = function (friend) {
-        GameRepo.create({
-          provider: friend.attr('provider'),
-          invitees: [friend.attr('uid')]
-        }).then(QuizRound.continue);
-      };
     }]);
 })();

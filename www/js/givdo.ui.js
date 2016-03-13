@@ -48,16 +48,6 @@
             }
           }
         })
-        .state('friends-ui', {
-          url: '/friends-ui',
-          parent: 'ui',
-          views: {
-            'content': {
-              templateUrl: 'templates/ui/friends.html',
-              controller: 'ProfileCtrl'
-            }
-          }
-        })
         .state('sponsor-ui', {
           url: '/sponsor-ui',
           parent: 'ui',

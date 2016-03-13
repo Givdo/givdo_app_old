@@ -39,6 +39,15 @@
       };
     }])
 
+    .factory('facebookInvite', ['$q', function ($q) {
+      // TODO: add picture and url (game vs current user)
+      return function () {
+        var deferred = $q.defer();
+        facebookConnectPlugin.appInvite({url: 'https://givdo.com'}, deferred.resolve, deferred.reject);
+        return deferred.promise;
+      };
+    }])
+
     .factory('facebookGameInvite', ['$cordovaFacebook', 'GameRepo', function ($cordovaFacebook, GameRepo) {
       return function (message, title) {
         return $cordovaFacebook.showDialog({
@@ -52,11 +61,12 @@
       };
     }])
 
-    .factory('facebook', ['facebookLogin', 'facebookCheckStatus', 'facebookGameInvite', function (facebookLogin, facebookCheckStatus, facebookGameInvite) {
+    .factory('facebook', ['facebookLogin', 'facebookCheckStatus', 'facebookGameInvite', 'facebookInvite', function (facebookLogin, facebookCheckStatus, facebookGameInvite, facebookInvite) {
       return {
         login: facebookLogin,
         checkStatus: facebookCheckStatus,
-        gameInvite: facebookGameInvite
+        gameInvite: facebookGameInvite,
+        invite: facebookInvite
       };
     }]);
 })();

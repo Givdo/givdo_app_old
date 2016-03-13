@@ -24,6 +24,16 @@
             }
           }
         })
+        .state('challenge', {
+          url: '/challenge',
+          parent: 'app',
+          views: {
+            'quiz-content': {
+              templateUrl: 'templates/quiz/challenge.html',
+              controller: 'ChallengeFriendCtrl'
+            }
+          }
+        })
         .state('show-game', {
           url: '/game',
           parent: 'app',
@@ -144,6 +154,19 @@
       };
       $scope.inviteFriends = function () {
         facebook.gameInvite('Come play with me for a fairer world!', 'Give and Play')
+          .then(QuizRound.continue);
+      };
+    }])
+
+    .controller('ChallengeFriendCtrl', ['$scope', 'facebook', 'UserRepo', 'GameRepo', 'QuizRound', function ($scope, facebook, UserRepo, GameRepo, QuizRound) {
+      UserRepo.friends().then(function (friends) {
+        $scope.friends = friends.relation('users');
+      });
+
+      $scope.invite = facebook.invite;
+
+      $scope.challenge = function (friend) {
+        GameRepo.versus({id: friend.attr('uid')})
           .then(QuizRound.continue);
       };
     }])
