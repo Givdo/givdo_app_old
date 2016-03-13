@@ -17,24 +17,4 @@ describe('NewGameCtrl', function(){
       });
     };
   }));
-
-  describe('inviteFriends()', function () {
-    it('invites the facebook users with a nice message', function () {
-      controller();
-
-      $scope.inviteFriends();
-
-      expect(facebook.gameInvite).toHaveBeenCalledWith('Come play with me for a fairer world!', 'Give and Play');
-    });
-
-    it('starts the game and moves to the organization screen after invite', inject(function ($rootScope) {
-      controller();
-
-      $scope.inviteFriends();
-      inviteDefer.resolve('game');
-      $rootScope.$digest();
-
-      expect(QuizRound.continue).toHaveBeenCalledWith('game');
-    }));
-  });
 });
