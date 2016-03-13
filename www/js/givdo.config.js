@@ -2,5 +2,5 @@
   'use strict';
 
   angular.module('givdo.config', [])
-    .constant('GivdoApiURL', 'https://givdo-qa.herokuapp.com/api/v1');
+    .constant('GivdoApiURL', 'https://givdo-prod.herokuapp.com/api/v1');
 })();
