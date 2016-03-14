@@ -1,30 +1,24 @@
 'use strict';
 
 describe('ChallengeFriendCtrl', function(){
-  var $scope, GameRepo, UserRepo, QuizRound, friendsDefer, facebook, controller;
+  var $scope, QuizRound, facebook, controller;
   beforeEach(inject(function ($rootScope, $controller, $q) {
     $scope = $rootScope.$new();
     facebook = jasmine.createSpyObj('facebook', ['invite']);
     QuizRound = jasmine.createSpyObj('quiz round', ['continue']);
-    UserRepo = jasmine.createSpyObj('UserRepo', ['friends']);
-    GameRepo = jasmine.createSpyObj('GameRepo', ['versus']);
-    friendsDefer = $q.defer();
-    UserRepo.friends.and.returnValue(friendsDefer.promise);
 
     controller = $controller('ChallengeFriendCtrl', {
       $scope: $scope,
       QuizRound: QuizRound,
-      GameRepo: GameRepo,
-      UserRepo: UserRepo,
       facebook: facebook
     });
   }));
 
   describe('initialization', function () {
-    it('loads the user friends into the scope', inject(function () {
+    it('loads the user friends into the scope', inject(function (givdo) {
       var friendsList = jasmine.createSpyObj('friends list', ['relation'])
       friendsList.relation.and.returnValue(['user 1', 'user 2']);
-      friendsDefer.resolve(friendsList);
+      givdo.user.deferred_friends.resolve(friendsList);
       $scope.$digest();
 
       expect($scope.friends).toEqual(['user 1', 'user 2']);
@@ -33,26 +27,19 @@ describe('ChallengeFriendCtrl', function(){
   });
 
   describe('challenge(friend)', function () {
-    var createDefer, friend;
+    var friend;
     beforeEach(inject(function ($q, resource) {
-      createDefer = $q.defer();
       friend = resource({attributes: {provider: 'facebook', uid: 'facebook-123456'}});
-      GameRepo.versus.and.returnValue(createDefer.promise);
     }));
 
-    it('creates a game with the friend user', inject(function () {
+    it('creates a game with the friend user', inject(function (givdo) {
       $scope.challenge(friend);
 
-      expect(GameRepo.versus).toHaveBeenCalledWith(friend);
+      expect(givdo.game.versus).toHaveBeenCalledWith(friend);
     }));
   });
 
   describe('invite()', function () {
-    var inviteDefer, friend;
-    beforeEach(inject(function ($q, resource) {
-      GameRepo.versus.and.returnValue($q.when());
-    }));
-
     it('invites using the facebook invite wrapper', inject(function () {
       $scope.invite();
 

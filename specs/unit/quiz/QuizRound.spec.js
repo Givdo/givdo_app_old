@@ -1,11 +1,10 @@
 'use strict';
 
 describe('QuizRound', function(){
-  var game, player, GameRepo;
-  beforeEach(inject(function ($state, _GameRepo_) {
+  var game, player;
+  beforeEach(inject(function ($state) {
     spyOn($state, 'go');
 
-    GameRepo = _GameRepo_;
     game = jasmine.createSpyObj('current game', ['relation']);
     player = jasmine.createSpyObj('player', ['attr']);
 
@@ -61,25 +60,21 @@ describe('QuizRound', function(){
   });
 
   describe('playFor', function () {
-    var deferredPlayFor;
     beforeEach(inject(function (QuizRound, $q) {
-      deferredPlayFor = $q.defer();
-      spyOn(GameRepo, 'playFor');
       playerState('organization name', false)
       gameState();
-      GameRepo.playFor.and.returnValue(deferredPlayFor.promise);
 
       QuizRound.continue(game);
     }));
 
-    it('moves the state to trivia once player\'s organization is set', inject(function (QuizRound, $state, $rootScope) {
+    it('moves the state to trivia once player\'s organization is set', inject(function (QuizRound, $state, $rootScope, givdo) {
       game.relation.and.returnValue(player);
       $state.go.calls.reset();
       QuizRound.playFor({id: 15});
-      deferredPlayFor.resolve(game);
+      givdo.game.deferred_playFor.resolve(game);
       $rootScope.$digest();
 
-      expect(GameRepo.playFor).toHaveBeenCalledWith(game, {id: 15});
+      expect(givdo.game.playFor).toHaveBeenCalledWith(game, {id: 15});
       expect(player.attr).toHaveBeenCalledWith('organization');
     }));
   });
@@ -108,7 +103,7 @@ describe('QuizRound', function(){
 
   describe('answer', function () {
     var wrongOption, correctOption, answer, trivia;
-    beforeEach(inject(function ($q, $rootScope, QuizRound, GameRepo) {
+    beforeEach(inject(function ($q, $rootScope, QuizRound, givdo) {
       wrongOption = {id: 11, attributes: {}}, correctOption = {id: 10, attributes: {}};
       trivia = jasmine.createSpyObj('trivia', ['relation']);
       trivia.relation.and.returnValue([correctOption, wrongOption]);
@@ -116,8 +111,7 @@ describe('QuizRound', function(){
       answer.attr.and.returnValue(10);
       answer.relation.and.returnValue(game);
 
-      spyOn(GameRepo, 'answer');
-      GameRepo.answer.and.returnValue($q.when(answer));
+      givdo.game.deferred_answer.resolve(answer);
 
       gameState(trivia);
       QuizRound.continue(game);
@@ -125,8 +119,8 @@ describe('QuizRound', function(){
       $rootScope.$digest();
     }));
 
-    it('answers the current trivia with the given option', inject(function () {
-      expect(GameRepo.answer).toHaveBeenCalledWith(game, trivia, correctOption);
+    it('answers the current trivia with the given option', inject(function (givdo) {
+      expect(givdo.game.answer).toHaveBeenCalledWith(game, trivia, correctOption);
     }));
 
     it('reveals the correct answer', inject(function () {

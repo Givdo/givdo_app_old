@@ -91,7 +91,7 @@
       };
     })
 
-    .service('QuizRound', ['$state', '$q', 'GameRepo', function ($state, $q, GameRepo) {
+    .service('QuizRound', ['$state', '$q', 'givdo', function ($state, $q, givdo) {
       var currentGame, currentTrivia, currentPlayer;
       var setCurrentGame = function (game) {
         currentGame = game;
@@ -129,10 +129,10 @@
           }
         },
         playFor: function (organization) {
-          return GameRepo.playFor(currentGame, organization);
+          return givdo.game.playFor(currentGame, organization);
         },
         answer: function (option) {
-          return GameRepo.answer(currentGame, currentTrivia, option).then(function (answer) {
+          return givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
             revealAnser(answer);
             setCurrentGame(answer.relation('game'));
             return answer;
@@ -148,21 +148,21 @@
       $scope.players = game.relation('players');
     }])
 
-    .controller('NewGameCtrl', ['$scope', 'facebook', 'GameRepo', 'QuizRound', function ($scope, facebook, GameRepo, QuizRound) {
+    .controller('NewGameCtrl', ['$scope', 'facebook', 'givdo', 'QuizRound', function ($scope, facebook, givdo, QuizRound) {
       $scope.playSingle = function () {
-        GameRepo.singlePlayer().then(QuizRound.continue);
+        givdo.game.singlePlayer().then(QuizRound.continue);
       };
     }])
 
-    .controller('ChallengeFriendCtrl', ['$scope', 'facebook', 'UserRepo', 'GameRepo', 'QuizRound', function ($scope, facebook, UserRepo, GameRepo, QuizRound) {
-      UserRepo.friends().then(function (friends) {
+    .controller('ChallengeFriendCtrl', ['$scope', 'facebook', 'UserRepo', 'givdo', 'QuizRound', function ($scope, facebook, UserRepo, givdo, QuizRound) {
+      givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
 
       $scope.invite = facebook.invite;
 
       $scope.challenge = function (friend) {
-        GameRepo.versus(friend).then(QuizRound.continue);
+        givdo.game.versus(friend).then(QuizRound.continue);
       };
     }])
 
@@ -182,8 +182,8 @@
       $scope.players = game.relation('players');
     }])
 
-    .controller('GameHistoryCtrl', ['$scope', 'GameRepo', 'QuizRound', function ($scope, GameRepo, QuizRound) {
-      GameRepo.query().then(function (games) {
+    .controller('GameHistoryCtrl', ['$scope', 'givdo', 'QuizRound', function ($scope, givdo, QuizRound) {
+      givdo.game.query().then(function (games) {
         $scope.games = games;
       });
       $scope.openGame = QuizRound.continue;
