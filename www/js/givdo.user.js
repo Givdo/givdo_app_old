@@ -16,8 +16,8 @@
         });
     }])
 
-    .controller('FriendsCtrl', ['$scope', 'UserRepo', function ($scope, UserRepo) {
-      UserRepo.friends().then(function (friends) {
+    .controller('FriendsCtrl', ['$scope', 'givdo', function ($scope, givdo) {
+      givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
     }]);
