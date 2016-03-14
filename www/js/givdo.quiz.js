@@ -154,7 +154,7 @@
       };
     }])
 
-    .controller('ChallengeFriendCtrl', ['$scope', 'facebook', 'UserRepo', 'givdo', 'QuizRound', function ($scope, facebook, UserRepo, givdo, QuizRound) {
+    .controller('ChallengeFriendCtrl', ['$scope', 'facebook', 'givdo', 'QuizRound', function ($scope, facebook, givdo, QuizRound) {
       givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
