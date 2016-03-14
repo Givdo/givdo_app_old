@@ -6,11 +6,12 @@
     beforeEach(inject(function (transport, repository) {
       spyOn(transport, 'load');
       AccountRepo = repository({
-        search: {url: '/search.json', method: 'GET'},
+        search: {url: '/search.json'},
         searchAdmin: {url: '/search.json', method: 'GET', params: {role: 'Admin'}},
-        delete: {url: '/account/{{id}}.json', method: 'DELETE', data: true},
+        deleteNoData: {url: '/account/{{id}}.json', method: 'DELETE', data: false},
+        delete: {url: '/account/{{id}}.json', method: 'DELETE'},
         update: {url: '/account.json', method: 'PATCH', data: {role: 'User'}},
-        create: {url: '/accounts.json', method: 'POST', data: true}
+        create: {url: '/accounts.json', method: 'POST'}
       });
     }));
 
@@ -19,6 +20,23 @@
 
       expect(transport.load).toHaveBeenCalledWith('/account/10.json', {
         data: {id: 10},
+        method: 'DELETE'
+      });
+    }));
+
+    it('accepts string interpolation based on the attributes of the resource passed as param', inject(function (transport, resource) {
+      AccountRepo.delete(resource({attributes: {id: 10}}));
+
+      expect(transport.load).toHaveBeenCalledWith('/account/10.json', {
+        data: {attributes: {id: 10}},
+        method: 'DELETE'
+      });
+    }));
+
+    it('accepts does not include the data when data is false', inject(function (transport, resource) {
+      AccountRepo.deleteNoData(resource({attributes: {id: 10}}));
+
+      expect(transport.load).toHaveBeenCalledWith('/account/10.json', {
         method: 'DELETE'
       });
     }));

@@ -19,11 +19,11 @@ describe('GameRepo', function() {
 
     describe('versus', function () {
       it('gets the game versus the given user', function () {
-        $http.expectGET('http://test.com/api/v1/games/versus/12345?id=12345').respond({
+        $http.expectGET('http://test.com/api/v1/games/versus/12345').respond({
           data: {id: 10}
         });
 
-        GameRepo.versus({id: '12345'}).then(function (game) {
+        GameRepo.versus({attributes: {uid: '12345'}}).then(function (game) {
           expect(game.id).toEqual(10);
         });
         $http.flush();

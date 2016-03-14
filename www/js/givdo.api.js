@@ -25,8 +25,8 @@
     .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       var GameRepo = repository({
         singlePlayer: {url: GivdoApiURL + '/games/single'},
-        versus: {url: GivdoApiURL + '/games/versus/{{id}}', method: 'GET'},
-        query: {url: GivdoApiURL + '/games', method: 'GET'}
+        versus: {url: GivdoApiURL + '/games/versus/{{uid}}', params: false},
+        query: {url: GivdoApiURL + '/games'}
       });
 
       GameRepo.answer = function (game, trivia, option) {

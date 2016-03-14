@@ -43,7 +43,7 @@ describe('ChallengeFriendCtrl', function(){
     it('creates a game with the friend user', inject(function () {
       $scope.challenge(friend);
 
-      expect(GameRepo.versus).toHaveBeenCalledWith({id: 'facebook-123456'});
+      expect(GameRepo.versus).toHaveBeenCalledWith(friend);
     }));
   });
 

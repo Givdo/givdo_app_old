@@ -162,8 +162,7 @@
       $scope.invite = facebook.invite;
 
       $scope.challenge = function (friend) {
-        GameRepo.versus({id: friend.attr('uid')})
-          .then(QuizRound.continue);
+        GameRepo.versus(friend).then(QuizRound.continue);
       };
     }])
 
