@@ -1,19 +1,18 @@
 'use strict';
 
 describe('ChooseOrganizationCtrl', function(){
-  var $scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound, controller;
-  beforeEach(inject(function ($q, $rootScope, $controller) {
+  var $scope, $ionicSlideBoxDelegate, QuizRound, controller;
+  beforeEach(inject(function ($q, $rootScope, $controller, givdo) {
     $scope = $rootScope.$new();
     $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update', 'currentIndex']);
-    OrganizationRepo = jasmine.createSpyObj('OrganizationRepo', ['query']);
     QuizRound = jasmine.createSpyObj('QuizRound', ['playFor']);
     QuizRound.playFor.and.returnValue($q.when());
 
     controller = function (organizations) {
-      OrganizationRepo.query.and.returnValue($q.when(organizations || []));
+      givdo.organizations.deferred_query.resolve(organizations || []);
       var controller = $controller('ChooseOrganizationCtrl', {
-        $scope: $scope, $ionicSlideBoxDelegate: $ionicSlideBoxDelegate,
-        OrganizationRepo: OrganizationRepo, QuizRound: QuizRound
+        $scope: $scope, QuizRound: QuizRound,
+        $ionicSlideBoxDelegate: $ionicSlideBoxDelegate
       });
       $scope.$digest();
       return controller;
@@ -21,14 +20,13 @@ describe('ChooseOrganizationCtrl', function(){
   }));
 
   describe('initialization', function () {
-    it('loads the first page of Organizations into the scope', function () {
+    it('loads the first page of Organizations into the scope', inject(function (givdo) {
       controller([1, 2, 3]);
 
-      expect(OrganizationRepo.query).toHaveBeenCalledWith({});
+      expect(givdo.organizations.query).toHaveBeenCalledWith({});
       expect($scope.organizations).toEqual([1, 2, 3]);
-      expect(OrganizationRepo.query).toHaveBeenCalled();
       expect($ionicSlideBoxDelegate.update).toHaveBeenCalled();
-    });
+    }));
   });
 
   describe('.slideChanged (infinite pagination)', function () {

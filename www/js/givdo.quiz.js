@@ -189,7 +189,7 @@
       $scope.openGame = QuizRound.continue;
     }])
 
-    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'OrganizationRepo', 'QuizRound', '$ionicFilterBar', function ($scope, $ionicSlideBoxDelegate, OrganizationRepo, QuizRound, $ionicFilterBar) {
+    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'givdo', 'QuizRound', '$ionicFilterBar', function ($scope, $ionicSlideBoxDelegate, givdo, QuizRound, $ionicFilterBar) {
       var Threshold = 3;
       var page;
 
@@ -200,7 +200,7 @@
       };
       var search = function (searchText) {
         var params = searchText ? {search: {name_cont: searchText}} : {};
-        OrganizationRepo.query(params).then(function (organizations) {
+        givdo.organizations.query(params).then(function (organizations) {
           $scope.organizations = [];
           loadOrganizations(organizations);
         });
