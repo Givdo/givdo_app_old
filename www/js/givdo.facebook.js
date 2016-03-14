@@ -49,7 +49,7 @@
       };
     }])
 
-    .factory('facebookGameInvite', ['$cordovaFacebook', 'GameRepo', function ($cordovaFacebook, GameRepo) {
+    .factory('facebookGameInvite', ['$cordovaFacebook', 'givdo', function ($cordovaFacebook, givdo) {
       return function (message, title) {
         return $cordovaFacebook.showDialog({
           method: 'apprequests',
@@ -57,7 +57,7 @@
           title: title,
           actionType:'turn'
         }).then(function (response) {
-          return GameRepo.versus({id: _.first(response.to)});
+          return givdo.game.versus({uid: _.first(response.to)});
         });
       };
     }])

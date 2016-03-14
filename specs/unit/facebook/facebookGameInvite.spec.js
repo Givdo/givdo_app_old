@@ -1,15 +1,11 @@
 'use strict';
 
 describe('facebook.gameInvite', function () {
-  var facebook, deferredFacebookDialog, deferredGameInvite;
-  beforeEach(inject(function ($q, $injector, $cordovaFacebook, GameRepo) {
+  var facebook, deferredFacebookDialog;
+  beforeEach(inject(function ($q, $injector, $cordovaFacebook) {
     deferredFacebookDialog = $q.defer();
     spyOn($cordovaFacebook, 'showDialog');
     $cordovaFacebook.showDialog.and.returnValue(deferredFacebookDialog.promise);
-
-    deferredGameInvite = $q.defer();
-    spyOn(GameRepo, 'versus');
-    GameRepo.versus.and.returnValue(deferredGameInvite.promise);
 
     facebook = $injector.get('facebook');
   }));
@@ -35,26 +31,25 @@ describe('facebook.gameInvite', function () {
     expect(fails).toHaveBeenCalled();
   }));
 
-  it('fails the promise when givdo game invitation fails', inject(function ($rootScope) {
+  it('fails the promise when givdo game invitation fails', inject(function ($rootScope, givdo) {
     var fails = jasmine.createSpy();
 
     facebook.gameInvite().then(null, fails);
     deferredFacebookDialog.resolve({});
-    deferredGameInvite.reject();
+    givdo.game.deferred_versus.reject();
     $rootScope.$digest();
 
     expect(fails).toHaveBeenCalled();
   }));
 
-  it('creates the game and returns the object when all succeeds', inject(function ($rootScope, GameRepo) {
-    var succeeds = jasmine.createSpy();
+  it('creates the game and returns the object when all succeeds', inject(function ($rootScope, givdo) {
+    var gameInvite = facebook.gameInvite();
 
-    facebook.gameInvite().then(succeeds);
     deferredFacebookDialog.resolve({to: ['facebook-id-1']});
-    deferredGameInvite.resolve({id: 'game id'});
+    givdo.game.deferred_versus.resolve({id: 'game id'});
     $rootScope.$digest();
 
-    expect(GameRepo.versus).toHaveBeenCalledWith({id: 'facebook-id-1'});
-    expect(succeeds).toHaveBeenCalledWith({id: 'game id'});
+    expect(givdo.game.versus).toHaveBeenCalledWith({uid: 'facebook-id-1'});
+    expect(gameInvite).toResolveTo({id: 'game id'});
   }));
 });
