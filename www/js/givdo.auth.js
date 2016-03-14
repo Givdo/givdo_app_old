@@ -14,8 +14,11 @@
 
       return {
         request: function (config) {
-          if (shouldIntercept(config) && session.token()) {
-            config.headers.Authorization = 'Token token="' + session.token() + '"';
+          if (shouldIntercept(config)) {
+            return session.token().then(function (token) {
+              config.headers.Authorization = 'Token token="' + token + '"';
+              return config;
+            });
           }
           return config;
         },
@@ -28,22 +31,35 @@
       }
     }])
 
-    .factory('session', ['$rootScope', 'localStorageService', function ($rootScope, localStorageService) {
-      var SessionTokenKey = 'session.token';
+    .factory('session', ['$rootScope', '$q', function ($rootScope, $q) {
+      var sessionDefer = $q.defer();
 
-      return {
-        token: function (newToken) {
-          if (newToken !== undefined) {
-            localStorageService.set(SessionTokenKey, newToken);
-            $rootScope.$emit('givdo:session:up');
-          }
-          return localStorageService.get(SessionTokenKey);
-        },
-        clear: function  () {
-          localStorageService.remove(SessionTokenKey);
-          $rootScope.$emit('givdo:session:down');
+      var session = function (newSession) {
+        if (newSession) {
+          sessionDefer.resolve(newSession);
+          $rootScope.$emit('givdo:session:up');
         }
+        return sessionDefer.promise;
       };
+
+      session.token = function () {
+        return session().then(function (s) {
+          return s.attr('token');
+        });
+      };
+
+      session.user = function () {
+        return session().then(function (s) {
+          return s.relation('user');
+        });
+      };
+
+      session.clear = function  () {
+        sessionDefer = $q.defer();
+        $rootScope.$emit('givdo:session:down');
+      };
+
+      return session;
     }])
 
     .factory('loginModal', ['$ionicModal', function ($ionicModal) {
@@ -68,22 +84,16 @@
         $rootScope.$on('givdo:session:up', loginModal.close);
         $rootScope.$on('givdo:session:down', loginModal.open);
 
-        facebook.checkStatus().then(function (auth) {
-          session.token(auth.token);
-        }, function () {
-          session.clear();
-        });
+        facebook.checkStatus().then(session, session.clear);
       };
     }])
 
     .controller('FacebookLoginCtrl', ['$scope', '$ionicPopup', 'facebook', 'session', function ($scope, $ionicPopup, facebook, session) {
       $scope.facebookLogin = function () {
-        facebook.login().then(function (auth) {
-          session.token(auth.token);
-        }, function (response) {
+        facebook.login().then(session, function (error) {
           $ionicPopup.alert({
            title: 'Uh, oh!',
-           template: response.data.error
+           template: error.attr('message')
          });
         });
       };

@@ -1,15 +1,11 @@
 'use strict';
 
 describe('facebook.checkStatus', function () {
-  var facebook, deferredFacebookCheckStatus, deferredOauthCallback;
-  beforeEach(inject(function ($q, $injector, $cordovaFacebook, OauthCallback) {
+  var facebook, deferredFacebookCheckStatus;
+  beforeEach(inject(function ($q, $injector, $cordovaFacebook) {
     deferredFacebookCheckStatus = $q.defer();
     spyOn($cordovaFacebook, 'getLoginStatus');
     $cordovaFacebook.getLoginStatus.and.returnValue(deferredFacebookCheckStatus.promise);
-
-    deferredOauthCallback = $q.defer();
-    spyOn(OauthCallback, 'authenticate');
-    OauthCallback.authenticate.and.returnValue(deferredOauthCallback.promise);
 
     facebook = $injector.get('facebook');
   }));
@@ -34,26 +30,25 @@ describe('facebook.checkStatus', function () {
     expect(fails).toHaveBeenCalled();
   }));
 
-  it('fails the promise when givdo oauth fails', inject(function ($rootScope) {
+  it('fails the promise when givdo oauth fails', inject(function ($rootScope, givdo) {
     var fails = jasmine.createSpy();
 
     facebook.checkStatus().then(null, fails);
     deferredFacebookCheckStatus.resolve({status: 'connected', authResponse: {}});
-    deferredOauthCallback.reject();
+    givdo.oauth.deferred_callback.reject();
     $rootScope.$digest();
 
     expect(fails).toHaveBeenCalled();
   }));
 
-  it('authenticates on oauth and returns the token', inject(function ($rootScope, OauthCallback) {
-    var succeeds = jasmine.createSpy();
+  it('authenticates on oauth and returns the token', inject(function ($rootScope, givdo, testSession) {
+    var checkStatus = facebook.checkStatus();
 
-    facebook.checkStatus().then(succeeds);
     deferredFacebookCheckStatus.resolve({status: 'connected', authResponse: {userID: '123', accessToken: 'facebook access token', expiresIn: '123'}});
-    deferredOauthCallback.resolve({token: 'my token'});
+    givdo.oauth.deferred_callback.resolve(testSession);
     $rootScope.$digest();
 
-    expect(OauthCallback.authenticate).toHaveBeenCalledWith('facebook', {uid: '123', access_token: 'facebook access token', expires_in: '123'});
-    expect(succeeds).toHaveBeenCalledWith({token: 'my token'});
+    expect(givdo.oauth.callback).toHaveBeenCalledWith({provider: 'facebook', uid: '123', access_token: 'facebook access token', expires_in: '123'});
+    expect(checkStatus).toResolveTo(testSession);
   }));
 });

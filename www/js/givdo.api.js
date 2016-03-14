@@ -6,14 +6,10 @@
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
     }])
 
-    .factory('OauthCallback', ['$http', 'GivdoApiURL', function ($http, GivdoApiURL) {
-      return {
-        authenticate: function (provider, data) {
-          return $http.post(GivdoApiURL + '/oauth/' + provider + '/callback', data).then(function (result) {
-            return result.data;
-          });
-        }
-      };
+    .factory('Oauth', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+      return repository({
+        callback: {url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST'}
+      });
     }])
 
     .factory('UserRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
@@ -42,7 +38,16 @@
 
     .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       return repository({
-        query: {url: GivdoApiURL + '/organizations', collection: true}
+        query: {url: GivdoApiURL + '/organizations'}
       });
+    }])
+
+    .factory('givdo', ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', function (Oauth, UserRepo, GameRepo, OrganizationRepo) {
+      return {
+        oauth: Oauth,
+        user: UserRepo,
+        game: GameRepo,
+        organizations: OrganizationRepo
+      };
     }]);
 })();

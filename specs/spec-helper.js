@@ -29,7 +29,38 @@ angular.module('givdo-test.custom-matchers', [])
     });
   }]);
 
-angular.module('givdo-test', ['givdo', 'ngCordovaMocks', 'givdo-test.custom-matchers']);
+angular.module('givdo-mocks', [])
+  .factory('testSession', ['resource', function (resource) {
+    return resource({
+      attributes: {token: 'user-token'},
+      relationships: {user: {data: {id: '1234', attributes: {name: 'John Doe'}}}}
+    });
+  }])
+
+  .factory('givdo', ['$q', function ($q) {
+    var mockMethods = function (names) {
+      var object = {};
+      _.each(names, function (name) {
+        var deferred = $q.defer();
+        object[name] = jasmine.createSpy().and.returnValue(deferred.promise);
+        object['deferred_' + name] = deferred;
+      });
+      return object;
+    }
+
+    return {
+      oauth: mockMethods(['callback']),
+      user: mockMethods(['friends']),
+      game: mockMethods(['singlePlayer', 'versus', 'query']),
+      organizations: mockMethods(['query'])
+    };
+  }])
+
+  .run(['session', 'testSession', function (session, testSession) {
+    session(testSession);
+  }]);
+
+angular.module('givdo-test', ['givdo', 'givdo-mocks', 'ngCordovaMocks', 'givdo-test.custom-matchers']);
 
 beforeEach(module('givdo-test'));
 

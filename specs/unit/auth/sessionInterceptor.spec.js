@@ -2,40 +2,41 @@
 
 describe('sessionInterceptor', function () {
   describe('request interception', function () {
-    it('applies the auth token to the request if going to the givdo api and user has a token', inject(function (GivdoApiURL, session, sessionInterceptor) {
+    it('applies the auth token to the request if going to the givdo api and user has a token', inject(function (GivdoApiURL, session, $rootScope, sessionInterceptor) {
       var config = {
         url: GivdoApiURL,
         headers: {}
       };
 
-      session.token('current.token');
-      sessionInterceptor.request(config);
-
-      expect(config.headers.Authorization).toEqual('Token token="current.token"');
+      sessionInterceptor.request(config).then(function (modifiedConfig) {
+        expect(modifiedConfig.headers.Authorization).toEqual('Token token="user-token"');
+      });
+      $rootScope.$digest();
     }));
 
-    it('does not intercept the request if not going to the givdo api', inject(function (GivdoApiURL, session, sessionInterceptor) {
+    it('does not intercept the request if not going to the givdo api', inject(function (GivdoApiURL, session, $rootScope, sessionInterceptor) {
       var config = {
         url: 'http://www.google.com/',
         headers: {}
       };
 
-      session.token('current.token');
-      sessionInterceptor.request(config);
+      var modifiedConfig = sessionInterceptor.request(config);
 
-      expect(config.headers.Authorization).toEqual(undefined);
+      expect(modifiedConfig.headers.Authorization).toEqual(undefined);
     }));
 
-    it('does not intercept the request if token is not set', inject(function (GivdoApiURL, session, sessionInterceptor) {
+    it('does not intercept the request if token is not set', inject(function (GivdoApiURL, session, $rootScope, sessionInterceptor) {
       var config = {
         url: GivdoApiURL,
         headers: {}
       };
+      var modifiedConfig = jasmine.createSpy();
 
       session.clear();
-      sessionInterceptor.request(config);
+      sessionInterceptor.request(config).then(modifiedConfig);
+      $rootScope.$digest();
 
-      expect(config.headers.Authorization).toEqual(undefined);
+      expect(modifiedConfig).not.toHaveBeenCalled();
     }));
   });
 

@@ -15,14 +15,13 @@ describe('authLock', function () {
       expect(facebook.checkStatus).toHaveBeenCalled();
     }));
 
-    it('sets the user token to session', inject(function (facebook, authLock, loginModal, session, $rootScope) {
+    it('sets the user token to session', inject(function (facebook, authLock, loginModal, session, testSession, $rootScope) {
+      session.clear();
       authLock();
-      spyOn(session, 'token');
 
-      deferredFacebookStatus.resolve({token: 'new token'});
-      $rootScope.$digest();
+      deferredFacebookStatus.resolve(testSession);
 
-      expect(session.token).toHaveBeenCalledWith('new token');
+      expect(session()).toResolveTo(testSession);
     }));
   });
 

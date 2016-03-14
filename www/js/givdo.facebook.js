@@ -10,7 +10,7 @@
       }
     }])
 
-    .factory('facebookAuth', ['OauthCallback', '$q', function (OauthCallback, $q) {
+    .factory('facebookAuth', ['givdo', '$q', function (givdo, $q) {
       return function (facebookData) {
         if (facebookData.status !== 'connected') {
           return $q.reject();
@@ -18,12 +18,13 @@
 
         var authResponse = facebookData.authResponse;
         var data = {
+          provider: 'facebook',
           uid: authResponse.userID,
           access_token: authResponse.accessToken,
           expires_in: authResponse.expiresIn
         };
 
-        return OauthCallback.authenticate('facebook', data);
+        return givdo.oauth.callback(data);
       };
     }])
 
