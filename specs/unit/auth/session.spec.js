@@ -2,9 +2,10 @@
 
 describe('session', function () {
   var sessionData, sessionUser;
-  beforeEach(inject(function (resource) {
+  beforeEach(inject(function (resource, session) {
     sessionUser = {id: '1234'};
-    sessionData = resource({attributes: {token: 'user-token'}, relationships: {user: {data: sessionUser}}});
+    sessionData = resource({id: 'user-token', relationships: {user: {data: sessionUser}}});
+    session.clear();
   }));
 
   describe('session(newSession)', function () {

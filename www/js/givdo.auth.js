@@ -9,7 +9,7 @@
 
     .factory('sessionInterceptor', ['GivdoApiURL', 'session', '$q', function (baseUrl, session, $q) {
       var shouldIntercept = function (config) {
-        return config.url.indexOf(baseUrl) === 0;
+        return config.auth !== false && config.url.indexOf(baseUrl) === 0;
       };
 
       return {
@@ -44,7 +44,7 @@
 
       session.token = function () {
         return session().then(function (s) {
-          return s.attr('token');
+          return s.id;
         });
       };
 

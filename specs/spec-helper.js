@@ -32,7 +32,7 @@ angular.module('givdo-test.custom-matchers', [])
 angular.module('givdo-mocks', [])
   .factory('testSession', ['resource', function (resource) {
     return resource({
-      attributes: {token: 'user-token'},
+      id: 'user-token',
       relationships: {user: {data: {id: '1234', attributes: {name: 'John Doe'}}}}
     });
   }])

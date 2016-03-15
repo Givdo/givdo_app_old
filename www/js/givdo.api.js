@@ -8,7 +8,7 @@
 
     .factory('Oauth', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       return repository({
-        callback: {url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST'}
+        callback: {url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false}
       });
     }])
 
