@@ -8,23 +8,12 @@
         abstract: true,
         templateUrl: 'templates/ui/menu.html'
       })
-        .state('profile', {
-          url: '/profile',
-          parent: 'ui',
-          views: {
-            'content': {
-              templateUrl: 'templates/ui/profile.html',
-              controller: 'ProfileCtrl'
-            }
-          }
-        })
         .state('welcome-ui', {
           url: '/welcome-ui',
           parent: 'ui',
           views: {
             'content': {
-              templateUrl: 'templates/ui/welcome.html',
-              controller: 'ProfileCtrl'
+              templateUrl: 'templates/ui/welcome.html'
             }
           }
         })
@@ -33,8 +22,7 @@
           parent: 'ui',
           views: {
             'content': {
-              templateUrl: 'templates/ui/no-guest.html',
-              controller: 'ProfileCtrl'
+              templateUrl: 'templates/ui/no-guest.html'
             }
           }
         })
@@ -43,8 +31,7 @@
           parent: 'ui',
           views: {
             'content': {
-              templateUrl: 'templates/ui/notifications.html',
-              controller: 'ProfileCtrl'
+              templateUrl: 'templates/ui/notifications.html'
             }
           }
         })
@@ -53,8 +40,7 @@
           parent: 'ui',
           views: {
             'content': {
-              templateUrl: 'templates/ui/sponsor.html',
-              controller: 'ProfileCtrl'
+              templateUrl: 'templates/ui/sponsor.html'
             }
           }
         })
@@ -63,13 +49,9 @@
           parent: 'ui',
           views: {
             'content': {
-              templateUrl: 'templates/ui/activity.html',
-              controller: 'ProfileCtrl'
+              templateUrl: 'templates/ui/activity.html'
             }
           }
         });
-    }])
-
-    .controller('ProfileCtrl', ['$scope', function ($scope) {
     }]);
 })();
