@@ -18,6 +18,12 @@
       });
     }])
 
+    .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+      return repository({
+        query: {url: GivdoApiURL + '/organizations'}
+      });
+    }])
+
     .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       var GameRepo = repository({
         singlePlayer: {url: GivdoApiURL + '/games/single'},
@@ -34,12 +40,6 @@
       };
 
       return GameRepo;
-    }])
-
-    .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      return repository({
-        query: {url: GivdoApiURL + '/organizations'}
-      });
     }])
 
     .factory('givdo', ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', function (Oauth, UserRepo, GameRepo, OrganizationRepo) {

@@ -4,6 +4,19 @@
       <div class="profile-picture" style="background-image: url('{{ user.attr('image') }}');"></div>
       <span class="profile-name">{{ user.attr('name') }}</span>
     </div>
+    <ion-list type="card">
+      <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
+        <div ng-show="organization">
+          <img src="avatar.jpg">
+          <h2>Pretty Hate Machine</h2>
+          <p>Nine Inch Nails</p>
+        </div>
+        <span ng-hide="organization">Select an organization to give</span>
+        <button class="button button-royal">
+          <i class="icon ion-edit"></i>
+        </button>
+      </ion-item>
+    </ion-list>
     <div class="profile-contents">
       <span><img src="img/causes-icon.png">Your Causes</span><br>
       <img src="img/causes/1.jpg">

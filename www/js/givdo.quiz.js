@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook', 'jett.ionic.filter.bar'])
+  angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook', 'givdo.util', 'jett.ionic.filter.bar'])
     .config(['$stateProvider', function ($stateProvider) {
       $stateProvider
         .state('game-history', {
@@ -61,19 +61,6 @@
             trivia: function(QuizRound) { return QuizRound.trivia(); },
             game: function(QuizRound) { return QuizRound.game(); }
           }
-        })
-        .state('choose-organization', {
-          url: '/choose-organization',
-          parent: 'app',
-          views: {
-            'quiz-content': {
-              templateUrl: 'templates/quiz/choose-organization.html',
-              controller: 'ChooseOrganizationCtrl'
-            }
-          },
-          resolve: {
-            game: function(QuizRound) { return QuizRound.game(); }
-          }
         });
     }])
 
@@ -91,7 +78,7 @@
       };
     })
 
-    .service('QuizRound', ['$state', '$q', 'givdo', function ($state, $q, givdo) {
+    .service('QuizRound', ['$state', '$q', 'givdo', 'OrganizationPicker', function ($state, $q, givdo, OrganizationPicker) {
       var currentGame, currentTrivia, currentPlayer;
       var setCurrentGame = function (game) {
         currentGame = game;
@@ -109,6 +96,9 @@
         }
         return $q.reject();
       };
+      var savePlayerOrganization = function (organization) {
+        return givdo.game.playFor(currentGame, organization);
+      };
       var self = {
         trivia: function () {
           return asPromised(currentTrivia);
@@ -125,11 +115,8 @@
           } else if (currentPlayer.attr('organization')) {
             $state.go('trivia', {}, {reload: true});
           } else {
-            $state.go('choose-organization', {}, {reload: true});
+            OrganizationPicker.open().then(savePlayerOrganization).then(self.continue);
           }
-        },
-        playFor: function (organization) {
-          return givdo.game.playFor(currentGame, organization);
         },
         answer: function (option) {
           return givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
@@ -139,7 +126,6 @@
           });
         }
       };
-
       return self;
     }])
 
@@ -187,39 +173,5 @@
         $scope.games = games;
       });
       $scope.openGame = QuizRound.continue;
-    }])
-
-    .controller('ChooseOrganizationCtrl', ['$scope', '$ionicSlideBoxDelegate', 'givdo', 'QuizRound', '$ionicFilterBar', function ($scope, $ionicSlideBoxDelegate, givdo, QuizRound, $ionicFilterBar) {
-      var Threshold = 3;
-      var page;
-
-      var loadOrganizations = function (organizations) {
-        page = organizations;
-        $scope.organizations = $scope.organizations.concat(organizations);
-        $ionicSlideBoxDelegate.update();
-      };
-      var search = function (searchText) {
-        var params = searchText ? {search: {name_cont: searchText}} : {};
-        givdo.organizations.query(params).then(function (organizations) {
-          $scope.organizations = [];
-          loadOrganizations(organizations);
-        });
-      };
-      search();
-
-      $scope.searchOrganization = function () {
-        $ionicFilterBar.show({debounce: true, search: search});
-      };
-      $scope.slideChanged = function (position) {
-        if ($scope.organizations.length - position == Threshold) {
-          page.next().then(loadOrganizations);
-        }
-      };
-      $scope.selectOrganization = function () {
-        var index = $ionicSlideBoxDelegate.currentIndex();
-        var organization = $scope.organizations[index];
-
-        QuizRound.playFor(organization).then(QuizRound.continue);
-      };
     }]);
 })();

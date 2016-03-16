@@ -1,18 +1,15 @@
 'use strict';
 
 describe('ChooseOrganizationCtrl', function(){
-  var $scope, $ionicSlideBoxDelegate, QuizRound, controller;
+  var $scope, $ionicSlideBoxDelegate, controller;
   beforeEach(inject(function ($q, $rootScope, $controller, givdo) {
     $scope = $rootScope.$new();
     $ionicSlideBoxDelegate = jasmine.createSpyObj('$ionicSlideBoxDelegate', ['update', 'currentIndex']);
-    QuizRound = jasmine.createSpyObj('QuizRound', ['playFor']);
-    QuizRound.playFor.and.returnValue($q.when());
 
     controller = function (organizations) {
       givdo.organizations.deferred_query.resolve(organizations || []);
       var controller = $controller('ChooseOrganizationCtrl', {
-        $scope: $scope, QuizRound: QuizRound,
-        $ionicSlideBoxDelegate: $ionicSlideBoxDelegate
+        $scope: $scope, $ionicSlideBoxDelegate: $ionicSlideBoxDelegate
       });
       $scope.$digest();
       return controller;
@@ -69,14 +66,16 @@ describe('ChooseOrganizationCtrl', function(){
   });
 
   describe('.selectOrganization', function () {
-    it('sets the current organization on the QuizRound', function () {
+    it('resolves the current organization', function () {
       controller();
       $scope.organizations = ['organization'];
       $ionicSlideBoxDelegate.currentIndex.and.returnValue(0);
 
+      $scope.select = jasmine.createSpy();
+
       $scope.selectOrganization();
 
-      expect(QuizRound.playFor).toHaveBeenCalledWith('organization');
+      expect($scope.select).toHaveBeenCalledWith('organization');
     });
   });
 });

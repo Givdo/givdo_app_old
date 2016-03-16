@@ -1,11 +1,17 @@
-<ion-view>
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon ion-search" ng-click="searchOrganization()">
-    </button>
-  </ion-nav-buttons>
+<ion-modal-view ng-controller="ChooseOrganizationCtrl">
+  <ion-header-bar>
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchText" ng-model-options="{debounce: 500}">
+        <i class="icon ion-ios-close placeholder-icon" ng-click="searchText = ''" ng-hide="searchText == ''"></i>
+      </label>
+      <button class="button button-clear" ng-click="cancel()">Cancel</button>
+    </div>
+  </ion-header-bar>
 
   <ion-content class="has-header">
-    <ion-slide-box show-pager="false" does-continue="true" on-slide-changed="slideChanged($index)">
+    <ion-slide-box show-pager="false" on-slide-changed="slideChanged()">
       <ion-slide ng-repeat="organization in organizations">
         <ion-list type="card">
           <ion-item class="item-avatar">
@@ -27,4 +33,4 @@
       </button>
     </div>
   </ion-footer-bar>
-</ion-view>
+</ion-modal-view>

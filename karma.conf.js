@@ -34,6 +34,7 @@ module.exports = function(config) {
       'www/lib/angular-mocks/angular-mocks.js',
 
       // Givdo
+      'www/js/givdo.util.js',
       'www/js/givdo.api.js',
       'www/js/givdo.facebook.js',
       'www/js/givdo.auth.js',

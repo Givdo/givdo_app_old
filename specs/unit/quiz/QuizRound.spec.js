@@ -49,34 +49,39 @@ describe('QuizRound', function(){
       expect($state.go).toHaveBeenCalledWith('trivia', {}, {reload: true});
     }));
 
-    it('moves the user to select an organization when user does not have one', inject(function ($state, QuizRound) {
-      playerState(null, false);
-      gameState();
+    describe('when player does not have an organization', function () {
+      beforeEach(inject(function (OrganizationPicker, $q) {
+        playerState(null, false);
+        gameState();
 
-      QuizRound.continue(game);
+        spyOn(OrganizationPicker, 'open').and.returnValue($q.when('organization'));
+      }));
 
-      expect($state.go).toHaveBeenCalledWith('choose-organization', {}, {reload: true});
-    }));
-  });
+      it('pops up the organization picker', inject(function ($state, QuizRound, OrganizationPicker) {
+        QuizRound.continue(game);
 
-  describe('playFor', function () {
-    beforeEach(inject(function (QuizRound, $q) {
-      playerState('organization name', false)
-      gameState();
+        expect(OrganizationPicker.open).toHaveBeenCalled();
+      }));
 
-      QuizRound.continue(game);
-    }));
+      it('updates the game and continues it', inject(function ($rootScope, QuizRound, givdo) {
+        QuizRound.continue(game);
+        $rootScope.$digest();
 
-    it('moves the state to trivia once player\'s organization is set', inject(function (QuizRound, $state, $rootScope, givdo) {
-      game.relation.and.returnValue(player);
-      $state.go.calls.reset();
-      QuizRound.playFor({id: 15});
-      givdo.game.deferred_playFor.resolve(game);
-      $rootScope.$digest();
+        expect(givdo.game.playFor).toHaveBeenCalledWith(game, 'organization');
+      }));
 
-      expect(givdo.game.playFor).toHaveBeenCalledWith(game, {id: 15});
-      expect(player.attr).toHaveBeenCalledWith('organization');
-    }));
+      it('moves the game to the next state', inject(function ($rootScope, QuizRound, givdo) {
+        var updatedGame = jasmine.createSpyObj('updated game', ['relation']);
+        updatedGame.relation.and.returnValue(jasmine.createSpyObj('player', ['attr']));
+        QuizRound.continue(game);
+
+        spyOn(QuizRound, 'continue');
+        givdo.game.deferred_playFor.resolve(updatedGame)
+        $rootScope.$digest();
+
+        expect(QuizRound.continue).toHaveBeenCalledWith(updatedGame);
+      }));
+    });
   });
 
   describe('trivia', function () {
