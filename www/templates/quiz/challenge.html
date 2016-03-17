@@ -1,10 +1,8 @@
-<ion-view view-title="Friends">
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon ion-ios-personadd" ng-click="invite()">
+<ion-view>
+  <ion-content>
+    <button class="button button-icon button-block icon ion-ios-personadd" ng-click="invite()">
+      Invite
     </button>
-  </ion-nav-buttons>
-
-  <ion-content class="has-header">
     <ion-list>
       <ion-item ng-repeat="friend in friends" class="item item-avatar" ng-click="challenge(friend)">
         <img ng-src="{{ friend.attr('image') }}" />
