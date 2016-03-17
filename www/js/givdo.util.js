@@ -11,7 +11,7 @@
         });
         return $ionicModal.fromTemplateUrl('templates/util/choose-organization.html', {scope: scope}).then(function (modal) {
           modal.show();
-          return promise.finally(modal.remove);
+          return promise.finally(function () {modal.remove();});
         });
       };
 

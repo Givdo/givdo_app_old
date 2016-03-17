@@ -6,11 +6,9 @@
     </div>
     <ion-list type="card">
       <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
-        <div ng-show="organization">
-          <img src="avatar.jpg">
-          <h2>Pretty Hate Machine</h2>
-          <p>Nine Inch Nails</p>
-        </div>
+        <img ng-if-start="organization" ng-src="{{organization.attr('picture')}}">
+        <h2>{{organization.attr('name')}}</h2>
+        <p ng-if-end>{{organization.attr('mission') | limitTo:100}}</p>
         <span ng-hide="organization">Select an organization to give</span>
         <button class="button button-royal">
           <i class="icon ion-edit"></i>

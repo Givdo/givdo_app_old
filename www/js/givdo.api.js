@@ -13,9 +13,13 @@
     }])
 
     .factory('UserRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      return repository({
+      var UserRepo = repository({
         friends: {url: GivdoApiURL + '/friends', method: 'GET'}
       });
+      UserRepo.update = function (user, data) {
+        return user.load('self', {data: data, method: 'PATCH'});
+      };
+      return UserRepo;
     }])
 
     .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {

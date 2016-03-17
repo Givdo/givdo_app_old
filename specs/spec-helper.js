@@ -50,7 +50,7 @@ angular.module('givdo-mocks', [])
 
     return {
       oauth: mockMethods(['callback']),
-      user: mockMethods(['friends']),
+      user: mockMethods(['friends', 'update']),
       game: mockMethods(['singlePlayer', 'versus', 'query', 'playFor', 'answer']),
       organizations: mockMethods(['query'])
     };
