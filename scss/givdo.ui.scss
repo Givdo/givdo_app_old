@@ -327,10 +327,17 @@
     text-align: center
 }
 
-.footer-last-game {
-    width: 24%;
-    text-align: center;
-    position: relative;
+.organization-icon {
+  @extend .player;
+
+  margin: auto;
+  right:0px;
+  bottom: 0px;
+  z-index: 10000000;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border: solid 3px #96939b;
 }
 
 .bar-footer {
