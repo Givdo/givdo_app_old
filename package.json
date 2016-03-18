@@ -14,6 +14,7 @@
     "cordova-plugin-disable-bitcode",
     "cordova-plugin-console",
     "cordova-plugin-device",
+    "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     {
       "variables": {
