@@ -38,5 +38,16 @@ describe('ProfileCtrl', function(){
 
       expect(givdo.user.update).toHaveBeenCalledWith(user, {organization_id: 12345});
     }));
+
+    it('emits a givdo:user-updated signal', inject(function (givdo) {
+      $scope.changeOrganization();
+      deferredPicker.resolve({});
+      givdo.user.deferred_update.resolve(user)
+      var signal = jasmine.createSpy();
+      $scope.$on('givdo:user-updated', signal);
+      $scope.$digest();
+
+      expect(signal).toHaveBeenCalledWith(jasmine.anything(), user);
+    }));
   });
 });

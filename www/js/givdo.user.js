@@ -30,6 +30,7 @@
       var setUser = function (user) {
         $scope.user = user;
         $scope.organization = user.relation('organization');
+        $scope.$emit('givdo:user-updated', user);
       };
       session.user().then(setUser);
 
