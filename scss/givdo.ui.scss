@@ -214,6 +214,21 @@
 }
 
 /* activity screen */
+.activity-contents {
+  @extend .profile-contents;
+
+  padding-bottom: 70px;
+}
+
+.grand-total-wrapper {
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  margin-bottom: 49px;
+  padding-bottom: 25px;
+  background-color: white;
+}
+
 .grand-total {
     padding: 12px;
     font-weight: 500;
@@ -221,7 +236,6 @@
     text-align: right;
     color: #ff9933;
     border-bottom: dotted 1px #666;
-    padding-bottom: 80px;
 }
 
 /* Friends */

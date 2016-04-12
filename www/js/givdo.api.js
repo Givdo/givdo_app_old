@@ -14,7 +14,8 @@
 
     .factory('UserRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
       var UserRepo = repository({
-        friends: {url: GivdoApiURL + '/friends', method: 'GET'}
+        friends: {url: GivdoApiURL + '/friends', method: 'GET'},
+        activities: { url: GivdoApiURL + '/activities', method: 'GET', params: false }
       });
       UserRepo.update = function (user, data) {
         return user.load('self', {data: data, method: 'PATCH'});

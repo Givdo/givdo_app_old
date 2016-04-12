@@ -1,0 +1,25 @@
+<ion-view>
+  <ion-content>
+    <div class="activity-contents">
+      <span><img src="img/task-small.png"> Activity</span><br>
+
+      <div class="alert-recent-user" ng-repeat="activity in activities">
+        <div class="player" style="background-image: url('{{ activity.attr('organization_picture') }}')"></div>
+        <span class="text-notification">
+          <strong>{{ activity.attr('organization_name') }}</strong><br>
+          {{ activityNameToLabel(activity.attr('name')) }} - Score: {{ activity.attr('score') }}
+        </span>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </ion-content>
+
+  <div class="grand-total-wrapper">
+    <div class="grand-total">
+      <img src="img/give-money.png"/>
+      <span style="color: #96939b;">Total Donations:</span>
+      {{ totalScore | currency }}
+    </div>
+  </div>
+
+</ion-view>
