@@ -1,6 +1,6 @@
 <ion-tabs class="tabs-striped tabs-color-light">
-  <ion-tab icon="notification-icon" ui-sref="activity">
-    <ion-nav-view name="activity-content"></ion-nav-view>
+  <ion-tab icon="notification-icon">
+    <ion-nav-view name="notification-content"></ion-nav-view>
   </ion-tab>
   <ion-tab icon="friends-icon" ui-sref="friends">
     <ion-nav-view name="friends-content"></ion-nav-view>
@@ -11,7 +11,9 @@
   <ion-tab icon="giving-love-icon" ui-sref="profile">
     <ion-nav-view name="profile-content"></ion-nav-view>
   </ion-tab>
-  <ion-tab icon="task-icon"></ion-tab>
+  <ion-tab icon="task-icon" ui-sref="activity">
+    <ion-nav-view name="activity-content"></ion-nav-view>
+  </ion-tab>
 </ion-tabs>
 
 <div ui-sref="play" class="organization-icon" style="background-image: url('{{organization.attr('picture') || 'img/givdo-icon-orange.png'}}');"></div>
