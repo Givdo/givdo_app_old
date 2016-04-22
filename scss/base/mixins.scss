@@ -1,0 +1,28 @@
+@mixin clearfix() {
+  &:after{
+    width: 100%;
+    clear: both;
+    display: block;
+    content: ' ';
+  }
+}
+
+@mixin icons($url) {
+  .icon{
+    &.icon-notification{
+      background-image: url("../img/icons/notification#{$url}.png");
+    }
+
+    &.icon-friends{
+      background-image: url("../img/icons/friends#{$url}.png");
+    }
+
+    &.icon-giving-love{
+      background-image: url("../img/icons/giving-love#{$url}.png");
+    }
+
+    &.icon-task{
+      background-image: url("../img/icons/task#{$url}.png");
+    }
+  }
+}
