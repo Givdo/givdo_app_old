@@ -1,8 +1,8 @@
 @import "base/ionic";
+@import "base/variables";
 @import "base/functions";
 @import "base/helpers";
 @import "base/mixins";
-@import "base/variables";
 
 @import "core/basic";
 @import "core/tables";
@@ -12,5 +12,8 @@
 @import "layout/givdo.helpers";
 @import "layout/givdo.misc";
 @import "layout/givdo.quiz";
+@import "layout/givdo.friends";
 
 @import "ui/givdo.ui";
+@import "ui/title";
+@import "ui/tab-bar";
