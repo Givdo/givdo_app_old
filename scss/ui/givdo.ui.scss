@@ -238,26 +238,6 @@
     border-bottom: dotted 1px #666;
 }
 
-/* Friends */
-.friend {
-    width: 86px;
-    height: 86px;
-    background-position: center;
-    background-size: cover;
-    float: left;
-    margin: 10px;
-    border-radius: 100%;
-    position: relative;
-    border: solid 2px #ccc;
-}
-
-.friend > img {
-    width: 41%;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-}
-
 /* Wheater CSS*/
 
 /* main element */
@@ -339,20 +319,6 @@
     width: 19%;
     padding: 4px;
     text-align: center
-}
-
-.organization-icon {
-  @extend .player;
-
-  margin: auto;
-  background-color: #FFF;
-  right:0px;
-  bottom: 0px;
-  z-index: 10000000;
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  border: solid 3px #96939b;
 }
 
 .bar-footer {
