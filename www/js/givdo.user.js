@@ -4,6 +4,16 @@
   angular.module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util'])
     .config(['$stateProvider', function ($stateProvider) {
       $stateProvider
+        .state('notification', {
+          url: '/notification',
+          parent: 'app',
+          views: {
+            'notification-content': {
+              templateUrl: 'templates/user/notification.html',
+              controller: 'NotificationCtrl'
+            }
+          }
+        })
         .state('activity', {
           url: '/activity',
           parent: 'app',
@@ -34,6 +44,21 @@
             }
           }
         });
+    }])
+
+    .controller('NotificationCtrl', ['$scope', 'givdo', function ($scope, givdo) {
+      var setActivities = function (feed) {
+        $scope.totalScore = feed.attr('total_score');
+        $scope.activities = feed.relation('activities');
+      };
+
+      $scope.$on('$ionicView.enter', function () {
+        givdo.user.activities().then(setActivities);
+      });
+
+      $scope.activityNameToLabel = function (name) {
+        return (name === 'won_scores') ? 'You Won' : 'You Lose';
+      }
     }])
 
     .controller('ActivityCtrl', ['$scope', 'givdo', function ($scope, givdo) {
