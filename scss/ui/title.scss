@@ -14,10 +14,18 @@
   color: $gray;
 
   &--your-friends{
-    background-image: url(../img/your-friends.png);
+    background-image: url(../img/icons/friends.png);
   }
 
   &--potential-friends{
-    background-image: url(../img/potential-friends.png);
+    background-image: url(../img/icons/friends-potential.png);
+  }
+
+  &--play{
+    background-image: url(../img/icons/play.png);
+  }
+
+  &--notification{
+    background-image: url(../img/icons/notification.png);
   }
 }
