@@ -4,44 +4,9 @@
       <h2 class="title title--your-friends">Your Friends</h2>
 
       <div class="friend-list">
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/lydia.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/7A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/fred.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/2A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/elizabeth.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/3A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/carol.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/2A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/rafael.jpg" /></figure>
+        <div class="friend-list__item" ng-repeat="friend in friends">
+          <figure class="friend-list__photo"><img src="{{ friend.attr('image') }}" /></figure>
           <div class="friend-list__badge"><img src="img/badges/1A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/andressa.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/1A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/daniela.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/4A.png" /></div>
-        </div>
-
-        <div class="friend-list__item">
-          <figure class="friend-list__photo"><img src="img/andre.jpg" /></figure>
-          <div class="friend-list__badge"><img src="img/badges/5A.png" /></div>
         </div>
 
         <div class="button-bar padding">
