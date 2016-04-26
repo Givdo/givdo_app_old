@@ -4,7 +4,7 @@
       <h2 class="title title--your-friends">Your Friends</h2>
 
       <div class="friend-list">
-        <div class="friend-list__item" ng-repeat="friend in friends">
+        <div class="friend-list__item" ng-repeat="friend in friends | limitTo:quantity">
           <figure class="friend-list__photo"><img src="{{ friend.attr('image') }}" /></figure>
           <div class="friend-list__badge"><img src="img/badges/1A.png" /></div>
         </div>
