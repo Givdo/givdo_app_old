@@ -4,8 +4,8 @@
   @include clearfix;
 
   &__item{
-    width: calc(100%/3);
-    height: 85px;
+    width: calc(100%/4);
+    height: 65px;
     margin-bottom: 20px;
     display: block;
     float: left;
@@ -13,8 +13,8 @@
   }
 
   &__photo{
-    width: 85px;
-    height: 85px;
+    width: 65px;
+    height: 100%;
     padding: 0;
     margin: 0;
     display: block;
@@ -29,9 +29,9 @@
   }
 
   &__badge{
-    width: 35px;
-    height: 35px;
-    right: 8px;
+    width: 30px;
+    height: 30px;
+    right: 0px;
     bottom: 0px;
     position: absolute;
 
