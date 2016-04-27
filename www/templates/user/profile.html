@@ -4,6 +4,7 @@
       <div class="profile-picture" style="background-image: url('{{ user.attr('image') }}');"></div>
       <span class="profile-name">{{ user.attr('name') }}</span>
     </div>
+
     <ion-list type="card">
       <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
         <img ng-if-start="organization" ng-src="{{organization.attr('picture')}}">
@@ -15,16 +16,22 @@
         </button>
       </ion-item>
     </ion-list>
+
     <div class="profile-contents">
-      <span><img src="img/causes-icon.png">Your Causes</span><br>
+      <h2 class="title title--causes">Your Causes</h2>
+
       <img src="img/causes/1.jpg">
       <img src="img/causes/2.jpg">
       <img src="img/causes/3.jpg">
       <img src="img/causes/4.jpg">
+      <img src="img/causes/5.jpg">
+      <img src="img/causes/6.jpg">
       <img src="img/add-icon.png">
     </div>
+
     <div class="profile-contents">
-      <span><img src="img/achievements-icon.png">Your Achievements</span>
+      <h2 class="title title--achievements">Your Achievements</h2>
+
       <div class="badge-givdo"><img src="img/badges/1A.png">Giver</div>
       <div class="badge-givdo"><img src="img/badges/2A.png">Samaritan</div>
       <div class="badge-givdo"><img src="img/badges/3.png">Altruist</div>
