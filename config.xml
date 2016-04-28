@@ -114,4 +114,7 @@
         <variable name="APP_ID" value="558889160934969" />
         <variable name="APP_NAME" value="Givdo" />
     </plugin>
+    <plugin name="phonegap-plugin-push" spec="~1.6.3">
+        <variable name="SENDER_ID" value="405350496228" />
+    </plugin>
 </widget>
