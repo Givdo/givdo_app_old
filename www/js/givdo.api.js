@@ -47,6 +47,12 @@
       return GameRepo;
     }])
 
+    .factory('DeviceRepo', ['repository', 'GivdoApiURL', function(repository, apiURL) {
+      return repository({
+        register: { url: '/devices' },
+      });
+    }])
+
     .factory('givdo', ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', function (Oauth, UserRepo, GameRepo, OrganizationRepo) {
       return {
         oauth: Oauth,

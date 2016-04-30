@@ -1,8 +1,8 @@
 (function () {
   'use strict';
 
-  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz', 'givdo.user', 'givdo.ui'])
-    .run(['$ionicPlatform', 'authLock', function ($ionicPlatform, authLock, RequestsService) {
+  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz', 'givdo.user', 'givdo.ui', 'givdo.notifications'])
+    .run(['$ionicPlatform', 'authLock', 'notifications', function ($ionicPlatform, authLock, notifications) {
       $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
           cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -13,27 +13,7 @@
           StatusBar.styleDefault();
         }
 
-        var push = PushNotification.init({
-          android: {
-            senderID: '405350496228'
-          }
-        });
-
-        push.on('registration', function(data) {
-          alert('register: ' + data.registrationId);
-
-          RequestsService.register(data.registrationId).then(function(response){
-            alert('registered!');
-          });
-        });
-
-        push.on('notification', function(data) {
-          alert('notify: ' + data.message);
-        });
-
-        push.on('error', function(e) {
-          alert('err: ' + e.message);
-        });
+        notifications.init();
 
         authLock();
       });
