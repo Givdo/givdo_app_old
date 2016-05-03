@@ -37,7 +37,7 @@ $ npm install -g karma-cli
 
 Depending on your setup, you might need to run the above with `sudo`.
 
-Then running the specs should be as siple as:
+Then running the specs should be as simple as:
 
 ```bash
 $ karma start karma.conf.js
