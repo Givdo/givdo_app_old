@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz', 'givdo.user', 'givdo.ui', 'givdo.notifications'])
-    .run(['$ionicPlatform', 'authLock', 'notifications', function ($ionicPlatform, authLock, notifications) {
+    .run(['$ionicPlatform', 'authLock', 'notificationsRegister', function ($ionicPlatform, authLock, notifications) {
       $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
           cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -13,9 +13,8 @@
           StatusBar.styleDefault();
         }
 
-        notifications.init();
-
         authLock();
+        notificationsRegister();
       });
     }])
 

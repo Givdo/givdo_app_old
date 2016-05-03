@@ -2,11 +2,13 @@
   'use strict';
 
   angular.module('givdo.notifications', ['ionic', 'givdo.api'])
-    .service('notifications', function() {
-      this.init = function() {
+    .factory('notificationsRegister', function() {
+      var push;
+
+      return function() {
         if (window.cordova === undefined) return;
 
-        var push = PushNotification.init({
+        push = PushNotification.init({
           ios: {
             alert: "true",
             badge: "true",
@@ -20,13 +22,14 @@
             platform: ionic.Platform.platform(),
           };
 
-          alert('register: ' + data.registrationId);
+          alert('registrationId: ' + data.registrationId);
 
           DeviceRepo.register(deviceParams).then(function(response) {
             alert('registered!');
           });
         });
 
+        // Only for test.
         push.on('notification', function(data) {
           alert('notify: ' + data.message);
         });
@@ -35,6 +38,5 @@
           alert('err: ' + e.message);
         });
       };
-
     });
 })();
