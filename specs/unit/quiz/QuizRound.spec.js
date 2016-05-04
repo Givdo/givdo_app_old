@@ -37,7 +37,7 @@ describe('QuizRound', function(){
 
       QuizRound.continue(game);
 
-      expect($state.go).toHaveBeenCalledWith('show-game', {}, {reload: true});
+      expect($state.go).toHaveBeenCalledWith('sponsor', {}, {reload: true});
     }));
 
     it('moves the user to the trivia when player have not finished and user has organization', inject(function ($state, QuizRound) {
