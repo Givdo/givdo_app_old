@@ -1,27 +1,30 @@
-<ion-view >
+<ion-view>
   <ion-content>
-    <div class="wheater-box weather" ng-class="winner ? 'snow' : 'rain'">
-      </div>
-      <div class="message-box gold" ng-show="winner">
-        You Win
-      </div>
-      <div class="message-box gray" ng-hide="winner">
-        You Lost
-      </div>
-      <div class="message-box" ng-show="winner">Good job! You're getting closer to your next badge!</div>
-      <div class="message-box" ng-hide="winner">But the points you won in this game still go to the charity you chose, so there is still reason to celebrate! Keep it up!</div>
-      <div class="score">
-        <div class="score gray" ng-repeat="player in players | orderBy: '-attributes.score'">
-          <div class="player" style="background-image: url('{{ player.attr('image') }}')"></div>
-          <p>{{ player.attr('name') }}: {{ player.attr('score') }} points</p>
-        </div>
-        <div class="clearfix"></div><br>
-      </div>
-  </ion-content>
+    <div class="wheater-box weather" ng-class="winner ? 'snow' : 'rain'"></div>
 
-  <ion-footer-bar>
-    <div class="title title-center">
-      <button class="button button-block orange">REMATCH</button>
+    <div ng-show="winner">
+      <div class="message-box gold">You Win</div>
+      <div class="message-box">
+        Good job! You're getting closer to your next badge!
+      </div>
     </div>
-  </ion-footer-bar>
+
+    <div ng-hide="winner">
+      <div class="message-box gray">You Lost</div>
+      <div class="message-box">
+        But the points you won in this game still go to the charity you chose, so there is still reason to celebrate! Keep it up!
+      </div>
+    </div>
+
+    <div class="score">
+      <div class="score-result gray" ng-repeat="player in players | orderBy: '-attributes.score'">
+        <div class="score-result__player"><img src="{{ player.attr('image') }}" /></div>
+        <p class="score-result__points">{{ player.attr('name') }}: {{ player.attr('score') }} points</p>
+      </div>
+    </div>
+
+    <div class="button-bar margin-bottom-30 padding">
+      <button class="button orange" ng-click="playSingle()">Rematch</button>
+    </div>
+  </ion-content>
 </ion-view>
