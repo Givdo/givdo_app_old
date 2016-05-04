@@ -129,9 +129,14 @@
       return self;
     }])
 
-    .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', function ($scope, $stateParams, game) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
+    .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', 'facebook', 'givdo', 'QuizRound', function ($scope, $stateParams, game, facebook, givdo, QuizRound) {
+      $scope.winner = game.relation('player').attr('winner?');
+      $scope.players = game.relation('players');
+      $scope.playSingle = function () {
+        givdo.game.singlePlayer().then(QuizRound.continue);
+      };
     }])
 
     .controller('NewGameCtrl', ['$scope', 'facebook', 'givdo', 'QuizRound', function ($scope, facebook, givdo, QuizRound) {
