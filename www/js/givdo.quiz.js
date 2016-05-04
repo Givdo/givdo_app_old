@@ -34,6 +34,19 @@
             }
           }
         })
+        .state('sponsor', {
+          url: '/sponsor',
+          parent: 'app',
+          views: {
+            'quiz-content': {
+              templateUrl: 'templates/quiz/sponsor.html',
+              controller: 'SponsorCtrl'
+            }
+          },
+          resolve: {
+            game: function(QuizRound) { return QuizRound.game(); }
+          }
+        })
         .state('show-game', {
           url: '/game',
           parent: 'app',
@@ -80,25 +93,30 @@
 
     .service('QuizRound', ['$state', '$q', 'givdo', 'OrganizationPicker', function ($state, $q, givdo, OrganizationPicker) {
       var currentGame, currentTrivia, currentPlayer;
+
       var setCurrentGame = function (game) {
         currentGame = game;
         currentTrivia = game.relation('trivia');
         currentPlayer = game.relation('player');
       };
+
       var revealAnser = function (answer) {
         (currentTrivia.relation('options') || []).forEach(function (option) {
           option.attributes.correct = option.id == answer.attr('correct_option_id');
         });
       };
+
       var asPromised = function (value) {
         if (value) {
           return $q.resolve(value);
         }
         return $q.reject();
       };
+
       var savePlayerOrganization = function (organization) {
         return givdo.game.playFor(currentGame, organization);
       };
+
       var self = {
         trivia: function () {
           return asPromised(currentTrivia);
@@ -111,7 +129,7 @@
             setCurrentGame(newGame);
           }
           if (currentPlayer.attr('finished?')) {
-            $state.go('show-game', {}, {reload: true});
+            $state.go('sponsor', {}, { reload: true });
           } else if (currentPlayer.attr('organization')) {
             $state.go('trivia', {}, {reload: true});
           } else {
@@ -126,11 +144,18 @@
           });
         }
       };
+
       return self;
     }])
 
+    .controller('SponsorCtrl', ['$state', '$scope', '$stateParams', 'game', function ($state, $scope, $stateParams, game) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
+      $scope.showResult = function () {
+        $state.go('show-game', {}, {reload: true});
+      };
+    }])
+
     .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', 'facebook', 'givdo', 'QuizRound', function ($scope, $stateParams, game, facebook, givdo, QuizRound) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
