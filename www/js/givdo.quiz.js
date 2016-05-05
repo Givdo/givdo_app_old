@@ -47,6 +47,16 @@
             game: function(QuizRound) { return QuizRound.game(); }
           }
         })
+        .state('survey', {
+          url: '/survey',
+          parent: 'app',
+          views: {
+            'quiz-content': {
+              templateUrl: 'templates/quiz/survey.html',
+              controller: 'SurveyCtrl'
+            }
+          }
+        })
         .state('show-game', {
           url: '/game',
           parent: 'app',
@@ -153,6 +163,39 @@
       $scope.players = game.relation('players');
       $scope.showResult = function () {
         $state.go('show-game', {}, {reload: true});
+      };
+    }])
+
+    .controller('SurveyCtrl', ['$state', '$scope', '$stateParams', function ($state, $scope, $stateParams) {
+      $scope.survey = {
+        difficulty:        '',
+        play:              '',
+        nonprofit:         '',
+        questions:         '',
+        back_to_play:      '',
+        length_play:       '',
+        like_app:          '',
+        sponsor:           '',
+        bugs:              '',
+        recommend_frinend: ''
+      };
+
+      $scope.survey = function(form) {
+        if(form.$valid) {
+          $scope.survey = {
+            difficulty:        '',
+            play:              '',
+            nonprofit:         '',
+            questions:         '',
+            back_to_play:      '',
+            length_play:       '',
+            like_app:          '',
+            sponsor:           '',
+            bugs:              '',
+            recommend_frinend: ''
+          };
+          $state.go('play', {}, { reload: true });
+        }
       };
     }])
 
