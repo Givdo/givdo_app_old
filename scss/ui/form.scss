@@ -1,0 +1,62 @@
+.form-givdo{
+  padding: 10px;
+
+  &__title{
+    padding-top: 255px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    background: url('/img/givdo-icon-orange.png') no-repeat center top;
+    background-size: 80%;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    border-bottom: dotted 1px lighten($gray, 30);
+  }
+
+  &__input,
+  &__textarea,
+  &__select{
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px !important;
+    border: none;
+    border-radius: 0 !important;
+    background-color: $white;
+    border-bottom: solid 1px lighten($gray, 25%) !important;
+    color: darken($gray, 20%) !important;
+
+    @include placeholder {
+      color: lighten($gray, 15%) !important;
+    }
+  }
+
+  &__input,
+  &__select{
+    height: 40px;
+    line-height: 40px;
+  }
+
+  &__select{
+    background-image: url('/img/icons/arrow-bottom.png');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    background-size: 8px;
+  }
+
+  &__textarea{
+    height: 100px;
+    resize: none;
+  }
+
+  &__label{
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: $black;
+  }
+
+  &__item{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
