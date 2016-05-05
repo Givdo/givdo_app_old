@@ -164,9 +164,13 @@
       };
     }])
 
-    .controller('NewGameCtrl', ['$scope', 'facebook', 'givdo', 'QuizRound', function ($scope, facebook, givdo, QuizRound) {
+    .controller('NewGameCtrl', ['$state', '$scope', 'facebook', 'givdo', 'QuizRound', function ($state, $scope, facebook, givdo, QuizRound) {
       $scope.playSingle = function () {
-        givdo.game.singlePlayer().then(QuizRound.continue);
+        givdo.game.singlePlayer().then(function(QuizRound){
+          QuizRound.continue
+        }, function(error){
+          $state.go('survey', {}, {reload: true});
+        });
       };
     }])
 
