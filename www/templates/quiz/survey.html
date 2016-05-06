@@ -1,0 +1,119 @@
+<ion-view>
+  <ion-content>
+    <form class="survey form-givdo" name="surveyForm" novalidate="" ng-submit="survey(surveyForm)">
+      <h2 class="form-givdo__title">You've played 10 games! Thanks so much for joining our community early. We are going to use your feedback to perfect our app for public launch.</h2>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="difficulty">Was this app easy to navigate?</label>
+        <input class="form-givdo__input" name="difficulty" ng-model="survey.difficulty" type="text" placeholder="Write a reply" />
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="play">Were you able to play a trivia game against one of your friends?</label>
+        <input class="form-givdo__input" name="play" ng-model="survey.play" type="text" placeholder="Write a reply" />
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="nonprofit">Was it easy to find a nonprofit you care about?</label>
+        <select class="form-givdo__select" name="nonprofit" ng-model="survey.nonprofit">
+          <option value="" disabled selected>Select an option</option>
+          <option value="A">Yes, it was easy</option>
+          <option value="B">No, there were too many</option>
+          <option value="C">No, there were too little</option>
+        </select>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="questions">How did you like the trivia questions?</label>
+        <select class="form-givdo__select" name="questions" ng-model="survey.questions">
+          <option value="" disabled selected>Select an option</option>
+          <option value="A">They were fun! </option>
+          <option value="B">They were too easy.</option>
+          <option value="C">They were too hard.</option>
+          <option value="D">They were not fun.</option>
+        </select>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="back_to_play">How likely are you to come back and play more games for charity?</label>
+        <select class="form-givdo__select" name="back_to_play" ng-model="survey.back_to_play">
+          <option value="" disabled selected>Select an option</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="length_play">How often do you see yourself playing games on this app?</label>
+        <select class="form-givdo__select" name="length_play" ng-model="survey.length_play">
+          <option value="" disabled selected>Select an option</option>
+          <option value="A">Every day</option>
+          <option value="B">Often</option>
+          <option value="C">Now and then</option>
+          <option value="D">Rarely</option>
+        </select>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="like_app">What did you like most about the app?</label>
+        <select class="form-givdo__select" name="like_app" ng-model="survey.like_app">
+          <option value="" disabled selected>Select an option</option>
+          <option value="A">Playing trivia</option>
+          <option value="B">Playing against friends</option>
+          <option value="C">Knowing my points are donated to charity</option>
+          <option value="D">Swiping and learning about nonprofits</option>
+          <option value="E">Winning badges</option>
+          <option value="F">Being able to log in easily with FaceBook</option>
+          <option value="G">The look of the app</option>
+          <option value="H">Being able to see my total giving across orgs</option>
+        </select>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="sponsor">How did you feel about the sponsor page before your results?</label>
+        <select class="form-givdo__select" name="sponsor" ng-model="survey.sponsor">
+          <option value="" disabled selected>Select an option</option>
+          <option value="A">Didn't bother me at all</option>
+          <option value="B">It was sort of annoying</option>
+          <option value="C">Ugh, I hated it</option>
+        </select>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="bugs">If you experienced any bugs, please let us know what happened below.</label>
+        <textarea class="form-givdo__textarea" name="bugs" placeholder="Write a reply" ng-model="survey.bugs"></textarea>
+      </div>
+
+      <div class="form-givdo__item">
+        <label class="form-givdo__label" for="recommend_frinend">How likely are you to recommend this app to a friend?</label>
+        <select class="form-givdo__select" name="recommend_frinend" ng-model="survey.recommend_frinend">
+          <option value="" disabled selected>Select an option</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+
+      <div>
+        <button class="button button-block button-positive" type="submit">Create Account</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

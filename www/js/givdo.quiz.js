@@ -47,6 +47,16 @@
             game: function(QuizRound) { return QuizRound.game(); }
           }
         })
+        .state('survey', {
+          url: '/survey',
+          parent: 'app',
+          views: {
+            'quiz-content': {
+              templateUrl: 'templates/quiz/survey.html',
+              controller: 'SurveyCtrl'
+            }
+          }
+        })
         .state('show-game', {
           url: '/game',
           parent: 'app',
@@ -156,6 +166,39 @@
       };
     }])
 
+    .controller('SurveyCtrl', ['$state', '$scope', '$stateParams', function ($state, $scope, $stateParams) {
+      $scope.survey = {
+        difficulty:        '',
+        play:              '',
+        nonprofit:         '',
+        questions:         '',
+        back_to_play:      '',
+        length_play:       '',
+        like_app:          '',
+        sponsor:           '',
+        bugs:              '',
+        recommend_frinend: ''
+      };
+
+      $scope.survey = function(form) {
+        if(form.$valid) {
+          $scope.survey = {
+            difficulty:        '',
+            play:              '',
+            nonprofit:         '',
+            questions:         '',
+            back_to_play:      '',
+            length_play:       '',
+            like_app:          '',
+            sponsor:           '',
+            bugs:              '',
+            recommend_frinend: ''
+          };
+          $state.go('play', {}, { reload: true });
+        }
+      };
+    }])
+
     .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', 'facebook', 'givdo', 'QuizRound', function ($scope, $stateParams, game, facebook, givdo, QuizRound) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
@@ -164,9 +207,13 @@
       };
     }])
 
-    .controller('NewGameCtrl', ['$scope', 'facebook', 'givdo', 'QuizRound', function ($scope, facebook, givdo, QuizRound) {
+    .controller('NewGameCtrl', ['$state', '$scope', 'facebook', 'givdo', 'QuizRound', function ($state, $scope, facebook, givdo, QuizRound) {
       $scope.playSingle = function () {
-        givdo.game.singlePlayer().then(QuizRound.continue);
+        givdo.game.singlePlayer().then(function(QuizRound){
+          QuizRound.continue
+        }, function(error){
+          $state.go('survey', {}, {reload: true});
+        });
       };
     }])
 
