@@ -1,16 +1,30 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.facebook', ['givdo.api', 'ngCordova'])
-    .config(['$cordovaFacebookProvider', function ($cordovaFacebookProvider) {
+  angular
+    .module('givdo.facebook', ['givdo.api', 'ngCordova'])
+    .config(config)
+    .factory('facebookAuth', facebookAuth)
+    .factory('facebookCheckStatus', facebookCheckStatus)
+    .factory('facebookLogin', facebookLogin)
+    .factory('facebookInvite', facebookInvite)
+    .factory('facebookGameInvite', facebookGameInvite)
+    .factory('facebook', facebook);
+
+
+    config.$inject = ['$cordovaFacebookProvider'];
+
+    function config($cordovaFacebookProvider) {
       if (!window.cordova) {
         ionic.Platform.ready(function () {
           $cordovaFacebookProvider.browserInit('558889160934969', 'v2.5');
         });
       }
-    }])
+    }
 
-    .factory('facebookAuth', ['givdo', '$q', function (givdo, $q) {
+    facebookAuth.$inject = ['givdo', '$q'];
+
+    function facebookAuth(givdo, $q) {
       return function (facebookData) {
         if (facebookData.status !== 'connected') {
           return $q.reject();
@@ -26,30 +40,38 @@
 
         return givdo.oauth.callback(data);
       };
-    }])
+    }
 
-    .factory('facebookCheckStatus', ['$cordovaFacebook', 'facebookAuth', function ($cordovaFacebook, facebookAuth) {
+    facebookCheckStatus.$inject = ['$cordovaFacebook', 'facebookAuth'];
+
+    function facebookCheckStatus($cordovaFacebook, facebookAuth) {
       return function () {
         return $cordovaFacebook.getLoginStatus().then(facebookAuth);
       };
-    }])
+    }
 
-    .factory('facebookLogin', ['$cordovaFacebook', 'facebookAuth', function ($cordovaFacebook, facebookAuth) {
+    facebookLogin.$inject = ['$cordovaFacebook', 'facebookAuth'];
+
+    function facebookLogin($cordovaFacebook, facebookAuth) {
       return function () {
         return $cordovaFacebook.login(['email', 'user_friends', 'user_about_me']).then(facebookAuth);
       };
-    }])
+    }
 
-    .factory('facebookInvite', ['$q', function ($q) {
+    facebookInvite.$inject = ['$q'];
+
+    function facebookInvite($q) {
       // TODO: add picture and url (game vs current user)
       return function () {
         var deferred = $q.defer();
         facebookConnectPlugin.appInvite({url: 'https://givdo.com'}, deferred.resolve, deferred.reject);
         return deferred.promise;
       };
-    }])
+    }
 
-    .factory('facebookGameInvite', ['$cordovaFacebook', 'givdo', function ($cordovaFacebook, givdo) {
+    facebookGameInvite.$inject = ['$cordovaFacebook', 'givdo'];
+
+    function facebookGameInvite($cordovaFacebook, givdo) {
       return function (message, title) {
         return $cordovaFacebook.showDialog({
           method: 'apprequests',
@@ -60,14 +82,21 @@
           return givdo.game.versus({uid: _.first(response.to)});
         });
       };
-    }])
+    }
 
-    .factory('facebook', ['facebookLogin', 'facebookCheckStatus', 'facebookGameInvite', 'facebookInvite', function (facebookLogin, facebookCheckStatus, facebookGameInvite, facebookInvite) {
+    facebook.$inject = [
+      'facebookLogin',
+      'facebookCheckStatus',
+      'facebookGameInvite',
+      'facebookInvite',
+    ];
+
+    function facebook(facebookLogin, facebookCheckStatus, facebookGameInvite, facebookInvite) {
       return {
         login: facebookLogin,
         checkStatus: facebookCheckStatus,
         gameInvite: facebookGameInvite,
         invite: facebookInvite
       };
-    }]);
+    }
 })();

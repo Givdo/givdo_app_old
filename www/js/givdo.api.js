@@ -1,64 +1,101 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.api', ['json-api-client', 'givdo.config'])
-    .config(['$httpProvider', function ($httpProvider) {
+  angular
+    .module('givdo.api', ['json-api-client', 'givdo.config'])
+    .config(config)
+    .factory('Oauth', Oauth)
+    .factory('UserRepo', UserRepo)
+    .factory('OrganizationRepo', OrganizationRepo)
+    .factory('GameRepo', GameRepo)
+    .factory('DeviceRepo', DeviceRepo)
+    .factory('givdo', givdo);
+
+    config.$inject = ['$httpProvider'];
+
+    function config($httpProvider) {
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
-    }])
+    }
 
-    .factory('Oauth', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+    Oauth.$inject = ['repository', 'GivdoApiURL'];
+
+    function Oauth(repository, GivdoApiURL) {
       return repository({
-        callback: {url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false}
+        callback: { url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false }
       });
-    }])
+    }
 
-    .factory('UserRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+    UserRepo.$inject = ['repository', 'GivdoApiURL'];
+
+    function UserRepo(repository, GivdoApiURL) {
       var UserRepo = repository({
-        friends: {url: GivdoApiURL + '/friends', method: 'GET'},
+        friends: { url: GivdoApiURL + '/friends', method: 'GET' },
         activities: { url: GivdoApiURL + '/activities', method: 'GET', params: false }
       });
+
       UserRepo.update = function (user, data) {
-        return user.load('self', {data: data, method: 'PATCH'});
+        return user.load('self', { data: data, method: 'PATCH' });
       };
+
       return UserRepo;
-    }])
+    }
 
-    .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      return repository({
-        query: {url: GivdoApiURL + '/organizations'}
+    OrganizationRepo.$inject = ['repository', 'GivdoApiURL'];
+
+    function OrganizationRepo(repository, GivdoApiURL) {
+      var OrganizationRepo = repository({
+        query: { url: GivdoApiURL + '/organizations' }
       });
-    }])
 
-    .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
+      return OrganizationRepo;
+    }
+
+    GameRepo.$inject = ['repository', 'GivdoApiURL'];
+
+    function GameRepo(repository, GivdoApiURL) {
       var GameRepo = repository({
-        singlePlayer: {url: GivdoApiURL + '/games/single'},
-        versus: {url: GivdoApiURL + '/games/versus/{{uid}}', params: false},
-        query: {url: GivdoApiURL + '/games'}
+        singlePlayer: { url: GivdoApiURL + '/games/single' },
+        versus: { url: GivdoApiURL + '/games/versus/{{uid}}', params: false },
+        query: { url: GivdoApiURL + '/games' }
       });
 
       GameRepo.answer = function (game, trivia, option) {
-        return game.load('answers', {data: {trivia_id: trivia.id, trivia_option_id: option.id}, method: 'POST'});
+        var data = {
+          trivia_id: trivia.id,
+          trivia_option_id: option.id
+        };
+
+        return game.load('answers', { data: data, method: 'POST' });
       };
 
       GameRepo.playFor = function (game, organization) {
-        return game.load('player', {data: {organization_id: organization.id}, method: 'PATCH'});
+        var data = { organization_id: organization.id };
+
+        return game.load('player', { data: data, method: 'PATCH' });
       };
 
       return GameRepo;
-    }])
+    }
 
-    .factory('DeviceRepo', ['repository', 'GivdoApiURL', function(repository, apiURL) {
-      return repository({
+    DeviceRepo.$inject = ['repository', 'GivdoApiURL'];
+
+    function DeviceRepo(repository, apiURL) {
+      var DeviceRepo = repository({
         register: { url: '/devices' },
       });
-    }])
 
-    .factory('givdo', ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', function (Oauth, UserRepo, GameRepo, OrganizationRepo) {
+      return DeviceRepo;
+    }
+
+    givdo.$inject = ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', 'DeviceRepo'];
+
+    function givdo(Oauth, UserRepo, GameRepo, OrganizationRepo) {
       return {
         oauth: Oauth,
         user: UserRepo,
         game: GameRepo,
         organizations: OrganizationRepo
       };
-    }]);
+    }
+
 })();
