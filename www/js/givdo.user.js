@@ -107,7 +107,7 @@
     }
 
     FriendsCtrl.$inject = ['$scope', 'givdo'];
-    
+
     function FriendsCtrl($scope, givdo) {
       givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');

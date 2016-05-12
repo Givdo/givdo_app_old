@@ -5,22 +5,13 @@
     .module('givdo.auth', [
       'givdo.config',
       'givdo.facebook',
-      'LocalStorageModule'
     ])
-    .config(config)
     .factory('sessionInterceptor', sessionInterceptor)
     .factory('session', session)
     .factory('loginModal', loginModal)
     .factory('authLock', authLock)
     .controller('FacebookLoginCtrl', FacebookLoginCtrl);
 
-
-    config.$inject = ['$httpProvider', 'localStorageServiceProvider'];
-
-    function config($httpProvider, localStorageServiceProvider) {
-      $httpProvider.interceptors.push('sessionInterceptor');
-      localStorageServiceProvider.setPrefix('givdo');
-    }
 
     sessionInterceptor.$inject = ['GivdoApiURL', 'session', '$q'];
 

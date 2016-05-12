@@ -2,15 +2,8 @@
   'use strict';
 
   angular
-    .module('givdo', [
-      'ionic',
-      'givdo.auth',
-      'givdo.quiz',
-      'givdo.user',
-      'givdo.ui',
-    ])
+    .module('givdo')
     .config(config)
-    .run(run)
     .controller('MenuBarCtrl', MenuBarCtrl);
 
 
@@ -24,37 +17,9 @@
           templateUrl: 'templates/menu.html',
           controller: 'MenuBarCtrl',
           data: { protected: true }
-        })
-        .state('app.loading', {
-          url: 'app/loading',
-          templateUrl: 'templates/ui/welcome.html',
-          data: { protected: false },
         });
 
-      $urlRouterProvider.otherwise('/app/loading');
-    }
-
-    run.$inject = ['$rootScope', '$ionicPlatform', 'loginModal'];
-
-    function run($rootScope, $ionicPlatform, loginModal) {
-      // $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
-      //   var protectedRoute = toState.data.protected;
-      //
-      //   if (protectedRoute && typeof $rootScope.currentUser === 'undefined') {
-      //     event.preventDefault();
-      //   }
-      // });
-
-      $ionicPlatform.ready(function () {
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-          cordova.plugins.Keyboard.disableScroll(true);
-        }
-
-        if (window.StatusBar) {
-          StatusBar.styleDefault();
-        }
-      });
+      $urlRouterProvider.otherwise('/welcome');
     }
 
     MenuBarCtrl.$inject = ['$scope', 'session'];

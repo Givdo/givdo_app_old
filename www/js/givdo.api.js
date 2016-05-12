@@ -3,19 +3,12 @@
 
   angular
     .module('givdo.api', ['json-api-client', 'givdo.config'])
-    .config(config)
     .factory('Oauth', Oauth)
     .factory('UserRepo', UserRepo)
     .factory('OrganizationRepo', OrganizationRepo)
     .factory('GameRepo', GameRepo)
     .factory('DeviceRepo', DeviceRepo)
     .factory('givdo', givdo);
-
-    config.$inject = ['$httpProvider'];
-
-    function config($httpProvider) {
-      $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
-    }
 
     Oauth.$inject = ['repository', 'GivdoApiURL'];
 
