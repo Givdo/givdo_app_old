@@ -18,7 +18,7 @@
       });
     }])
 
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
       $stateProvider.state('app', {
         url: '/app',
         abstract: true,
@@ -27,6 +27,7 @@
       });
       // if none of the above states are matched, use this as the fallback
       $urlRouterProvider.otherwise('/app/play');
+      $ionicConfigProvider.tabs.position('bottom');
     }])
 
     .controller('MenuBarCtrl', ['$scope', 'session', function ($scope, session) {
