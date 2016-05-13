@@ -43,8 +43,11 @@ module.exports = function(config) {
       'www/js/core/core.module.js',
       'www/js/core/constants.js',
       'www/js/core/config.js',
-      'www/js/core/config.platform.js',
-      'www/js/core/config.routes.js',
+
+      // auth
+      'www/js/auth/auth.module.js',
+      'www/js/auth/session.interceptor.js',
+      'www/js/auth/config.js',
 
       // welcome
       'www/js/welcome/welcome.module.js',
