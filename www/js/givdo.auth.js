@@ -89,11 +89,12 @@
     }])
 
     .controller('FacebookLoginCtrl', ['$scope', '$ionicPopup', 'facebook', 'session', function ($scope, $ionicPopup, facebook, session) {
+      console.log(facebook.checkStatus());
       $scope.facebookLogin = function () {
         facebook.login().then(session, function (error) {
           $ionicPopup.alert({
            title: 'Uh, oh!',
-           template: error.attr('message')
+           template: error
          });
         });
       };
