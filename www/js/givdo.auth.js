@@ -2,50 +2,12 @@
   'use strict';
 
   angular
-    .module('givdo.auth', [
-      'givdo.config',
-      'givdo.facebook',
-    ])
-    .factory('sessionInterceptor', sessionInterceptor)
+    .module('givdo.auth')
     .factory('session', session)
     .factory('loginModal', loginModal)
     .factory('authLock', authLock)
     .controller('FacebookLoginCtrl', FacebookLoginCtrl);
 
-
-    sessionInterceptor.$inject = ['GivdoApiURL', 'session', '$q'];
-
-    function sessionInterceptor(baseUrl, session, $q) {
-      var service = {
-        request: request,
-        responseError: responseError,
-      };
-
-      return service;
-
-      function shouldIntercept(config) {
-        return config.auth !== false && config.url.indexOf(baseUrl) === 0;
-      }
-
-      function request(config) {
-        if (shouldIntercept(config)) {
-          return session.token().then(function (token) {
-            config.headers.Authorization = 'Token token="' + token + '"';
-            return config;
-          });
-        }
-
-        return config;
-      }
-
-      function responseError(response) {
-        if (shouldIntercept(response.config) && response.status == 401) {
-          session.clear();
-        }
-
-        return $q.reject(response);
-      }
-    }
 
     session.$inject = ['$rootScope', '$q'];
 

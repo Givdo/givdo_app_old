@@ -4,17 +4,26 @@
   angular
     .module('givdo.core')
     .config(['$httpProvider', configureSerializer])
-    .config(['$httpProvider', 'localStorageServiceProvider', configureInterceptors]);
+    .run(['$ionicPlatform', configurePlatform]);
 
 
   function configureSerializer($httpProvider) {
-    console.log('givdo.core configureSerializer');
+    // console.log('givdo.core configureSerializer');
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
   }
 
-  function configureInterceptors($httpProvider, localStorage) {
-    console.log('givdo.core configureInterceptors');
+  function configurePlatform($ionicPlatform) {
+    // console.log('givdo.core configurePlatform');
 
-    $httpProvider.interceptors.push('sessionInterceptor');
+    $ionicPlatform.ready(function () {
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
+      }
+
+      if (window.StatusBar) {
+        StatusBar.styleDefault();
+      }
+    });
   }
 })();

@@ -1,5 +1,5 @@
 <ion-view>
-  <ion-content padding="true" style="padding: 12px">
+  <ion-content padding="true" style="padding: 12px" ng-controller="WelcomeController as vm">
   	<div class="title-box">
       <img src="img/givdo-icon-orange.png" class="half-width"><br>
       <img src="img/gdlogoold.png" class="full-width">
@@ -7,6 +7,6 @@
 
     <button class="button button-stable button-block icon-left ion-social-facebook"
             style="color: #ff9900"
-            ng-click="facebookLogin()">CONNECT WITH FACEBOOK</button>
+            ng-click="vm.facebookSignIn()">CONNECT WITH FACEBOOK</button>
   </ion-content>
 </ion-view>
