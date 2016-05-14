@@ -41,7 +41,8 @@
           if (response.status === 'connected') {
             AuthService
               .login(response.authResponse)
-              .then(loginSuccess);
+              .then(loginSuccess)
+              .catch(function () { $ionicLoading.hide() });
           } else {
             var facebookPermissions = ['email', 'user_friends', 'user_about_me'];
             facebookConnectPlugin.login(facebookPermissions, fbLoginSuccess, fbLoginError);
