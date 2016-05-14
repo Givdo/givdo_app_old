@@ -3,10 +3,11 @@
 
   angular.module('givdo', [
     'givdo.core',
-    'givdo.welcome',
+    'givdo.api',
     'givdo.auth',
     'givdo.quiz',
     'givdo.user',
     'givdo.ui',
+    'givdo.welcome',
   ]);
 })();

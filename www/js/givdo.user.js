@@ -89,15 +89,16 @@
       }
     }
 
-    ProfileCtrl.$inject = ['$scope', 'session', 'givdo', 'OrganizationPicker'];
+    ProfileCtrl.$inject = ['$rootScope', '$scope', 'session', 'givdo', 'OrganizationPicker'];
 
-    function ProfileCtrl($scope, session, givdo, OrganizationPicker) {
+    function ProfileCtrl($rootScope, $scope, session, givdo, OrganizationPicker) {
       var setUser = function (user) {
         $scope.user = user;
         $scope.organization = user.relation('organization');
         $scope.$emit('givdo:user-updated', user);
       };
-      session.user().then(setUser);
+      setUser($rootScope.currentUser);
+      // session.user().then(setUser);
 
       $scope.changeOrganization = function () {
         OrganizationPicker.open($scope.organization).then(function (organization) {

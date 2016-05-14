@@ -2,92 +2,99 @@
   'use strict';
 
   angular
-    .module('givdo.api', ['json-api-client', 'givdo.config'])
-    .factory('Oauth', Oauth)
-    .factory('UserRepo', UserRepo)
-    .factory('OrganizationRepo', OrganizationRepo)
-    .factory('GameRepo', GameRepo)
-    .factory('DeviceRepo', DeviceRepo)
+    .module('givdo.api')
+    // .factory('Oauth', Oauth)
+    // .factory('UserRepo', UserRepo)
+    // .factory('OrganizationRepo', OrganizationRepo)
+    // .factory('GameRepo', GameRepo)
+    // .factory('DeviceRepo', DeviceRepo)
     .factory('givdo', givdo);
 
-    Oauth.$inject = ['repository', 'GivdoApiURL'];
+    // Oauth.$inject = ['repository', 'GivdoApiURL'];
+    //
+    // function Oauth(repository, GivdoApiURL) {
+    //   return repository({
+    //     callback: { url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false }
+    //   });
+    // }
 
-    function Oauth(repository, GivdoApiURL) {
-      return repository({
-        callback: { url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false }
-      });
-    }
+    // UserRepo.$inject = ['repository', 'GivdoApiURL'];
+    //
+    // function UserRepo(repository, GivdoApiURL) {
+    //   var UserRepo = repository({
+    //     friends: { url: GivdoApiURL + '/friends', method: 'GET' },
+    //     activities: { url: GivdoApiURL + '/activities', method: 'GET', params: false }
+    //   });
+    //
+    //   UserRepo.update = function (user, data) {
+    //     return user.load('self', { data: data, method: 'PATCH' });
+    //   };
+    //
+    //   return UserRepo;
+    // }
 
-    UserRepo.$inject = ['repository', 'GivdoApiURL'];
+    // OrganizationRepo.$inject = ['repository', 'GivdoApiURL'];
 
-    function UserRepo(repository, GivdoApiURL) {
-      var UserRepo = repository({
-        friends: { url: GivdoApiURL + '/friends', method: 'GET' },
-        activities: { url: GivdoApiURL + '/activities', method: 'GET', params: false }
-      });
+    // function OrganizationRepo(repository, GivdoApiURL) {
+    //   var OrganizationRepo = repository({
+    //     query: { url: GivdoApiURL + '/organizations' }
+    //   });
+    //
+    //   return OrganizationRepo;
+    // }
 
-      UserRepo.update = function (user, data) {
-        return user.load('self', { data: data, method: 'PATCH' });
-      };
+    // GameRepo.$inject = ['repository', 'GivdoApiURL'];
 
-      return UserRepo;
-    }
+    // function GameRepo(repository, GivdoApiURL) {
+    //   var GameRepo = repository({
+    //     singlePlayer: { url: GivdoApiURL + '/games/single' },
+    //     versus: { url: GivdoApiURL + '/games/versus/{{uid}}', params: false },
+    //     query: { url: GivdoApiURL + '/games' }
+    //   });
+    //
+    //   GameRepo.answer = function (game, trivia, option) {
+    //     var data = {
+    //       trivia_id: trivia.id,
+    //       trivia_option_id: option.id
+    //     };
+    //
+    //     return game.load('answers', { data: data, method: 'POST' });
+    //   };
+    //
+    //   GameRepo.playFor = function (game, organization) {
+    //     var data = { organization_id: organization.id };
+    //
+    //     return game.load('player', { data: data, method: 'PATCH' });
+    //   };
+    //
+    //   return GameRepo;
+    // }
 
-    OrganizationRepo.$inject = ['repository', 'GivdoApiURL'];
+    // DeviceRepo.$inject = ['repository', 'GivdoApiURL'];
+    //
+    // function DeviceRepo(repository, apiURL) {
+    //   var DeviceRepo = repository({
+    //     register: { url: '/devices' },
+    //   });
+    //
+    //   return DeviceRepo;
+    // }
 
-    function OrganizationRepo(repository, GivdoApiURL) {
-      var OrganizationRepo = repository({
-        query: { url: GivdoApiURL + '/organizations' }
-      });
+    givdo.$inject = [
+      'OAuthRepository',
+      'UserRepository',
+      'GameRepository',
+      'OrganizationRepository',
+      'DeviceRepository',
+    ];
 
-      return OrganizationRepo;
-    }
-
-    GameRepo.$inject = ['repository', 'GivdoApiURL'];
-
-    function GameRepo(repository, GivdoApiURL) {
-      var GameRepo = repository({
-        singlePlayer: { url: GivdoApiURL + '/games/single' },
-        versus: { url: GivdoApiURL + '/games/versus/{{uid}}', params: false },
-        query: { url: GivdoApiURL + '/games' }
-      });
-
-      GameRepo.answer = function (game, trivia, option) {
-        var data = {
-          trivia_id: trivia.id,
-          trivia_option_id: option.id
-        };
-
-        return game.load('answers', { data: data, method: 'POST' });
-      };
-
-      GameRepo.playFor = function (game, organization) {
-        var data = { organization_id: organization.id };
-
-        return game.load('player', { data: data, method: 'PATCH' });
-      };
-
-      return GameRepo;
-    }
-
-    DeviceRepo.$inject = ['repository', 'GivdoApiURL'];
-
-    function DeviceRepo(repository, apiURL) {
-      var DeviceRepo = repository({
-        register: { url: '/devices' },
-      });
-
-      return DeviceRepo;
-    }
-
-    givdo.$inject = ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', 'DeviceRepo'];
-
-    function givdo(Oauth, UserRepo, GameRepo, OrganizationRepo) {
+    function givdo(Oauth, UserRepo, GameRepo, OrganizationRepo, DeviceRepository) {
       return {
         oauth: Oauth,
         user: UserRepo,
         game: GameRepo,
-        organizations: OrganizationRepo
+        device: DeviceRepository,
+        organizations: OrganizationRepo,
       };
     }
 

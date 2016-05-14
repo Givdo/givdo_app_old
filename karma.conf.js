@@ -44,6 +44,14 @@ module.exports = function(config) {
       'www/js/core/constants.js',
       'www/js/core/config.js',
 
+      // api
+      'www/js/api/api.module.js',
+      'www/js/api/oauth.repository.js',
+      'www/js/api/device.repository.js',
+      'www/js/api/game.repository.js',
+      'www/js/api/user.repository.js',
+      'www/js/api/organization.repository.js',
+
       // auth
       'www/js/auth/auth.module.js',
       'www/js/auth/session.interceptor.js',

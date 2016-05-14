@@ -3,31 +3,51 @@
 
   angular
     .module('givdo.welcome')
-    .controller('WelcomeController', ['$state', '$ionicLoading', WelcomeController]);
+    .controller('WelcomeController', [
+      '$state',
+      '$rootScope',
+      '$ionicLoading',
+      'AuthService',
+      WelcomeController
+    ]);
 
 
-    WelcomeController.$inject = [];
-
-    function WelcomeController($state, $ionicLoading) {
+    function WelcomeController($state, $rootScope, $ionicLoading, AuthService) {
       var vm = this;
 
       vm.facebookSignIn = facebookSignIn;
 
+
+      function loginSuccess() {
+        $ionicLoading.hide();
+        $state.go('profile');
+      }
+
+      function fbLoginSuccess(response) {
+        AuthService
+          .signup(response.authResponse)
+          .then(loginSuccess);
+      }
+
+      function fbLoginError(error) {
+        console.log('error:' + error);
+        $ionicLoading.hide();
+      }
+
       function facebookSignIn() {
+        $ionicLoading.show({ template: 'Signing in...' });
+
         facebookConnectPlugin.getLoginStatus(function(response) {
-          $ionicLoading.show({ template: 'Signing in...' });
-
           if (response.status === 'connected') {
-            console.log('connected');
-
-            $ionicLoading.hide();
-            $state.go('profile');
+            AuthService
+              .login(response.authResponse)
+              .then(loginSuccess);
           } else {
-            console.log('not_authorized');
-
-            setTimeout($ionicLoading.hide, 2000);
+            var facebookPermissions = ['email', 'user_friends', 'user_about_me'];
+            facebookConnectPlugin.login(facebookPermissions, fbLoginSuccess, fbLoginError);
           }
         });
       }
     }
+
 })();
