@@ -90,8 +90,8 @@
       function login() {
         facebook.login().then(session, function (error) {
           $ionicPopup.alert({
-           title: 'Uh, oh!',
-           template: error.attr('message')
+            title: 'Uh, oh!',
+            template: error.attr('message')
          });
         });
       };
