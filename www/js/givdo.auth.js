@@ -1,44 +1,26 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.auth', ['givdo.config', 'givdo.facebook', 'LocalStorageModule'])
-    .config(['$httpProvider', 'localStorageServiceProvider', function ($httpProvider, localStorageServiceProvider) {
-      $httpProvider.interceptors.push('sessionInterceptor');
-      localStorageServiceProvider.setPrefix('givdo');
-    }])
+  angular
+    .module('givdo.auth')
+    .factory('session', session)
+    .factory('loginModal', loginModal)
+    .factory('authLock', authLock)
+    .controller('FacebookLoginCtrl', FacebookLoginCtrl);
 
-    .factory('sessionInterceptor', ['GivdoApiURL', 'session', '$q', function (baseUrl, session, $q) {
-      var shouldIntercept = function (config) {
-        return config.auth !== false && config.url.indexOf(baseUrl) === 0;
-      };
 
-      return {
-        request: function (config) {
-          if (shouldIntercept(config)) {
-            return session.token().then(function (token) {
-              config.headers.Authorization = 'Token token="' + token + '"';
-              return config;
-            });
-          }
-          return config;
-        },
-        responseError: function (response) {
-          if (shouldIntercept(response.config) && response.status == 401) {
-            session.clear();
-          }
-          return $q.reject(response);
-        }
-      }
-    }])
+    session.$inject = ['$rootScope', '$q'];
 
-    .factory('session', ['$rootScope', '$q', function ($rootScope, $q) {
+    function session($rootScope, $q) {
       var sessionDefer = $q.defer();
 
       var session = function (newSession) {
         if (newSession) {
+          $rootScope.currentUser = newSession.relation('user');
           sessionDefer.resolve(newSession);
           $rootScope.$emit('givdo:session:up');
         }
+
         return sessionDefer.promise;
       };
 
@@ -60,36 +42,52 @@
       };
 
       return session;
-    }])
+    }
 
-    .factory('loginModal', ['$ionicModal', function ($ionicModal) {
-      var modal = $ionicModal.fromTemplateUrl('templates/auth/login.html', {animation: 'slide-in-up'});
+    loginModal.$inject = ['$ionicModal'];
 
-      return {
-        open: function () {
-          modal.then(function (modal) {
-            modal.show();
-          });
-        },
-        close: function () {
-          modal.then(function (modal) {
-            modal.hide();
-          });
-        }
+    function loginModal($modal) {
+      var modal = $modal.fromTemplateUrl('templates/auth/login.html', {
+        animation: 'slide-in-up'
+      });
+
+      var service = {
+        open: openModal,
+        close: closeModal,
       };
-    }])
 
-    .factory('authLock', ['$rootScope', 'facebook', 'session', 'loginModal', function ($rootScope, facebook, session, loginModal) {
+      return service;
+
+      function openModal() {
+        modal.then(function (modal) {
+          modal.show();
+        });
+      }
+
+      function closeModal() {
+        modal.then(function (modal) {
+          modal.hide();
+        });
+      }
+    }
+
+    authLock.$inject = ['$rootScope', 'facebook', 'session', 'loginModal'];
+
+    function authLock($rootScope, facebook, session, loginModal) {
       return function () {
         $rootScope.$on('givdo:session:up', loginModal.close);
         $rootScope.$on('givdo:session:down', loginModal.open);
 
         facebook.checkStatus().then(session, session.clear);
       };
-    }])
+    }
 
-    .controller('FacebookLoginCtrl', ['$scope', '$ionicPopup', 'facebook', 'session', function ($scope, $ionicPopup, facebook, session) {
-      $scope.facebookLogin = function () {
+    FacebookLoginCtrl.$inject = ['$scope', '$ionicPopup', 'facebook', 'session'];
+
+    function FacebookLoginCtrl($scope, $ionicPopup, facebook, session) {
+      $scope.facebookLogin = login;
+
+      function login() {
         facebook.login().then(session, function (error) {
           $ionicPopup.alert({
            title: 'Uh, oh!',
@@ -97,5 +95,5 @@
          });
         });
       };
-    }]);
+    }
 })();

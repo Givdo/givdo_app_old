@@ -1,8 +1,12 @@
 (function(){
   'use strict';
 
-  angular.module('givdo.notifications', ['ionic', 'givdo.api'])
-    .factory('notificationsRegister', function() {
+  angular
+    .module('givdo.notifications', ['ionic', 'givdo.api'])
+    .factory('notificationsRegister', notificationsRegister);
+
+
+    function notificationsRegister() {
       var push;
 
       return function() {
@@ -38,5 +42,5 @@
           alert('err: ' + e.message);
         });
       };
-    });
+    }
 })();
