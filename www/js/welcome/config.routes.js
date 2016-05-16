@@ -14,8 +14,11 @@
       $state
         .state('welcome', {
           url: '/welcome',
+          controller: 'WelcomeController',
           templateUrl: 'templates/welcome/index.html',
-          controller: 'WelcomeController'
+          data: {
+            protected: false,
+          }
         });
     }
 })();
