@@ -1,8 +1,28 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.quiz', ['givdo.api', 'givdo.facebook', 'givdo.util', 'jett.ionic.filter.bar'])
-    .config(['$stateProvider', function ($stateProvider) {
+  angular
+    .module('givdo.quiz', [
+      'givdo.api',
+      'givdo.util',
+      'givdo.facebook',
+      'jett.ionic.filter.bar'
+    ])
+    .config(config)
+    .directive('gameScore', gameScore)
+    .service('QuizRound', QuizRound)
+    .controller('SponsorCtrl', SponsorCtrl)
+    .controller('SurveyCtrl', SurveyCtrl)
+    .controller('ShowGameCtrl', ShowGameCtrl)
+    .controller('NewGameCtrl', NewGameCtrl)
+    .controller('ChallengeFriendCtrl', ChallengeFriendCtrl)
+    .controller('TriviaCtrl', TriviaCtrl)
+    .controller('GameHistoryCtrl', GameHistoryCtrl);
+
+
+    config.$inject = ['$stateProvider'];
+
+    function config($stateProvider) {
       $stateProvider
         .state('game-history', {
           url: '/game-history',
@@ -17,6 +37,7 @@
         .state('play', {
           url: '/play',
           parent: 'app',
+          data: { protected: true },
           views: {
             'quiz-content': {
               templateUrl: 'templates/quiz/new-game.html',
@@ -85,9 +106,9 @@
             game: function(QuizRound) { return QuizRound.game(); }
           }
         });
-    }])
+    }
 
-    .directive('gameScore', function() {
+    function gameScore() {
       return {
         restrict: 'E',
         scope: {
@@ -99,9 +120,11 @@
           scope.players = scope.game.relation('players');
         }
       };
-    })
+    }
 
-    .service('QuizRound', ['$state', '$q', 'givdo', 'OrganizationPicker', function ($state, $q, givdo, OrganizationPicker) {
+    QuizRound.$inject = ['$state', '$q', 'givdo', 'OrganizationPicker'];
+
+    function QuizRound($state, $q, givdo, OrganizationPicker) {
       var currentGame, currentTrivia, currentPlayer;
 
       var setCurrentGame = function (game) {
@@ -156,17 +179,21 @@
       };
 
       return self;
-    }])
+    }
 
-    .controller('SponsorCtrl', ['$state', '$scope', '$stateParams', 'game', function ($state, $scope, $stateParams, game) {
+    SponsorCtrl.$inject = ['$state', '$scope', '$stateParams', 'game'];
+
+    function SponsorCtrl($state, $scope, $stateParams, game) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
       $scope.showResult = function () {
         $state.go('show-game', {}, {reload: true});
       };
-    }])
+    }
 
-    .controller('SurveyCtrl', ['$state', '$scope', '$stateParams', function ($state, $scope, $stateParams) {
+    SurveyCtrl.$inject = ['$state', '$scope', '$stateParams'];
+
+    function SurveyCtrl($state, $scope, $stateParams) {
       $scope.survey = {
         difficulty:        '',
         play:              '',
@@ -197,17 +224,28 @@
           $state.go('play', {}, { reload: true });
         }
       };
-    }])
+    }
 
-    .controller('ShowGameCtrl', ['$scope', '$stateParams', 'game', 'facebook', 'givdo', 'QuizRound', function ($scope, $stateParams, game, facebook, givdo, QuizRound) {
+    ShowGameCtrl.$inject = [
+      '$scope',
+      '$stateParams',
+      'game',
+      'facebook',
+      'givdo',
+      'QuizRound'
+    ];
+
+    function ShowGameCtrl($scope, $stateParams, game, facebook, givdo, QuizRound) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
       $scope.playSingle = function () {
         givdo.game.singlePlayer().then(QuizRound.continue);
       };
-    }])
+    }
 
-    .controller('NewGameCtrl', ['$state', '$scope', 'facebook', 'givdo', 'QuizRound', function ($state, $scope, facebook, givdo, QuizRound) {
+    NewGameCtrl.$inject = ['$state', '$scope', 'facebook', 'givdo', 'QuizRound'];
+
+    function NewGameCtrl($state, $scope, facebook, givdo, QuizRound) {
       $scope.playSingle = function () {
         givdo.game.singlePlayer().then(function(QuizRound){
           QuizRound.continue
@@ -215,9 +253,11 @@
           $state.go('survey', {}, {reload: true});
         });
       };
-    }])
+    }
 
-    .controller('ChallengeFriendCtrl', ['$scope', 'facebook', 'givdo', 'QuizRound', function ($scope, facebook, givdo, QuizRound) {
+    ChallengeFriendCtrl.$inject = ['$scope', 'facebook', 'givdo', 'QuizRound'];
+
+    function ChallengeFriendCtrl($scope, facebook, givdo, QuizRound) {
       givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
@@ -227,9 +267,18 @@
       $scope.challenge = function (friend) {
         givdo.game.versus(friend).then(QuizRound.continue);
       };
-    }])
+    }
 
-    .controller('TriviaCtrl', ['$scope', '$ionicLoading', '$ionicNavBarDelegate', 'QuizRound', 'trivia', 'game', function ($scope, $ionicLoading, $ionicNavBarDelegate, QuizRound, trivia, game) {
+    TriviaCtrl.$inject = [
+      '$scope',
+      '$ionicLoading',
+      '$ionicNavBarDelegate',
+      'QuizRound',
+      'trivia',
+      'game'
+    ];
+
+    function TriviaCtrl($scope, $ionicLoading, $ionicNavBarDelegate, QuizRound, trivia, game) {
       $ionicNavBarDelegate.showBackButton(false);
       $scope.submitAnswer = function () {
         $ionicLoading.show();
@@ -243,12 +292,14 @@
       $scope.trivia = trivia;
       $scope.options = trivia.relation('options');
       $scope.players = game.relation('players');
-    }])
+    }
 
-    .controller('GameHistoryCtrl', ['$scope', 'givdo', 'QuizRound', function ($scope, givdo, QuizRound) {
+    GameHistoryCtrl.$inject = ['$scope', 'givdo', 'QuizRound'];
+    
+    function GameHistoryCtrl($scope, givdo, QuizRound) {
       givdo.game.query().then(function (games) {
         $scope.games = games;
       });
       $scope.openGame = QuizRound.continue;
-    }]);
+    }
 })();

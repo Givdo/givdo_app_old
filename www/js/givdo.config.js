@@ -1,10 +1,14 @@
 (function () {
   'use strict';
 
-  var HOSTNAME = window.location.hostname;
-  var URL_SERVER = (HOSTNAME === 'localhost' ? 'localhost:3000' : 'givdo-qa.herokuapp.com');
+  angular
+    .module('givdo.config', [])
+    .constant('GivdoApiURL', getApiUrl());
 
-  angular.module('givdo.config', [])
-    .constant('GivdoApiURL', 'http://' + URL_SERVER + '/api/v1');
+    function getApiUrl() {
+      var hostname = window.location.hostname;
+      var serverUrl = (hostname === 'localhost' ? 'http://localhost:3000' : 'https://givdo-qa.herokuapp.com');
 
+      return serverUrl + '/api/v1';
+    }
 })();
