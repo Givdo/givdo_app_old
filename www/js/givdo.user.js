@@ -97,8 +97,7 @@
         $scope.organization = user.relation('organization');
         $scope.$emit('givdo:user-updated', user);
       };
-      setUser($rootScope.currentUser);
-      // session.user().then(setUser);
+      session.user().then(setUser);
 
       $scope.changeOrganization = function () {
         OrganizationPicker.open($scope.organization).then(function (organization) {

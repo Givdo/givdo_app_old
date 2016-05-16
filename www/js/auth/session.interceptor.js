@@ -38,6 +38,7 @@
 
       function responseError(response) {
         if (shouldIntercept(response.config) && response.status == 401) {
+          session.clear();
           $rootScope.$broadcast('givdo:session:down');
         }
 
