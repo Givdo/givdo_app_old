@@ -3,13 +3,13 @@
 
   angular
     .module('givdo.core')
-    .config(['$cordovaFacebookProvider', configurePlugins])
+    .config(['facebookConfig', '$cordovaFacebookProvider', configurePlugins])
     .config(['$httpProvider', configureSerializer])
     .run(['$ionicPlatform', configurePlatform]);
 
 
-  function configurePlugins($facebookProvider) {
-    $facebookProvider.browserInit('558889160934969', 'v2.5');
+  function configurePlugins(facebookConfig, $facebookProvider) {
+    $facebookProvider.browserInit(facebookConfig.appID, facebookConfig.version);
   }
 
   function configureSerializer($httpProvider) {
