@@ -9,13 +9,16 @@
     .controller('FacebookLoginCtrl', FacebookLoginCtrl);
 
 
-    session.$inject = ['$rootScope', '$q'];
+    session.$inject = ['$rootScope', '$q', 'localStorageService'];
 
-    function session($rootScope, $q) {
+    function session($rootScope, $q, $localStorage) {
       var sessionDefer = $q.defer();
 
       var session = function (newSession) {
         if (newSession) {
+          $localStorage.set('token', newSession.id);
+          $rootScope.currentUser = newSession.relation('user');
+
           sessionDefer.resolve(newSession);
           $rootScope.$emit('givdo:session:up');
         }

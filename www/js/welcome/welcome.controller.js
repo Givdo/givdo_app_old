@@ -7,12 +7,12 @@
       '$state',
       '$rootScope',
       '$ionicLoading',
-      'AuthService',
+      'authService',
       WelcomeController
     ]);
 
 
-    function WelcomeController($state, $rootScope, $ionicLoading, AuthService) {
+    function WelcomeController($state, $rootScope, $ionicLoading, authService) {
       var vm = this;
 
       vm.facebookSignIn = facebookSignIn;
@@ -24,13 +24,12 @@
       }
 
       function fbLoginSuccess(response) {
-        AuthService
+        authService
           .signup(response.authResponse)
           .then(loginSuccess);
       }
 
       function fbLoginError(error) {
-        console.log('error:' + error);
         $ionicLoading.hide();
       }
 
@@ -39,10 +38,13 @@
 
         facebookConnectPlugin.getLoginStatus(function(response) {
           if (response.status === 'connected') {
-            AuthService
+            authService
               .login(response.authResponse)
               .then(loginSuccess)
-              .catch(function () { $ionicLoading.hide() });
+              .catch(function (error) {
+                console.log(error);
+                $ionicLoading.hide();
+              });
           } else {
             var facebookPermissions = ['email', 'user_friends', 'user_about_me'];
             facebookConnectPlugin.login(facebookPermissions, fbLoginSuccess, fbLoginError);

@@ -3,10 +3,16 @@
 
   angular
     .module('givdo.auth')
-    .factory('sessionInterceptor', ['GivdoApiURL', 'session', '$q', SessionInterceptor]);
+    .factory('sessionInterceptor', [
+      '$rootScope',
+      'GivdoApiURL',
+      'session',
+      '$q',
+      sessionInterceptor
+    ]);
 
 
-    function SessionInterceptor(baseUrl, session, $q) {
+    function sessionInterceptor($rootScope, baseUrl, session, $q) {
       var service = {
         request: request,
         responseError: responseError,
@@ -32,7 +38,7 @@
 
       function responseError(response) {
         if (shouldIntercept(response.config) && response.status == 401) {
-          session.clear();
+          $rootScope.$broadcast('givdo:session:down');
         }
 
         return $q.reject(response);

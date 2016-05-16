@@ -8,7 +8,7 @@
 
 
   function configureInterceptors($httpProvider) {
-    $httpProvider.interceptors.push('SessionInterceptor');
+    $httpProvider.interceptors.push('sessionInterceptor');
   }
 
   function configureProtectedRoutes($rootScope, $state) {

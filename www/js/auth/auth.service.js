@@ -3,10 +3,17 @@
 
   angular
     .module('givdo.auth')
-    .service('AuthService', ['$q', '$rootScope', 'OAuthRepository', AuthService]);
+    .service('authService', [
+      '$q',
+      '$rootScope',
+      'events',
+      'session',
+      'OAuthRepository',
+      authService
+    ]);
 
 
-    function AuthService($q, $rootScope, OAuthRepository) {
+    function authService($q, $rootScope, events, session, OAuthRepository) {
       var service = {
         login: login,
         signup: signup,
@@ -14,6 +21,10 @@
 
       return service;
 
+
+      function saveSession(s) {
+        session(s);
+      }
 
       function loginOrSignup(response) {
         var deferred = $q.defer();
@@ -28,10 +39,12 @@
         OAuthRepository
           .callback(data)
           .then(function (response) {
-            $rootScope.currentUser = response.relation('user');
+            saveSession(response);
+            $rootScope.$emit(events.LOGIN_SUCCESS);
             deferred.resolve();
           })
           .catch(function (error) {
+            $rootScope.$broadcast(events.LOGIN_FAILED);
             deferred.reject(error);
           });
 
