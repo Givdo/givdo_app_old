@@ -1,25 +1,66 @@
 <ion-view>
   <ion-content>
-    <div class="activity-contents">
-      <span><img src="img/task-small.png"> Activity</span><br>
+    <div class="container">
+      <h2 class="title title--task">Activity</h2>
 
-      <div class="alert-recent-user" ng-repeat="activity in activities">
-        <div class="player" style="background-image: url('{{ activity.attr('organization_picture') }}')"></div>
-        <span class="text-notification">
-          <strong>{{ activity.attr('organization_name') }}</strong><br>
-          {{ activityNameToLabel(activity.attr('name')) }} - Score: {{ activity.attr('score') }}
-        </span>
-        <div class="clearfix"></div>
-      </div>
+        <div class="alert-recent-user">
+          <div class="player" style="background-image: url('img/dog-rescue.jpg')"></div>
+          <span class="text-notification"><b>Rocket Dog Rescue</b><br>
+          You Won - Score: 15
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="alert-following">
+          <div class="player" style="background-image: url('img/sfsp.jpg')"></div>
+          <span class="text-notification"><b>San Francisco Suicide Prevention</b><br>
+          You Lost - Score: 2
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="alert-following">
+          <div class="player" style="background-image: url('img/dog-rescue.jpg')"></div>
+          <span class="text-notification"><b>Rocket Dog Rescue</b><br>
+          You Lost - Score: 5
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="alert-recent-user">
+          <div class="player" style="background-image: url('img/breast-cancer.jpg')"></div>
+          <span class="text-notification"><b>Breast Cancer Emergency Fund</b><br>
+          You Won - Score: 15
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="alert-recent-user">
+          <div class="player" style="background-image: url('img/sfsp.jpg')"></div>
+          <span class="text-notification"><b>San Francisco Suicide Prevention</b><br>
+          You Won - Score: 15
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="alert-recent-user">
+          <div class="player" style="background-image: url('img/breast-cancer.jpg')"></div>
+          <span class="text-notification"><b>Breast Cancer Emergency Fund</b><br>
+          You Won - Score: 15
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="alert-following">
+          <div class="player" style="background-image: url('img/sfsp.jpg')"></div>
+          <span class="text-notification"><b>San Francisco Suicide Prevention</b><br>
+          You Lost - Score: 2
+          </span>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="grand-total"><img src="img/give-money.png"/> <span style="color: #96939b;">Total Donations:</span> {{ totalScore | currency }}</div>
+
     </div>
   </ion-content>
-
-  <div class="grand-total-wrapper">
-    <div class="grand-total">
-      <img src="img/give-money.png"/>
-      <span style="color: #96939b;">Total Donations:</span>
-      {{ totalScore | currency }}
-    </div>
-  </div>
-
 </ion-view>
