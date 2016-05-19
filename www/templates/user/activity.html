@@ -1,6 +1,6 @@
 <ion-view>
   <ion-content>
-    <div class="container">
+    <div class="container-activity">
       <h2 class="title title--task">Activity</h2>
 
       <div class="alert-recent-user" ng-repeat="activity in activities">
@@ -11,11 +11,13 @@
         </span>
         <div class="clearfix"></div>
       </div>
-
-      <div class="grand-total">
-        <img src="img/give-money.png"/>
-        <span style="color: #96939b;">Total Donations:</span> {{ totalScore | currency }}
-      </div>
     </div>
   </ion-content>
+
+  <div class="grand-total">
+    <h2 class="title title--give-money">
+      Total Donations:
+      <span>{{ totalScore | currency }}</span>
+    </h2>
+  </div>
 </ion-view>
