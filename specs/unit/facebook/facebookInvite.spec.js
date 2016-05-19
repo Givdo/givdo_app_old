@@ -8,7 +8,7 @@ describe('facebook.invite', function () {
   it('invites with the game URL', inject(function (facebook) {
     facebook.invite();
 
-    expect(facebookConnectPlugin.appInvite).toHaveBeenCalledWith({url: 'https://givdo.com'}, jasmine.any(Function), jasmine.any(Function));
+    expect(facebookConnectPlugin.appInvite).toHaveBeenCalledWith({url: 'https://fb.me/603544463136105'}, jasmine.any(Function), jasmine.any(Function));
   }));
 
   it('resolves with the returned value', inject(function (facebook, $rootScope) {
