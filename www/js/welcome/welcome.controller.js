@@ -7,12 +7,13 @@
       '$state',
       '$rootScope',
       '$ionicLoading',
+      '$cordovaFacebook',
       'authService',
       WelcomeController
     ]);
 
 
-    function WelcomeController($state, $rootScope, $ionicLoading, authService) {
+    function WelcomeController($state, $rootScope, $ionicLoading, $cordovaFacebook, authService) {
       var vm = this;
 
       vm.facebookSignIn = facebookSignIn;
@@ -36,20 +37,22 @@
       function facebookSignIn() {
         $ionicLoading.show({ template: 'Signing in...' });
 
-        facebookConnectPlugin.getLoginStatus(function(response) {
-          if (response.status === 'connected') {
-            authService
-              .login(response.authResponse)
-              .then(loginSuccess)
-              .catch(function (error) {
-                console.log(error);
-                $ionicLoading.hide();
-              });
-          } else {
-            var facebookPermissions = ['email', 'user_friends', 'user_about_me'];
-            facebookConnectPlugin.login(facebookPermissions, fbLoginSuccess, fbLoginError);
-          }
-        });
+        $cordovaFacebook
+          .getLoginStatus()
+          .then(function(response) {
+            if (response.status === 'connected') {
+              authService
+                .login(response.authResponse)
+                .then(loginSuccess)
+                .catch(function (error) {
+                  console.log(error);
+                  $ionicLoading.hide();
+                });
+            } else {
+              var facebookPermissions = ['email', 'user_friends', 'user_about_me'];
+              $cordovaFacebook.login(facebookPermissions, fbLoginSuccess, fbLoginError);
+            }
+          });
       }
     }
 

@@ -3,7 +3,6 @@
 
   angular
     .module('givdo.facebook', ['givdo.api', 'ngCordova'])
-    // .config(config)
     .factory('facebookAuth', facebookAuth)
     .factory('facebookCheckStatus', facebookCheckStatus)
     .factory('facebookLogin', facebookLogin)
@@ -11,16 +10,6 @@
     .factory('facebookGameInvite', facebookGameInvite)
     .factory('facebook', facebook);
 
-
-    // config.$inject = ['$cordovaFacebookProvider'];
-    //
-    // function config($cordovaFacebookProvider) {
-    //   if (!window.cordova) {
-    //     ionic.Platform.ready(function () {
-    //       $cordovaFacebookProvider.browserInit('558889160934969', 'v2.5');
-    //     });
-    //   }
-    // }
 
     facebookAuth.$inject = ['givdo', '$q'];
 
@@ -64,7 +53,8 @@
       // TODO: add picture and url (game vs current user)
       return function () {
         var deferred = $q.defer();
-        facebookConnectPlugin.appInvite({url: 'https://givdo.com'}, deferred.resolve, deferred.reject);
+        var options = { url: 'https://fb.me/603544463136105' };
+        facebookConnectPlugin.appInvite(options, deferred.resolve, deferred.reject);
         return deferred.promise;
       };
     }
