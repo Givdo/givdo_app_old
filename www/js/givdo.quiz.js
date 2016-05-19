@@ -247,9 +247,9 @@
 
     function NewGameCtrl($state, $scope, facebook, givdo, QuizRound) {
       $scope.playSingle = function () {
-        givdo.game.singlePlayer().then(function(QuizRound){
-          QuizRound.continue
-        }, function(error){
+        givdo.game.singlePlayer()
+        .then(QuizRound.continue)
+        .catch(function(response) {
           $state.go('survey', {}, {reload: true});
         });
       };
@@ -295,7 +295,7 @@
     }
 
     GameHistoryCtrl.$inject = ['$scope', 'givdo', 'QuizRound'];
-    
+
     function GameHistoryCtrl($scope, givdo, QuizRound) {
       givdo.game.query().then(function (games) {
         $scope.games = games;
