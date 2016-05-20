@@ -93,6 +93,14 @@
 
     function ProfileCtrl($rootScope, $scope, session, givdo, OrganizationPicker) {
       $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Philanthropist', 'Grantor'];
+
+      $scope.range = function(min, max, step){
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) input.push(i);
+        return input;
+      };
+
       var setUser = function (user) {
         $scope.user = user;
         $scope.organization = user.relation('organization');
