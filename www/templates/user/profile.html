@@ -5,41 +5,43 @@
       <span class="profile-name">{{ user.attr('name') }}</span>
     </div>
 
-    <ion-list type="card">
-      <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
-        <img ng-if-start="organization" ng-src="{{organization.attr('picture')}}">
-        <h2>{{organization.attr('name')}}</h2>
-        <p ng-if-end>{{organization.attr('mission') | limitTo:100}}</p>
-        <span ng-hide="organization">Select an organization to give</span>
-        <button class="button button-royal">
-          <i class="icon ion-edit"></i>
-        </button>
-      </ion-item>
-    </ion-list>
+    <div class="container">
+      <ion-list type="card">
+        <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
+          <img ng-if-start="organization" ng-src="{{organization.attr('picture')}}">
+          <h2>{{organization.attr('name')}}</h2>
+          <p ng-if-end>{{organization.attr('mission') | limitTo:100}}</p>
+          <span ng-hide="organization">Select an organization to give</span>
+          <button class="button button-royal">
+            <i class="icon ion-edit"></i>
+          </button>
+        </ion-item>
+      </ion-list>
 
-    <div class="profile-contents">
-      <h2 class="title title--causes">Your Causes</h2>
+      <div class="profile-contents">
+        <h2 class="title title--causes">Your Causes</h2>
 
-      <img src="img/causes/1.jpg">
-      <img src="img/causes/2.jpg">
-      <img src="img/causes/3.jpg">
-      <img src="img/causes/4.jpg">
-      <img src="img/causes/5.jpg">
-      <img src="img/causes/6.jpg">
-      <img src="img/add-icon.png">
-    </div>
-
-    <div class="profile-contents">
-      <h2 class="title title--achievements">Your Achievements</h2>
-
-      <div class="badge-givdo" ng-repeat="badge in badges">
-        <img src="img/badges/{{$index + 1}}A.png">
-        {{badges_name[$index]}}
+        <img src="img/causes/1.jpg">
+        <img src="img/causes/2.jpg">
+        <img src="img/causes/3.jpg">
+        <img src="img/causes/4.jpg">
+        <img src="img/causes/5.jpg">
+        <img src="img/causes/6.jpg">
+        <img src="img/add-icon.png">
       </div>
 
-      <div class="badge-givdo" ng-repeat="n in range((badges.length), 6)">
-        <img src="img/badges/{{n + 1}}.png">
-        {{badges_name[n]}}
+      <div class="profile-contents">
+        <h2 class="title title--achievements">Your Achievements</h2>
+
+        <div class="badge-givdo" ng-repeat="badge in badges">
+          <img src="img/badges/{{$index + 1}}A.png">
+          {{badges_name[$index]}}
+        </div>
+
+        <div class="badge-givdo" ng-repeat="n in range((badges.length), 6)">
+          <img src="img/badges/{{n + 1}}.png">
+          {{badges_name[n]}}
+        </div>
       </div>
     </div>
   </ion-content>

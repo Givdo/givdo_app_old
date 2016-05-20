@@ -15,4 +15,9 @@
       width: calc((100% / 3) - 20px);
     }
   }
+
+  &-activity {
+    @extend .container;
+    padding-bottom: 90px;
+  }
 }

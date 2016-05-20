@@ -31,6 +31,10 @@
   position: relative;
 }
 
+.cover{
+  width: 100%;
+}
+
 .profile-picture, .profile-name {
   position: absolute;
 }
@@ -213,29 +217,6 @@
 }
 
 /* activity screen */
-.activity-contents {
-  @extend .profile-contents;
-
-  padding-bottom: 70px;
-}
-
-.grand-total-wrapper {
-  bottom: 0;
-  width: 100%;
-  position: fixed;
-  margin-bottom: 49px;
-  padding-bottom: 25px;
-  background-color: white;
-}
-
-.grand-total {
-  padding: 12px;
-  font-weight: 500;
-  font-size: 24px;
-  text-align: right;
-  color: #ff9933;
-  border-bottom: dotted 1px #666;
-}
 
 /* Wheater CSS*/
 
@@ -356,4 +337,11 @@
 .tab-item{
   border-top: none !important;
   margin-top: 0 !important;
+}
+
+.givdo-option{
+  &:hover{
+    background-color: orange !important;
+    color: #fff !important;
+  }
 }
