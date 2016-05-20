@@ -46,6 +46,8 @@
         .state('profile', {
           url: '/profile',
           parent: 'app',
+          cache: false,
+          reload: true,
           views: {
             'profile-content': {
               templateUrl: 'templates/user/profile.html',
