@@ -92,6 +92,7 @@
     ProfileCtrl.$inject = ['$rootScope', '$scope', 'session', 'givdo', 'OrganizationPicker'];
 
     function ProfileCtrl($rootScope, $scope, session, givdo, OrganizationPicker) {
+      $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Philanthropist', 'Grantor'];
       var setUser = function (user) {
         $scope.user = user;
         $scope.organization = user.relation('organization');
