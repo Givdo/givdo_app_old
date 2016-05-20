@@ -46,6 +46,8 @@
         .state('profile', {
           url: '/profile',
           parent: 'app',
+          cache: false,
+          reload: true,
           views: {
             'profile-content': {
               templateUrl: 'templates/user/profile.html',
@@ -92,9 +94,19 @@
     ProfileCtrl.$inject = ['$rootScope', '$scope', 'session', 'givdo', 'OrganizationPicker'];
 
     function ProfileCtrl($rootScope, $scope, session, givdo, OrganizationPicker) {
+      $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Philanthropist', 'Grantor'];
+
+      $scope.range = function(min, max, step){
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) input.push(i);
+        return input;
+      };
+
       var setUser = function (user) {
         $scope.user = user;
         $scope.organization = user.relation('organization');
+        $scope.badges = user.relation('badges');
         $scope.$emit('givdo:user-updated', user);
       };
       session.user().then(setUser);
