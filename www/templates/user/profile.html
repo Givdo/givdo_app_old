@@ -34,12 +34,12 @@
         <h2 class="title title--achievements">Your Achievements</h2>
 
         <div class="badge-givdo" ng-repeat="badge in badges">
-          <img src="img/badges/{{$index + 1}}A.png">
+          <img ng-src="img/badges/{{$index + 1}}A.png">
           {{badges_name[$index]}}
         </div>
 
         <div class="badge-givdo" ng-repeat="n in range((badges.length), 6)">
-          <img src="img/badges/{{n + 1}}.png">
+          <img ng-src="img/badges/{{n + 1}}.png">
           {{badges_name[n]}}
         </div>
       </div>
