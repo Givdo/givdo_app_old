@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src * &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Givdo</title>
 
@@ -14,45 +14,70 @@
     <link rel="stylesheet" href="lib/ionic-filter-bar/dist/ionic.filter.bar.css" />
     <!-- endbower -->
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/release/js/ionic.bundle.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-
-    <!-- bower:js -->
-    <script src="lib/angular-animate/angular-animate.js"></script>
-    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
-    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="lib/ionic/release/js/ionic.js"></script>
-    <script src="lib/ionic/release/js/ionic-angular.js"></script>
-    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
-    <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
-    <script src="lib/underscore/underscore.js"></script>
-    <script src="lib/angular-json-api-client/dist/angular-json-api-client.js"></script>
-    <script src="lib/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
-    <!-- endbower -->
-
-    <!-- Vendor -->
-    <script src="vendor/facebookConnectPlugin.js"></script>
-    <script src="vendor/ionRadio.js"></script>
-
-    <!-- your app's js -->
-    <script src="js/givdo.util.js"></script>
-    <script src="js/givdo.api.js"></script>
-    <script src="js/givdo.facebook.js"></script>
-    <script src="js/givdo.auth.js"></script>
-    <script src="js/givdo.ui.js"></script>
-    <script src="js/givdo.quiz.js"></script>
-    <script src="js/givdo.user.js"></script>
-    <script src="js/givdo.config.js"></script>
-    <script src="js/givdo.notifications.js"></script>
-    <script src="js/givdo.js"></script>
-
-    <link rel="stylesheet" href="vendor/ionRadio.css" />
+    <link rel="stylesheet" href="vendor/ionRadio.css">
   </head>
 
-  <body ng-app="givdo" ng-strict-di>
+  <body ng-app="givdo" ng-strict-di="">
     <ion-nav-view></ion-nav-view>
   </body>
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/release/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- bower:js -->
+  <script src="lib/angular-animate/angular-animate.js"></script>
+  <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+  <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="lib/ionic/release/js/ionic.js"></script>
+  <script src="lib/ionic/release/js/ionic-angular.js"></script>
+  <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+  <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="lib/angular-json-api-client/dist/angular-json-api-client.js"></script>
+  <script src="lib/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
+  <!-- endbower -->
+
+  <!-- Vendor -->
+  <script src="vendor/facebookConnectPlugin.js"></script>
+  <script src="vendor/ionRadio.js"></script>
+
+  <!-- app module -->
+  <script src="js/givdo.module.js"></script>
+
+  <!-- core -->
+  <script src="js/core/core.module.js"></script>
+  <script src="js/core/constants.js"></script>
+  <script src="js/core/config.js"></script>
+
+  <!-- api -->
+  <script src="js/api/api.module.js"></script>
+  <script src="js/api/oauth.repository.js"></script>
+  <script src="js/api/device.repository.js"></script>
+  <script src="js/api/game.repository.js"></script>
+  <script src="js/api/user.repository.js"></script>
+  <script src="js/api/organization.repository.js"></script>
+
+  <!-- auth -->
+  <script src="js/auth/auth.module.js"></script>
+  <script src="js/auth/auth.service.js"></script>
+  <script src="js/auth/session.interceptor.js"></script>
+  <script src="js/auth/config.js"></script>
+
+  <!-- welcome -->
+  <script src="js/welcome/welcome.module.js"></script>
+  <script src="js/welcome/welcome.controller.js"></script>
+  <script src="js/welcome/config.routes.js"></script>
+
+  <script src="js/givdo.util.js"></script>
+  <script src="js/givdo.api.js"></script>
+  <script src="js/givdo.facebook.js"></script>
+  <script src="js/givdo.auth.js"></script>
+  <script src="js/givdo.ui.js"></script>
+  <script src="js/givdo.quiz.js"></script>
+  <script src="js/givdo.user.js"></script>
+  <script src="js/givdo.config.js"></script>
+  <script src="js/givdo.js"></script>
 </html>

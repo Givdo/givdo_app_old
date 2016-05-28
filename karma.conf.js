@@ -34,6 +34,34 @@ module.exports = function(config) {
       'www/lib/angular-mocks/angular-mocks.js',
 
       // Givdo
+      // -----
+
+      // givdo module
+      'www/js/givdo.module.js',
+
+      // core
+      'www/js/core/core.module.js',
+      'www/js/core/constants.js',
+      'www/js/core/config.js',
+
+      // api
+      'www/js/api/api.module.js',
+      'www/js/api/oauth.repository.js',
+      'www/js/api/device.repository.js',
+      'www/js/api/game.repository.js',
+      'www/js/api/user.repository.js',
+      'www/js/api/organization.repository.js',
+
+      // auth
+      'www/js/auth/auth.module.js',
+      'www/js/auth/session.interceptor.js',
+      'www/js/auth/config.js',
+
+      // welcome
+      'www/js/welcome/welcome.module.js',
+      'www/js/welcome/welcome.controller.js',
+      'www/js/welcome/config.routes.js',
+
       'www/js/givdo.notifications.js',
       'www/js/givdo.util.js',
       'www/js/givdo.api.js',

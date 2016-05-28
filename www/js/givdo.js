@@ -1,42 +1,36 @@
 (function () {
   'use strict';
 
-  angular.module('givdo', ['ionic', 'givdo.auth', 'givdo.quiz', 'givdo.user', 'givdo.ui', 'givdo.notifications'])
-    .run(['$ionicPlatform', 'authLock', 'notificationsRegister', function ($ionicPlatform, authLock, notificationsRegister) {
-      $ionicPlatform.ready(function () {
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-          cordova.plugins.Keyboard.disableScroll(true);
-        }
+  angular
+    .module('givdo')
+    .config(config)
+    .controller('MenuBarCtrl', MenuBarCtrl);
 
-        if (window.StatusBar) {
-          StatusBar.styleDefault();
-        }
 
-        authLock();
-        notificationsRegister();
-      });
-    }])
+    config.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
 
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-      $stateProvider.state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/menu.html',
-        controller: 'MenuBarCtrl'
-      });
-      // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/app/play');
-    }])
+    function config($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+      $stateProvider
+        .state('app', {
+          url: '/app',
+          abstract: true,
+          templateUrl: 'templates/menu.html',
+          controller: 'MenuBarCtrl',
+          data: { protected: true }
+        });
 
-    .controller('MenuBarCtrl', ['$scope', 'session', function ($scope, session) {
-      var setUser = function (user) {
+      $urlRouterProvider.otherwise('/welcome');
+      $ionicConfigProvider.tabs.position('bottom');
+    }
+
+    MenuBarCtrl.$inject = ['$scope', 'session'];
+
+    function MenuBarCtrl($scope, session) {
+      session.user().then(setUser);
+      $scope.$on('givdo:user-updated', function (_, user) { setUser(user); });
+
+      function setUser(user) {
         $scope.organization = user.relation('organization');
       }
-      session.user().then(setUser);
-
-      $scope.$on('givdo:user-updated', function (_, user) {
-        setUser(user);
-      });
-    }]);
+    }
 })();

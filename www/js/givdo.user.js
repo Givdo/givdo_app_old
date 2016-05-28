@@ -1,8 +1,17 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util'])
-    .config(['$stateProvider', function ($stateProvider) {
+  angular
+    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util'])
+    .config(config)
+    .controller('NotificationCtrl', NotificationCtrl)
+    .controller('ActivityCtrl', ActivityCtrl)
+    .controller('ProfileCtrl', ProfileCtrl)
+    .controller('FriendsCtrl', FriendsCtrl);
+
+    config.$inject = ['$stateProvider'];
+
+    function config($stateProvider) {
       $stateProvider
         .state('notification', {
           url: '/notification',
@@ -37,6 +46,8 @@
         .state('profile', {
           url: '/profile',
           parent: 'app',
+          cache: false,
+          reload: true,
           views: {
             'profile-content': {
               templateUrl: 'templates/user/profile.html',
@@ -44,9 +55,11 @@
             }
           }
         });
-    }])
+    }
 
-    .controller('NotificationCtrl', ['$scope', 'givdo', function ($scope, givdo) {
+    NotificationCtrl.$inject = ['$scope', 'givdo'];
+
+    function NotificationCtrl($scope, givdo) {
       var setActivities = function (feed) {
         $scope.totalScore = feed.attr('total_score');
         $scope.activities = feed.relation('activities');
@@ -59,9 +72,11 @@
       $scope.activityNameToLabel = function (name) {
         return (name === 'won_scores') ? 'You Won' : 'You Lose';
       }
-    }])
+    }
 
-    .controller('ActivityCtrl', ['$scope', 'givdo', function ($scope, givdo) {
+    ActivityCtrl.$inject = ['$scope', 'givdo'];
+
+    function ActivityCtrl($scope, givdo) {
       var setActivities = function (feed) {
         $scope.totalScore = feed.attr('total_score');
         $scope.activities = feed.relation('activities');
@@ -74,12 +89,24 @@
       $scope.activityNameToLabel = function (name) {
         return (name === 'won_scores') ? 'You Won' : 'You Lose';
       }
-    }])
+    }
 
-    .controller('ProfileCtrl', ['$scope', 'session', 'givdo', 'OrganizationPicker', function ($scope, session, givdo, OrganizationPicker) {
+    ProfileCtrl.$inject = ['$rootScope', '$scope', 'session', 'givdo', 'OrganizationPicker'];
+
+    function ProfileCtrl($rootScope, $scope, session, givdo, OrganizationPicker) {
+      $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Philanthropist', 'Grantor'];
+
+      $scope.range = function(min, max, step){
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) input.push(i);
+        return input;
+      };
+
       var setUser = function (user) {
         $scope.user = user;
         $scope.organization = user.relation('organization');
+        $scope.badges = user.relation('badges');
         $scope.$emit('givdo:user-updated', user);
       };
       session.user().then(setUser);
@@ -89,12 +116,14 @@
           return givdo.user.update($scope.user, {organization_id: organization.id});
         }).then(setUser);
       };
-    }])
+    }
 
-    .controller('FriendsCtrl', ['$scope', 'givdo', function ($scope, givdo) {
+    FriendsCtrl.$inject = ['$scope', 'givdo'];
+
+    function FriendsCtrl($scope, givdo) {
       givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
         $scope.quantity = 9;
       });
-    }]);
+    }
 })();

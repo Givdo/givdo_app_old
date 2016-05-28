@@ -1,64 +1,101 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.api', ['json-api-client', 'givdo.config'])
-    .config(['$httpProvider', function ($httpProvider) {
-      $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
-    }])
+  angular
+    .module('givdo.api')
+    // .factory('Oauth', Oauth)
+    // .factory('UserRepo', UserRepo)
+    // .factory('OrganizationRepo', OrganizationRepo)
+    // .factory('GameRepo', GameRepo)
+    // .factory('DeviceRepo', DeviceRepo)
+    .factory('givdo', givdo);
 
-    .factory('Oauth', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      return repository({
-        callback: {url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false}
-      });
-    }])
+    // Oauth.$inject = ['repository', 'GivdoApiURL'];
+    //
+    // function Oauth(repository, GivdoApiURL) {
+    //   return repository({
+    //     callback: { url: GivdoApiURL + '/oauth/{{provider}}/callback', method: 'POST', auth: false }
+    //   });
+    // }
 
-    .factory('UserRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      var UserRepo = repository({
-        friends: {url: GivdoApiURL + '/friends', method: 'GET'},
-        activities: { url: GivdoApiURL + '/activities', method: 'GET', params: false }
-      });
-      UserRepo.update = function (user, data) {
-        return user.load('self', {data: data, method: 'PATCH'});
-      };
-      return UserRepo;
-    }])
+    // UserRepo.$inject = ['repository', 'GivdoApiURL'];
+    //
+    // function UserRepo(repository, GivdoApiURL) {
+    //   var UserRepo = repository({
+    //     friends: { url: GivdoApiURL + '/friends', method: 'GET' },
+    //     activities: { url: GivdoApiURL + '/activities', method: 'GET', params: false }
+    //   });
+    //
+    //   UserRepo.update = function (user, data) {
+    //     return user.load('self', { data: data, method: 'PATCH' });
+    //   };
+    //
+    //   return UserRepo;
+    // }
 
-    .factory('OrganizationRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      return repository({
-        query: {url: GivdoApiURL + '/organizations'}
-      });
-    }])
+    // OrganizationRepo.$inject = ['repository', 'GivdoApiURL'];
 
-    .factory('GameRepo', ['repository', 'GivdoApiURL', function (repository, GivdoApiURL) {
-      var GameRepo = repository({
-        singlePlayer: {url: GivdoApiURL + '/games/single'},
-        versus: {url: GivdoApiURL + '/games/versus/{{uid}}', params: false},
-        query: {url: GivdoApiURL + '/games'}
-      });
+    // function OrganizationRepo(repository, GivdoApiURL) {
+    //   var OrganizationRepo = repository({
+    //     query: { url: GivdoApiURL + '/organizations' }
+    //   });
+    //
+    //   return OrganizationRepo;
+    // }
 
-      GameRepo.answer = function (game, trivia, option) {
-        return game.load('answers', {data: {trivia_id: trivia.id, trivia_option_id: option.id}, method: 'POST'});
-      };
+    // GameRepo.$inject = ['repository', 'GivdoApiURL'];
 
-      GameRepo.playFor = function (game, organization) {
-        return game.load('player', {data: {organization_id: organization.id}, method: 'PATCH'});
-      };
+    // function GameRepo(repository, GivdoApiURL) {
+    //   var GameRepo = repository({
+    //     singlePlayer: { url: GivdoApiURL + '/games/single' },
+    //     versus: { url: GivdoApiURL + '/games/versus/{{uid}}', params: false },
+    //     query: { url: GivdoApiURL + '/games' }
+    //   });
+    //
+    //   GameRepo.answer = function (game, trivia, option) {
+    //     var data = {
+    //       trivia_id: trivia.id,
+    //       trivia_option_id: option.id
+    //     };
+    //
+    //     return game.load('answers', { data: data, method: 'POST' });
+    //   };
+    //
+    //   GameRepo.playFor = function (game, organization) {
+    //     var data = { organization_id: organization.id };
+    //
+    //     return game.load('player', { data: data, method: 'PATCH' });
+    //   };
+    //
+    //   return GameRepo;
+    // }
 
-      return GameRepo;
-    }])
+    // DeviceRepo.$inject = ['repository', 'GivdoApiURL'];
+    //
+    // function DeviceRepo(repository, apiURL) {
+    //   var DeviceRepo = repository({
+    //     register: { url: '/devices' },
+    //   });
+    //
+    //   return DeviceRepo;
+    // }
 
-    .factory('DeviceRepo', ['repository', 'GivdoApiURL', function(repository, apiURL) {
-      return repository({
-        register: { url: '/devices' },
-      });
-    }])
+    givdo.$inject = [
+      'OAuthRepository',
+      'UserRepository',
+      'GameRepository',
+      'OrganizationRepository',
+      'DeviceRepository',
+    ];
 
-    .factory('givdo', ['Oauth', 'UserRepo', 'GameRepo', 'OrganizationRepo', function (Oauth, UserRepo, GameRepo, OrganizationRepo) {
+    function givdo(Oauth, UserRepo, GameRepo, OrganizationRepo, DeviceRepository) {
       return {
         oauth: Oauth,
         user: UserRepo,
         game: GameRepo,
-        organizations: OrganizationRepo
+        device: DeviceRepository,
+        organizations: OrganizationRepo,
       };
-    }]);
+    }
+
 })();

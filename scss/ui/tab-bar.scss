@@ -26,6 +26,7 @@
           color: $gray;
         }
 
+        &:hover,
         &-active{
           @include icons('-active');
 

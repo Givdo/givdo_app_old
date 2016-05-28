@@ -3,7 +3,7 @@
 }
 
 .container {
-  padding: 5px 5px 20px 5px;
+  padding: 5px 5px 40px 5px;
   display: block;
   position: relative;
 
@@ -14,5 +14,10 @@
     &--triple{
       width: calc((100% / 3) - 20px);
     }
+  }
+
+  &-activity {
+    @extend .container;
+    padding-bottom: 90px;
   }
 }

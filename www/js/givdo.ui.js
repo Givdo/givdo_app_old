@@ -1,8 +1,12 @@
 (function () {
   'use strict';
 
-  angular.module('givdo.ui', [])
-    .config(['$stateProvider', function ($stateProvider) {
+  angular
+    .module('givdo.ui', [])
+    .config(['$stateProvider', config]);
+
+
+    function config($stateProvider) {
       $stateProvider.state('ui', {
         url: '/ui',
         abstract: true,
@@ -53,5 +57,5 @@
             }
           }
         });
-    }]);
+    }
 })();

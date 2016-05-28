@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('givdo.config', [])
+angular.module('givdo.core', [])
   .constant('GivdoApiURL', 'http://test.com/api/v1');
 
 angular.module('givdo-test.custom-matchers', [])
