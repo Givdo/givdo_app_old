@@ -273,13 +273,48 @@
       '$scope',
       '$ionicLoading',
       '$ionicNavBarDelegate',
+      '$interval',
       'QuizRound',
       'trivia',
       'game'
     ];
 
-    function TriviaCtrl($scope, $ionicLoading, $ionicNavBarDelegate, QuizRound, trivia, game) {
+    function TriviaCtrl($scope, $ionicLoading, $ionicNavBarDelegate, $interval, QuizRound, trivia, game) {
+      $scope.progressval = 0;
+      $scope.timer = 10;
+      $scope.stopinterval = null;
+
+      $scope.updateProgressbar = function()
+      {
+        startprogress();
+      }
+
+      function startprogress()
+      {
+        $scope.progressval = 0;
+
+        if ($scope.stopinterval)
+        {
+          $interval.cancel($scope.stopinterval);
+        }
+
+        $scope.stopinterval = $interval(function() {
+          $scope.progressval = $scope.progressval + 1;
+
+          if($scope.progressval >= $scope.timer) {
+            $interval.cancel($scope.stopinterval);
+            $scope.answer.submitted = true;
+
+            return;
+          }
+
+        }, 1000);
+      }
+
+      startprogress();
+
       $ionicNavBarDelegate.showBackButton(false);
+
       $scope.submitAnswer = function () {
         $ionicLoading.show();
         QuizRound.answer($scope.answer.option).then(function () {
@@ -287,6 +322,7 @@
           $ionicLoading.hide();
         });
       };
+
       $scope.answer = {};
       $scope.next = QuizRound.continue;
       $scope.trivia = trivia;
