@@ -1,5 +1,7 @@
 <ion-view class="new-game">
   <ion-content>
+    <div class="timer-bar" data-progress="{{ progressval }}"></div>
+
     <div class="versus">
       <div class="player" ng-repeat="player in players" style="background-image: url('{{ player.attr('image') }}')"></div>
     </div>

@@ -6,7 +6,6 @@
     .config(config)
     .controller('MenuBarCtrl', MenuBarCtrl);
 
-
     config.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
 
     function config($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
