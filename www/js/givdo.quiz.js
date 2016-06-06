@@ -170,11 +170,21 @@
           }
         },
         answer: function (option) {
-          return givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
-            revealAnser(answer);
-            setCurrentGame(answer.relation('game'));
-            return answer;
-          });
+          // Step 2
+          // Here while I'm taking all questions and selecting the first to pass
+          if(option.length > 1){
+            return givdo.game.answer(currentGame, currentTrivia, option[0]).then(function (answer) {
+              revealAnser(answer);
+              setCurrentGame(answer.relation('game'));
+              return answer;
+            });
+          } else {
+            givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
+              revealAnser(answer);
+              setCurrentGame(answer.relation('game'));
+              return answer;
+            });
+          }
         }
       };
 
@@ -281,7 +291,7 @@
 
     function TriviaCtrl($scope, $ionicLoading, $ionicNavBarDelegate, $interval, QuizRound, trivia, game) {
       $scope.progressval = 0;
-      $scope.timer = 10;
+      $scope.timer = 12;
       $scope.stopinterval = null;
 
       $scope.updateProgressbar = function()
@@ -303,7 +313,15 @@
 
           if($scope.progressval >= $scope.timer) {
             $interval.cancel($scope.stopinterval);
-            $scope.answer.submitted = true;
+
+            $ionicLoading.show();
+
+            // Step 1
+            // Here we need to address the return to the end of time
+            QuizRound.answer($scope.options).then(function () {
+              $scope.answer.submitted = true;
+              $ionicLoading.hide();
+            });
 
             return;
           }
