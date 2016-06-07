@@ -16,11 +16,23 @@
   }
 
   &:after{
-    animation: pulse 12s linear;
+    width: 0;
     height: 100%;
     display: block;
     background: $orange;
     content: '';
+  }
+}
+
+.play{
+  &:after{
+    animation: pulse 12s linear;
+  }
+}
+
+.pause{
+  &:after{
+    animation-play-state: paused;
   }
 }
 
