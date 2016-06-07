@@ -10,6 +10,7 @@
     <div class="title-box">{{ trivia.attr('question') }}</div>
 
     <ion-list type="list-inset">
+      <div class="disabled" ng-show="answer.submitted"></div>
       <ion-radio-fix class="givdo-option"
                      ng-repeat="option in options"
                      icon="ion-ios-circle-filled"
