@@ -170,21 +170,11 @@
           }
         },
         answer: function (option) {
-          // Step 2
-          // Here while I'm taking all questions and selecting the first to pass
-          if(option.length > 1){
-            return givdo.game.answer(currentGame, currentTrivia, option[0]).then(function (answer) {
-              revealAnser(answer);
-              setCurrentGame(answer.relation('game'));
-              return answer;
-            });
-          } else {
-            givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
-              revealAnser(answer);
-              setCurrentGame(answer.relation('game'));
-              return answer;
-            });
-          }
+          return givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
+            revealAnser(answer);
+            setCurrentGame(answer.relation('game'));
+            return answer;
+          });
         }
       };
 
@@ -301,6 +291,7 @@
 
       function startprogress()
       {
+        $scope.class = 'play';
         $scope.progressval = 0;
 
         if ($scope.stopinterval)
@@ -316,9 +307,7 @@
 
             $ionicLoading.show();
 
-            // Step 1
-            // Here we need to address the return to the end of time
-            QuizRound.answer($scope.options).then(function () {
+            QuizRound.answer('').then(function () {
               $scope.answer.submitted = true;
               $ionicLoading.hide();
             });
@@ -329,13 +318,23 @@
         }, 1000);
       }
 
+      function stopProgress()
+      {
+        $scope.progressval = 0;
+        $interval.cancel($scope.stopinterval);
+        $scope.class = 'pause';
+      }
+
       startprogress();
 
       $ionicNavBarDelegate.showBackButton(false);
 
       $scope.submitAnswer = function () {
         $ionicLoading.show();
+
         QuizRound.answer($scope.answer.option).then(function () {
+          stopProgress()
+
           $scope.answer.submitted = true;
           $ionicLoading.hide();
         });
