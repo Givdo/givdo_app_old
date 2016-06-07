@@ -107,6 +107,8 @@
         $scope.user = user;
         $scope.organization = user.relation('organization');
         $scope.badges = user.relation('badges');
+        $scope.causes = user.relation('causes');
+
         $scope.$emit('givdo:user-updated', user);
       };
       session.user().then(setUser);
