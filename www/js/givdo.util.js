@@ -37,7 +37,7 @@
     }
 
     ChooseOrganizationCtrl.$inject = ['$scope', '$ionicSlideBoxDelegate', 'givdo'];
-    
+
     function ChooseOrganizationCtrl($scope, $ionicSlideBoxDelegate, givdo) {
       var Threshold = 3;
       var page;

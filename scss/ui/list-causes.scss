@@ -1,0 +1,34 @@
+.list-causes{
+  @include clearfix();
+
+  &__item{
+    width: calc(50% - 5px);
+    margin-bottom: 10px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+
+    &:nth-child(even){ float: left; }
+    &:nth-child(odd){ float: right; }
+
+    img{
+      width: 100%;
+      display: block;
+    }
+
+    .item{
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0 !important;
+      position: absolute;
+
+      .checkbox{
+        left: 0;
+        right: 0;
+        top: initial;
+        bottom: 0;
+      }
+    }
+  }
+}
