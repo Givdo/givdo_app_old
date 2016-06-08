@@ -21,8 +21,9 @@
       <div class="profile-contents">
         <h2 class="title title--causes">Your Causes</h2>
 
-        <img src="img/causes/{{cause.attributes.name}}.jpg" ng-repeat="cause in causes">
-        <img src="img/add-icon.png">
+        <img ng-src="img/causes/{{cause.attributes.name}}.jpg" ng-repeat="cause in causes">
+
+        <img src="img/add-icon.png" ng-click="modal.show()">
       </div>
 
       <div class="profile-contents">
