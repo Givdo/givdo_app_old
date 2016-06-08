@@ -7,7 +7,8 @@
     .controller('NotificationCtrl', NotificationCtrl)
     .controller('ActivityCtrl', ActivityCtrl)
     .controller('ProfileCtrl', ProfileCtrl)
-    .controller('FriendsCtrl', FriendsCtrl);
+    .controller('FriendsCtrl', FriendsCtrl)
+    .controller('ModalCausesCtrl', ModalCausesCtrl);
 
     config.$inject = ['$stateProvider'];
 
@@ -91,9 +92,9 @@
       }
     }
 
-    ProfileCtrl.$inject = ['$rootScope', '$scope', 'session', 'givdo', 'OrganizationPicker'];
+    ProfileCtrl.$inject = ['$rootScope', '$scope', '$ionicModal', 'session', 'givdo', 'OrganizationPicker'];
 
-    function ProfileCtrl($rootScope, $scope, session, givdo, OrganizationPicker) {
+    function ProfileCtrl($rootScope, $scope, $ionicModal, session, givdo, OrganizationPicker) {
       $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Philanthropist', 'Grantor'];
 
       $scope.range = function(min, max, step){
@@ -118,6 +119,16 @@
           return givdo.user.update($scope.user, {organization_id: organization.id});
         }).then(setUser);
       };
+
+      $ionicModal.fromTemplateUrl('templates/util/choose-cause.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      $scope.createContact = function(u) {
+        $scope.modal.hide();
+      };
     }
 
     FriendsCtrl.$inject = ['$scope', 'givdo'];
@@ -127,5 +138,29 @@
         $scope.friends = friends.relation('users');
         $scope.quantity = 9;
       });
+    }
+
+    ModalCausesCtrl.$inject = ['$scope', 'givdo'];
+
+    function ModalCausesCtrl($scope, givdo) {
+      $scope.causeChange = function(){
+        console.log($scope.cause);
+      }
+
+      $scope.cause = { checked: true };
+      $scope.causes = [
+        { name: 'animal-welfare' },
+        { name: 'art-theatre' },
+        { name: 'community' },
+        { name: 'environment' },
+        { name: 'family-services' },
+        { name: 'health-wellness' },
+        { name: 'human-rights' },
+        { name: 'hunger' },
+        { name: 'international-support' },
+        { name: 'mental-health' },
+        { name: 'science-research' },
+        { name: 'youth-education' },
+      ];
     }
 })();
