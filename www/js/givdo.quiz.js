@@ -281,7 +281,7 @@
 
     function TriviaCtrl($scope, $ionicLoading, $ionicNavBarDelegate, $interval, QuizRound, trivia, game) {
       $scope.progressval = 0;
-      $scope.timer = 10;
+      $scope.timer = 12;
       $scope.stopinterval = null;
 
       $scope.updateProgressbar = function()
@@ -291,6 +291,7 @@
 
       function startprogress()
       {
+        $scope.class = 'play';
         $scope.progressval = 0;
 
         if ($scope.stopinterval)
@@ -303,12 +304,25 @@
 
           if($scope.progressval >= $scope.timer) {
             $interval.cancel($scope.stopinterval);
-            $scope.answer.submitted = true;
+
+            $ionicLoading.show();
+
+            QuizRound.answer('').then(function () {
+              $scope.answer.submitted = true;
+              $ionicLoading.hide();
+            });
 
             return;
           }
 
         }, 1000);
+      }
+
+      function stopProgress()
+      {
+        $scope.progressval = 0;
+        $interval.cancel($scope.stopinterval);
+        $scope.class = 'pause';
       }
 
       startprogress();
@@ -317,7 +331,10 @@
 
       $scope.submitAnswer = function () {
         $ionicLoading.show();
+
         QuizRound.answer($scope.answer.option).then(function () {
+          stopProgress()
+
           $scope.answer.submitted = true;
           $ionicLoading.hide();
         });
