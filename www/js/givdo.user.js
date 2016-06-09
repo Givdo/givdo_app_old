@@ -140,27 +140,13 @@
       });
     }
 
-    ModalCausesCtrl.$inject = ['$scope', 'givdo'];
+    ModalCausesCtrl.$inject = ['$scope', 'givdo', 'session'];
 
-    function ModalCausesCtrl($scope, givdo) {
-      $scope.causeChange = function(){
-        console.log($scope.cause);
-      }
+    function ModalCausesCtrl($scope, givdo, session) {
+      var setCauses = function (causes) {
+        $scope.causes = causes;
+      };
 
-      $scope.cause = { checked: true };
-      $scope.causes = [
-        { name: 'animal-welfare' },
-        { name: 'art-theatre' },
-        { name: 'community' },
-        { name: 'environment' },
-        { name: 'family-services' },
-        { name: 'health-wellness' },
-        { name: 'human-rights' },
-        { name: 'hunger' },
-        { name: 'international-support' },
-        { name: 'mental-health' },
-        { name: 'science-research' },
-        { name: 'youth-education' },
-      ];
+      givdo.causes.all().then(setCauses);
     }
 })();
