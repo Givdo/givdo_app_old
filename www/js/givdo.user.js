@@ -125,10 +125,6 @@
       }).then(function(modal) {
         $scope.modal = modal;
       });
-
-      $scope.createContact = function(u) {
-        $scope.modal.hide();
-      };
     }
 
     FriendsCtrl.$inject = ['$scope', 'givdo'];
