@@ -137,7 +137,14 @@
     }
 
     ModalCausesCtrl.$inject = ['$scope', 'givdo', 'UserRepository', 'session'];
+
     function ModalCausesCtrl($scope, givdo, UserRepository, session) {
+      var setUser = function (user) {
+        $scope.user = user;
+        $scope.user.causes = user.relation('causes');
+      }
+
+      session.user().then(setUser);
 
       var setCauses = function (causes) {
         $scope.causes = causes;
