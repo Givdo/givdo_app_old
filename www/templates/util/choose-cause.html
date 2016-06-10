@@ -7,11 +7,11 @@
   <ion-content class="padding">
     <div class="list-causes">
       <div class="list-causes__item" ng-repeat="cause in causes">
-        <ion-checkbox ng-model="cause"
-                      ng-change="causeChange()"
-                      ng-true-value="'Subscribed'"
-                      ng-false-value="'Unubscribed'">
-        </ion-checkbox>
+        <label class="item">
+          <div class="checkbox">
+            <input type="checkbox" data-checklist-model="user.causes" data-checklist-value="cause">
+          </div>
+        </label>
         <img ng-src="img/causes/{{ cause.attributes.name }}.jpg">
       </div>
     </div>
