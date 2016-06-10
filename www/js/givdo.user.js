@@ -151,5 +151,11 @@
       };
 
       givdo.causes.all().then(setCauses);
+
+      $scope.saveCauses = function(causes) {
+        UserRepository.causes({id: [1,2,3]}).then(function(data){
+          $scope.modal.hide();
+        });
+      };
     }
 })();
