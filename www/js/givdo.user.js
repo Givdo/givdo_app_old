@@ -136,9 +136,9 @@
       });
     }
 
-    ModalCausesCtrl.$inject = ['$scope', 'givdo', 'session'];
+    ModalCausesCtrl.$inject = ['$scope', 'givdo', 'UserRepository', 'session'];
+    function ModalCausesCtrl($scope, givdo, UserRepository, session) {
 
-    function ModalCausesCtrl($scope, givdo, session) {
       var setCauses = function (causes) {
         $scope.causes = causes;
       };
