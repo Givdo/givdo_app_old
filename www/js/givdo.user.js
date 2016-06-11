@@ -163,5 +163,9 @@
           $scope.modal.hide();
         });
       };
+
+      $scope.updateCauses = function(causes){
+        $scope.causes_update = causes;
+      }
     }
 })();
