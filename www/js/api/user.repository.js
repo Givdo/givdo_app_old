@@ -18,7 +18,7 @@
           url: baseUrl + '/activities',
         },
         causes: {
-          method: 'PUT',
+          method: 'POST',
           url: baseUrl + '/causes',
         },
       });

@@ -159,7 +159,7 @@
           ids.push(Number(cause.id));
         });
 
-        UserRepository.causes.query({id: ids}).then(function(data){
+        UserRepository.causes({id: ids}).then(function(data){
           $scope.modal.hide();
         });
       };
