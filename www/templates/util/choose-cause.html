@@ -8,7 +8,7 @@
       <div class="list-causes__item" ng-repeat="cause in causes">
         <label class="item">
           <div class="checkbox">
-            <input type="checkbox" data-checklist-model="user.causes" data-checklist-value="cause">
+            <input type="checkbox" data-checklist-model="user.causes" data-checklist-value="cause" ng-click="updateCauses(user.causes)">
           </div>
         </label>
         <img ng-src="img/causes/{{ cause.attributes.name }}.jpg">
