@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util'])
+    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model'])
     .config(config)
     .controller('NotificationCtrl', NotificationCtrl)
     .controller('ActivityCtrl', ActivityCtrl)
