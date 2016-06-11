@@ -17,6 +17,10 @@
           params: false,
           url: baseUrl + '/activities',
         },
+        causes: {
+          method: 'POST',
+          url: baseUrl + '/causes',
+        },
       });
 
       repository.update = function (user, data) {

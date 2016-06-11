@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util'])
+    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model'])
     .config(config)
     .controller('NotificationCtrl', NotificationCtrl)
     .controller('ActivityCtrl', ActivityCtrl)
@@ -125,10 +125,6 @@
       }).then(function(modal) {
         $scope.modal = modal;
       });
-
-      $scope.createContact = function(u) {
-        $scope.modal.hide();
-      };
     }
 
     FriendsCtrl.$inject = ['$scope', 'givdo'];
@@ -140,27 +136,40 @@
       });
     }
 
-    ModalCausesCtrl.$inject = ['$scope', 'givdo'];
+    ModalCausesCtrl.$inject = ['$scope', 'givdo', 'UserRepository', 'session'];
 
-    function ModalCausesCtrl($scope, givdo) {
-      $scope.causeChange = function(){
-        console.log($scope.cause);
+    function ModalCausesCtrl($scope, givdo, UserRepository, session) {
+      var setUser = function (user) {
+        $scope.user = user;
+        $scope.user.causes = user.relation('causes');
       }
 
-      $scope.cause = { checked: true };
-      $scope.causes = [
-        { name: 'animal-welfare' },
-        { name: 'art-theatre' },
-        { name: 'community' },
-        { name: 'environment' },
-        { name: 'family-services' },
-        { name: 'health-wellness' },
-        { name: 'human-rights' },
-        { name: 'hunger' },
-        { name: 'international-support' },
-        { name: 'mental-health' },
-        { name: 'science-research' },
-        { name: 'youth-education' },
-      ];
+      session.user().then(setUser);
+
+      var setCauses = function (causes) {
+        $scope.causes = causes;
+      };
+
+      givdo.causes.all().then(setCauses);
+
+      $scope.saveCauses = function(causes) {
+        var ids = []
+
+        causes.forEach(function (cause) {
+          ids.push(Number(cause.id));
+        });
+
+        UserRepository.causes({id: ids}).then(function(data){
+          $scope.modal.hide();
+        });
+      };
+
+      $scope.updateCauses = function(causes){
+        $scope.causes_update = causes;
+      }
+
+      $scope.$on('modal.hidden', function() {
+        $scope.$parent.$parent.$parent.causes = $scope.causes_update
+      });
     }
 })();

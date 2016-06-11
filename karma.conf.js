@@ -29,6 +29,7 @@ module.exports = function(config) {
       'www/lib/angular-json-api-client/dist/angular-json-api-client.js',
       'www/lib/ionic-filter-bar/dist/ionic.filter.bar.js',
       'www/vendor/facebookConnectPlugin.js',
+      'www/vendor/checklist-model.js',
 
       // Test dependency
       'www/lib/angular-mocks/angular-mocks.js',

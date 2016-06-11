@@ -8,8 +8,8 @@
     overflow: hidden;
     position: relative;
 
-    &:nth-child(even){ float: left; }
-    &:nth-child(odd){ float: right; }
+    &:nth-child(odd){ float: left; }
+    &:nth-child(even){ float: right; }
 
     img{
       width: 100%;
