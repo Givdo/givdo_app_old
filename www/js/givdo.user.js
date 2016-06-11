@@ -153,7 +153,13 @@
       givdo.causes.all().then(setCauses);
 
       $scope.saveCauses = function(causes) {
-        UserRepository.causes({id: [1,2,3]}).then(function(data){
+        var ids = []
+
+        causes.forEach(function (cause) {
+          ids.push(Number(cause.id));
+        });
+
+        UserRepository.causes.query({id: ids}).then(function(data){
           $scope.modal.hide();
         });
       };
