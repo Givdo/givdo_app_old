@@ -61,17 +61,18 @@
     NotificationCtrl.$inject = ['$scope', 'givdo'];
 
     function NotificationCtrl($scope, givdo) {
-      var setActivities = function (feed) {
-        $scope.totalScore = feed.attr('total_score');
-        $scope.activities = feed.relation('activities');
-      };
+      var setNotifications = function(notifications) {
+        $scope.notifications = notifications;
+      }
 
-      $scope.$on('$ionicView.enter', function () {
-        givdo.user.activities().then(setActivities);
-      });
+      givdo.user.notifications().then(setNotifications);
 
-      $scope.activityNameToLabel = function (name) {
-        return (name === 'won_scores') ? 'You Won' : 'You Lose';
+      $scope.accept = function() {
+        console.log('aceitou');
+      }
+
+      $scope.reject = function() {
+        console.log('rejeitou');
       }
     }
 

@@ -22,7 +22,7 @@
 
     config.$inject = ['$stateProvider'];
 
-    function config($stateProvider) {
+    function config($stateProvider, givdo) {
       $stateProvider
         .state('game-history', {
           url: '/game-history',
@@ -92,7 +92,7 @@
           }
         })
         .state('trivia', {
-          url: '/trivia',
+          url: '/trivia?gameId',
           parent: 'app',
           cache: false,
           views: {
@@ -103,7 +103,9 @@
           },
           resolve: {
             trivia: function(QuizRound) { return QuizRound.trivia(); },
-            game: function(QuizRound) { return QuizRound.game(); }
+            game: function($stateParams, QuizRound) {
+              return QuizRound.game($stateParams.gameId);
+            }
           }
         });
     }
@@ -154,7 +156,10 @@
         trivia: function () {
           return asPromised(currentTrivia);
         },
-        game: function () {
+        game: function (gameId) {
+          if (gameId !== undefined)
+            var currentGame = givdo.game.versus({uid: gameId});
+
           return asPromised(currentGame);
         },
         continue: function (newGame) {

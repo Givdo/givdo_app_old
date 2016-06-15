@@ -21,6 +21,10 @@
           method: 'POST',
           url: baseUrl + '/causes',
         },
+        notifications: {
+          method: 'GET',
+          url: baseUrl + '/notifications',
+        }
       });
 
       repository.update = function (user, data) {
