@@ -58,21 +58,28 @@
         });
     }
 
-    NotificationCtrl.$inject = ['$scope', 'givdo'];
+    NotificationCtrl.$inject = ['$scope', 'givdo', 'QuizRound'];
 
-    function NotificationCtrl($scope, givdo) {
-      var setNotifications = function(notifications) {
+    function NotificationCtrl($scope, givdo, QuizRound) {
+      givdo.user.notifications().then(function(notifications) {
         $scope.notifications = notifications;
+      });
+
+      $scope.accept = function(notification) {
+        givdo.notification.accept(notification).then(function() {
+           console.log('accept');
+          // QuizRound.continue(notification.relation('game'));
+        });
       }
 
-      givdo.user.notifications().then(setNotifications);
-
-      $scope.accept = function() {
-        console.log('aceitou');
-      }
-
-      $scope.reject = function() {
-        console.log('rejeitou');
+      $scope.reject = function(notification) {
+        givdo.notification.reject(notification).then(function () {
+          // Removes notification from interface.
+          // TODO improve this snippet
+          $scope.notifications = $scope.notifications.filter(function (item) {
+            return item.id != notification.id;
+          });
+        });
       }
     }
 

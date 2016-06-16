@@ -12,9 +12,10 @@
       'OrganizationRepository',
       'DeviceRepository',
       'CauseRepository',
+      'NotificationRepository',
     ];
 
-    function givdo(Oauth, UserRepo, GameRepo, OrganizationRepo, DeviceRepository, CauseRepository) {
+    function givdo(Oauth, UserRepo, GameRepo, OrganizationRepo, DeviceRepository, CauseRepository, NotificationRepository) {
       return {
         oauth: Oauth,
         user: UserRepo,
@@ -22,6 +23,7 @@
         device: DeviceRepository,
         organizations: OrganizationRepo,
         causes: CauseRepository,
+        notification: NotificationRepository,
       };
     }
 

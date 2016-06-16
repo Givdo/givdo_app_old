@@ -92,7 +92,7 @@
           }
         })
         .state('trivia', {
-          url: '/trivia?gameId',
+          url: '/trivia',
           parent: 'app',
           cache: false,
           views: {
@@ -103,9 +103,7 @@
           },
           resolve: {
             trivia: function(QuizRound) { return QuizRound.trivia(); },
-            game: function($stateParams, QuizRound) {
-              return QuizRound.game($stateParams.gameId);
-            }
+            game: function($stateParams, QuizRound) { return QuizRound.game(); }
           }
         });
     }
