@@ -6,13 +6,16 @@
 
         <div class="request-to-play" ng-repeat="notification in notifications">
           <div class="player" style="background-image: url('{{notification.attr('sender_image')}}')"></div>
-          <span class="text-notification"><b>{{ notification.attr('sender_name') }}</b> would like to play you in {{ notification.attr('category') }}!<br>
+
+          <span class="text-notification">
+            <b>{{ notification.attr('sender_name') }}</b>
+            would like to play you in {{ notification.attr('category') }}!<br>
             <button class="gold" ng-click="accept(notification)">Accept</button>
             <button class="purple" ng-click="reject(notification)">Reject</button>
           </span>
           <div class="clearfix"></div>
         </div>
       </div>
-   </div>
+    </div>
   </ion-content>
 </ion-view>
