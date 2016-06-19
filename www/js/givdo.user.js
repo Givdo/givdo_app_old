@@ -71,6 +71,11 @@
         givdo.user.notifications('?page[number]=' + page + '&page[size]=10').then(function(notifications) {
           $scope.notifications = $scope.notifications.concat(notifications);
 
+          notifications.last().then(function(){})
+          .catch(function(){
+            $scope.moreDataCanBeLoaded = false;
+          });
+
           $scope.$broadcast('scroll.infiniteScrollComplete');
         });
       };
