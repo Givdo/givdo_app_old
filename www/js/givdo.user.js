@@ -65,6 +65,16 @@
       $scope.notifications = [];
       $scope.moreDataCanBeLoaded = true;
 
+      $scope.loadMore = function(){
+        page++
+
+        givdo.user.notifications('?page[number]=' + page + '&page[size]=10').then(function(notifications) {
+          $scope.notifications = $scope.notifications.concat(notifications);
+
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        });
+      };
+
       $scope.accept = function(notification) {
         givdo.notification.accept(notification).then(function() {
           console.log('accept');
