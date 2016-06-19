@@ -61,6 +61,8 @@
     NotificationCtrl.$inject = ['$scope', 'givdo', 'QuizRound'];
 
     function NotificationCtrl($scope, givdo, QuizRound) {
+      var page = 0;
+      $scope.notifications = [];
 
       $scope.accept = function(notification) {
         givdo.notification.accept(notification).then(function() {
