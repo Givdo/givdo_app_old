@@ -67,15 +67,13 @@
 
       $scope.accept = function(notification) {
         givdo.notification.accept(notification).then(function() {
-           console.log('accept');
+          console.log('accept');
           // QuizRound.continue(notification.relation('game'));
         });
       }
 
       $scope.reject = function(notification) {
         givdo.notification.reject(notification).then(function () {
-          // Removes notification from interface.
-          // TODO improve this snippet
           $scope.notifications = $scope.notifications.filter(function (item) {
             return item.id != notification.id;
           });
