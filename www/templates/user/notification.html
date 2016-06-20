@@ -10,7 +10,7 @@
           <span class="text-notification">
             <b>{{ notification.attr('sender_name') }}</b>
             would like to play you in {{ notification.attr('category') }}!<br>
-            <button class="gold" ng-click="accept(notification)">Accept</button>
+            <button class="gold" ng-click="accept($index, notification)">Accept</button>
             <button class="purple" ng-click="reject($index, notification)">Reject</button>
           </span>
           <div class="clearfix"></div>

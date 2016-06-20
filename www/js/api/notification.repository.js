@@ -15,15 +15,15 @@
       var repository = Repository({});
 
       repository.accept = function (notification) {
-        var data = { status: 'accepted' };
+        var url = baseUrl + '/notifications/' + notification.id + '/accept';
 
-        return transport.load(baseUrl + '/notifications/' + notification.id, { data: data, method: 'PATCH' });
+        return transport.load(url, { method: 'PUT' });
       }
 
       repository.reject = function (notification) {
-        var url = baseUrl + '/notifications/' + notification.id;
+        var url = baseUrl + '/notifications/' + notification.id + '/reject';
 
-        return $http.patch(url, { status: 'rejected' });
+        return $http.put(url);
       }
 
       return repository;
