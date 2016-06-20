@@ -28,7 +28,7 @@
       }
 
       repository.notifications = function (page) {
-        return transport.load(baseUrl + '/notifications' + page, { method: 'GET' });
+        return transport.load(baseUrl + '/notifications', { method: 'GET' });
       }
 
       return repository;

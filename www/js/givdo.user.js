@@ -4,7 +4,6 @@
   angular
     .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model'])
     .config(config)
-    .controller('NotificationCtrl', NotificationCtrl)
     .controller('ActivityCtrl', ActivityCtrl)
     .controller('ProfileCtrl', ProfileCtrl)
     .controller('FriendsCtrl', FriendsCtrl)
@@ -14,16 +13,6 @@
 
     function config($stateProvider) {
       $stateProvider
-        .state('notification', {
-          url: '/notification',
-          parent: 'app',
-          views: {
-            'notification-content': {
-              templateUrl: 'templates/user/notification.html',
-              controller: 'NotificationCtrl'
-            }
-          }
-        })
         .state('activity', {
           url: '/activity',
           parent: 'app',

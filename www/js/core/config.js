@@ -5,6 +5,7 @@
     .module('givdo.core')
     .config(['facebookConfig', '$cordovaFacebookProvider', configurePlugins])
     .config(['$httpProvider', configureSerializer])
+    .config(['$ionicConfigProvider', configureIonic])
     .run(['$ionicPlatform', configurePlatform]);
 
 
@@ -16,6 +17,10 @@
 
   function configureSerializer($httpProvider) {
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
+  }
+
+  function configureIonic($ionicConfigProvider) {
+    $ionicConfigProvider.tabs.position('bottom');
   }
 
   function configurePlatform($ionicPlatform) {

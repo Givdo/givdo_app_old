@@ -6,9 +6,9 @@
     .config(config)
     .controller('MenuBarCtrl', MenuBarCtrl);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
+    config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    function config($stateProvider, $urlRouterProvider) {
       $stateProvider
         .state('app', {
           url: '/app',
@@ -19,7 +19,6 @@
         });
 
       $urlRouterProvider.otherwise('/welcome');
-      $ionicConfigProvider.tabs.position('bottom');
     }
 
     MenuBarCtrl.$inject = ['$scope', 'session'];
