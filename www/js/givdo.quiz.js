@@ -19,10 +19,9 @@
     .controller('TriviaCtrl', TriviaCtrl)
     .controller('GameHistoryCtrl', GameHistoryCtrl);
 
-
     config.$inject = ['$stateProvider'];
 
-    function config($stateProvider, givdo) {
+    function config($stateProvider) {
       $stateProvider
         .state('game-history', {
           url: '/game-history',
@@ -103,7 +102,7 @@
           },
           resolve: {
             trivia: function(QuizRound) { return QuizRound.trivia(); },
-            game: function($stateParams, QuizRound) { return QuizRound.game(); }
+            game: function(QuizRound) { return QuizRound.game(); }
           }
         });
     }
@@ -154,10 +153,7 @@
         trivia: function () {
           return asPromised(currentTrivia);
         },
-        game: function (gameId) {
-          if (gameId !== undefined)
-            var currentGame = givdo.game.versus({uid: gameId});
-
+        game: function () {
           return asPromised(currentGame);
         },
         continue: function (newGame) {
