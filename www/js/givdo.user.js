@@ -174,8 +174,8 @@
         });
       };
 
-      $scope.updateCauses = function(causes){
-        $scope.causes_update = causes;
+      $scope.hideCauses = function(causes){
+        $scope.modal.hide();
       }
     }
 })();
