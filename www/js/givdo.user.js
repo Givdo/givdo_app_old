@@ -36,8 +36,7 @@
         .state('profile', {
           url: '/profile',
           parent: 'app',
-          cache: false,
-          reload: true,
+          cache: true,
           views: {
             'profile-content': {
               templateUrl: 'templates/user/profile.html',
@@ -170,16 +169,13 @@
         });
 
         UserRepository.causes({id: ids}).then(function(data){
+          $scope.$parent.$parent.$parent.causes = data;
           $scope.modal.hide();
         });
       };
 
-      $scope.updateCauses = function(causes){
-        $scope.causes_update = causes;
+      $scope.hideCauses = function(causes){
+        $scope.modal.hide();
       }
-
-      $scope.$on('modal.hidden', function() {
-        $scope.$parent.$parent.$parent.causes = $scope.causes_update
-      });
     }
 })();

@@ -1,6 +1,7 @@
 <ion-modal-view ng-controller="ModalCausesCtrl">
   <ion-header-bar class="bar bar-header bar-positive">
     <h1 class="title">Select your causes</h1>
+    <button class="button button-clear button-primary" ng-click="hideCauses(user.causes)">Cancel</button>
   </ion-header-bar>
 
   <ion-content class="padding">
@@ -8,7 +9,7 @@
       <div class="list-causes__item" ng-repeat="cause in causes">
         <label class="item">
           <div class="checkbox">
-            <input type="checkbox" data-checklist-model="user.causes" data-checklist-value="cause" ng-click="updateCauses(user.causes)">
+            <input type="checkbox" data-checklist-model="user.causes" data-checklist-value="cause">
           </div>
         </label>
         <img ng-src="img/causes/{{ cause.attributes.name }}.jpg">
