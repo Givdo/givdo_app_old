@@ -169,6 +169,7 @@
         });
 
         UserRepository.causes({id: ids}).then(function(data){
+          $scope.$parent.$parent.$parent.causes = data;
           $scope.modal.hide();
         });
       };
