@@ -176,9 +176,5 @@
       $scope.updateCauses = function(causes){
         $scope.causes_update = causes;
       }
-
-      $scope.$on('modal.hidden', function() {
-        $scope.$parent.$parent.$parent.causes = $scope.causes_update
-      });
     }
 })();
