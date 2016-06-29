@@ -13,23 +13,19 @@
     function NotificationsController($scope, givdo, QuizRound) {
       var page;
       $scope.notifications = [];
-      $scope.moreDataCanBeLoaded = true;
+
+      givdo.user.notifications().then(setNotifications);
 
       function setNotifications(notifications) {
-        if (notifications.length == 0)
-          $scope.moreDataCanBeLoaded = false;
-
         page = notifications;
         $scope.notifications = $scope.notifications.concat(notifications);
       }
 
       $scope.loadMore = function() {
-        if (page)
-          page.next().then(setNotifications);
-        else
-          givdo.user.notifications().then(setNotifications);
-
-        $scope.$broadcast('scroll.infiniteScrollComplete');
+        page.next().then(function (notifications) {
+          setNotifications(notifications);
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        });
       }
 
       $scope.accept = function(index, notification) {
