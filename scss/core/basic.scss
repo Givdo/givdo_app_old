@@ -21,3 +21,10 @@
     padding-bottom: 90px;
   }
 }
+
+a,
+button{
+  &:hover{
+    opacity: .7 !important;
+  }
+}
