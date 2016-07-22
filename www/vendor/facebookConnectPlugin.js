@@ -1,149 +1,184 @@
 /* global FB */
-window.facebookConnectPlugin = (function () {
-  var isInited = false
-  var assertInited = function () {
-    if (!isInited) {
-      return false;
-    }
-    return true;
-  };
-  var printError = function (f, err) {
-    if (typeof f === 'function') {
-      f(err.message);
-      return;
-    }
-    console.error(err.stack);
-  };
+"use strict";
 
-  var insertSdk = function () {
-    var js;
-    var fjs = document.getElementsByTagName('script')[0];
-    if (document.getElementById('facebook-jssdk')) return;
+/*
+ * @author Ally Ogilvie
+ * @copyright Wizcorp Inc. [ Incorporated Wizards ] 2014
+ * @file - facebookConnectPlugin.js
+ * @about - JavaScript interface for PhoneGap bridge to Facebook Connect SDK
+ *
+ *
+ */
+var insertSdk = function () {
+  var js;
+  var fjs = document.getElementsByTagName('script')[0];
+  if (document.getElementById('facebook-jssdk')) return;
 
-    js = document.createElement('script');
-    js.id = 'facebook-jssdk';
-    js.src = 'https://connect.facebook.net/en_US/sdk.js';
-    fjs.parentNode.insertBefore(js, fjs);
-  };
+  js = document.createElement('script');
+  js.id = 'facebook-jssdk';
+  js.src = 'https://connect.facebook.net/en_US/sdk.js';
+  fjs.parentNode.insertBefore(js, fjs);
+};
 
-  return {
-    getLoginStatus: function getLoginStatus (s, f) {
-      if (!assertInited()) return printError(f, new Error('init not called with valid version'))
-      FB.getLoginStatus(function (response) {
-        s(response)
-      })
-    },
+if (!window.cordova) {
+// This should override the existing facebookConnectPlugin object created from cordova_plugins.js
+  var facebookConnectPlugin = {
 
-    showDialog: function showDialog (options, s, f) {
-      if (!assertInited()) return printError(f, new Error('init not called with valid version'))
-
-      options.name = options.name || ''
-      options.message = options.message || ''
-      options.caption = options.caption || ''
-      options.description = options.description || ''
-      options.href = options.href || ''
-      options.picture = options.picture || ''
-
-      FB.ui(options, function (response) {
-        if (response && (response.request || !response.error_code)) {
-          s(response)
-          return
+    getLoginStatus: function (s, f) {
+      // Try will catch errors when SDK has not been init
+      try {
+        FB.getLoginStatus(function (response) {
+          s(response);
+        });
+      } catch (error) {
+        if (!f) {
+          console.error(error.message);
+        } else {
+          f(error.message);
         }
-        printError(f, response)
-      })
+      }
     },
 
+    showDialog: function (options, s, f) {
+
+      if (!options.name) {
+        options.name = "";
+      }
+      if (!options.message) {
+        options.message = "";
+      }
+      if (!options.caption) {
+        options.caption = "";
+      }
+      if (!options.description) {
+        options.description = "";
+      }
+      if (!options.link) {
+        options.link = "";
+      }
+      if (!options.picture) {
+        options.picture = "";
+      }
+
+      // Try will catch errors when SDK has not been init
+      try {
+        FB.ui({
+            method: options.method,
+            message: options.message,
+            name: options.name,
+            caption: options.caption,
+            description: (
+              options.description
+              ),
+            link: options.link,
+            // JS SDK expects href and not link
+            href: options.link,
+            picture: options.picture
+          },
+          function (response) {
+            if (response && (response.request || !response.error_code)) {
+              s(response);
+            } else {
+              f(response);
+            }
+          });
+      } catch (error) {
+        if (!f) {
+          console.error(error.message);
+        } else {
+          f(error.message);
+        }
+      }
+    },
     // Attach this to a UI element, this requires user interaction.
-    login: function login (permissions, s, f) {
-      if (!assertInited()) return printError(f, new Error('init not called with valid version'))
+    login: function (permissions, s, f) {
       // JS SDK takes an object here but the native SDKs use array.
-      var options = {}
+      var permissionObj = {};
       if (permissions && permissions.length > 0) {
-        var index = permissions.indexOf('rerequest')
-        if (index > -1) {
-          permissions.splice(index, 1)
-          options.auth_type = 'rerequest'
-        }
-        options.scope = permissions.join(',')
+        permissionObj.scope = permissions.toString();
       }
 
       FB.login(function (response) {
         if (response.authResponse) {
-          s(response)
+          s(response);
         } else {
-          printError(f, response.status)
+          f(response.status);
         }
-      }, options)
+      }, permissionObj);
     },
 
-    getAccessToken: function getAccessToken (s, f) {
-      var response = FB.getAccessToken()
-      if (response) {
-        s(response)
-        return
+    getAccessToken: function (s, f) {
+      var response = FB.getAccessToken();
+      if (!response) {
+        if (!f) {
+          console.error("NO_TOKEN");
+        } else {
+          f("NO_TOKEN");
+        }
+      } else {
+        s(response);
       }
-      printError(f, new Error('NO_TOKEN'))
     },
 
-    logEvent: function logEvent (eventName, params, valueToSum, s, f) {
+    logEvent: function (eventName, params, valueToSum, s, f) {
       // AppEvents are not avaliable in JS.
-      s()
+      s();
     },
 
     logPurchase: function (value, currency, s, f) {
       // AppEvents are not avaliable in JS.
-      s()
-    },
-
-    appInvite: function (options, s, f) {
-      // App Invites are not avaliable in JS.
-      f()
+      s();
     },
 
     logout: function (s, f) {
-      if (!assertInited()) return printError(f, new Error('init not called with valid version'))
-      FB.logout(function (response) {
-        s(response)
-      })
+      // Try will catch errors when SDK has not been init
+      try {
+        FB.logout(function (response) {
+          s(response);
+        });
+      } catch (error) {
+        if (!f) {
+          console.error(error.message);
+        } else {
+          f(error.message);
+        }
+      }
     },
 
     api: function (graphPath, permissions, s, f) {
-      if (!assertInited()) return printError(f, new Error('init not called with valid version'))
       // JS API does not take additional permissions
-      FB.api(graphPath, function (response) {
-        if (response.error) {
-          f(response)
+
+      // Try will catch errors when SDK has not been init
+      try {
+        FB.api(graphPath, function (response) {
+          if (response.error) {
+            f(response);
+          } else {
+            s(response);
+          }
+        });
+      } catch (error) {
+        if (!f) {
+          console.error(error.message);
         } else {
-          s(response)
+          f(error.message);
         }
-      })
+      }
     },
 
     // Browser wrapper API ONLY
-    browserInit: function (appId, version, s) {
-      if (s == null && typeof version === 'function') {
-        s = version
-        version = null
+    browserInit: function (appId, version) {
+      if (!version) {
+        version = "v2.0";
       }
-
-      // Global :(
-      // This function will be called by the FB SDK when the client is inited
-      window.fbAsyncInit = function fbAsyncInit () {
-        version = version || 'v2.4'
-
-        FB.init({
-          appId: appId,
-          xfbml: false,
-          version: version
-        })
-
-        isInited = true
-
-        if (typeof s === 'function') s()
-      }
-
-      // Bake in the JS SDK
-      insertSdk()
+      FB.init({
+        appId: appId,
+        cookie: true,
+        xfbml: false,
+        version: version
+      })
     }
   };
-})();
+
+  insertSdk();
+}
