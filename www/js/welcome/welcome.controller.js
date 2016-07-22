@@ -43,7 +43,15 @@
             if (response.status === 'connected') {
               authService
                 .login(response.authResponse)
-                .then(loginSuccess)
+                .then(function(){
+                  window.localStorage.setItem("accessToken",   response.authResponse.accessToken);
+                  window.localStorage.setItem("expiresIn",     response.authResponse.expiresIn);
+                  window.localStorage.setItem("signedRequest", response.authResponse.signedRequest);
+                  window.localStorage.setItem("userID",        response.authResponse.userID);
+
+                  $ionicLoading.hide();
+                  $state.go('profile');
+                })
                 .catch(function (error) {
                   console.log(error);
                   $ionicLoading.hide();
