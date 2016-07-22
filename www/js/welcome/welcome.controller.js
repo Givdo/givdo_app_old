@@ -15,6 +15,7 @@
 
     function WelcomeController($state, $rootScope, $ionicLoading, $cordovaFacebook, authService) {
       var vm = this;
+      $rootScope.login_screen = true;
 
       vm.facebookSignIn = facebookSignIn;
 
