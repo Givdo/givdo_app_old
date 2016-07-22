@@ -19,6 +19,24 @@
       vm.facebookSignIn = facebookSignIn;
 
 
+      if(window.localStorage.getItem("accessToken")){
+        $cordovaFacebook
+          .getLoginStatus()
+          .then(function(response) {
+            $ionicLoading.show({ template: 'Signing in...' });
+
+            if (response.status === 'connected') {
+              authService
+                .login(response.authResponse)
+                .then(loginSuccess)
+                .catch(function (error) {
+                  console.log(error);
+                  $ionicLoading.hide();
+                });
+            }
+          });
+      }
+
       function loginSuccess() {
         $ionicLoading.hide();
         $state.go('profile');
