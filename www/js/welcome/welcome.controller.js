@@ -19,13 +19,13 @@
 
       vm.facebookSignIn = facebookSignIn;
 
-
       if(window.localStorage.getItem("accessToken")){
+        $rootScope.login_screen = false;
+        $ionicLoading.show({ template: 'Signing in...' });
+
         $cordovaFacebook
           .getLoginStatus()
           .then(function(response) {
-            $ionicLoading.show({ template: 'Signing in...' });
-
             if (response.status === 'connected') {
               authService
                 .login(response.authResponse)
