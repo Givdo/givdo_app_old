@@ -30,36 +30,36 @@
           <dict>
             <key>NSIncludesSubdomains</key>
             <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <true></true>
-            <false></false>
+            <true/>
+            <false/>
           </dict>
           <dict>
             <key>NSIncludesSubdomains</key>
             <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <true></true>
-            <false></false>
+            <true/>
+            <false/>
           </dict>
           <dict>
             <key>NSIncludesSubdomains</key>
             <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <true></true>
-            <false></false>
-          </dict>
-          <dict>
-            <key>NSIncludesSubdomains</key>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true></true>
-            <true></true>
-            <false></false>
+            <true/>
+            <false/>
           </dict>
           <dict>
             <key>NSIncludesSubdomains</key>
             <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
             <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true></true>
-            <true></true>
-            <false></false>
+            <true/>
+            <true/>
+            <false/>
+          </dict>
+          <dict>
+            <key>NSIncludesSubdomains</key>
+            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+            <true/>
+            <false/>
           </dict>
         </dict>
       </dict>
