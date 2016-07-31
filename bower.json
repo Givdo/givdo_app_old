@@ -10,7 +10,10 @@
     "angular-local-storage": "~0.2.3",
     "angular-json-api-client": "~0.5.0",
     "ionic-filter-bar": "https://github.com/ace-han/ionic-filter-bar.git#ce05d6c5023807504203f1601b771a3598896d5f",
-    "angular-ui-router": "^0.3.1"
+    "angular-ui-router": "^0.3.1",
+    "ng-cordova-oauth": "^0.2.10",
+    "moment": "^2.14.1",
+    "underscore": "^1.8.3"
   },
   "resolutions": {
     "angular": "1.4.3"

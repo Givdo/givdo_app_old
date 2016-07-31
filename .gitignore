@@ -4,3 +4,4 @@ plugins/
 .DS_Store
 .idea/
 www/css/givdo.*
+www/vendor

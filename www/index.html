@@ -10,11 +10,11 @@
     <link href="css/givdo.min.css" rel="stylesheet">
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="lib/ionic/release/css/ionic.css" />
-    <link rel="stylesheet" href="lib/ionic-filter-bar/dist/ionic.filter.bar.css" />
+    <link rel="stylesheet" href="vendor/ionic/release/css/ionic.css" />
+    <link rel="stylesheet" href="vendor/ionic-filter-bar/dist/ionic.filter.bar.css" />
     <!-- endbower -->
 
-    <link rel="stylesheet" href="vendor/ionRadio.css">
+    <link rel="stylesheet" href="lib/ionRadio.css">
   </head>
 
   <body ng-app="givdo" ng-strict-di="">
@@ -22,28 +22,27 @@
   </body>
 
   <!-- ionic/angularjs js -->
-  <script src="lib/ionic/release/js/ionic.bundle.js"></script>
+  <script src="vendor/ionic/release/js/ionic.bundle.js"></script>
 
   <!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
 
   <!-- bower:js -->
-  <script src="lib/angular-animate/angular-animate.js"></script>
-  <script src="lib/angular-sanitize/angular-sanitize.js"></script>
-  <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="lib/ionic/release/js/ionic.js"></script>
-  <script src="lib/ionic/release/js/ionic-angular.js"></script>
-  <script src="lib/ngCordova/dist/ng-cordova.js"></script>
-  <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
-  <script src="lib/underscore/underscore.js"></script>
-  <script src="lib/angular-json-api-client/dist/angular-json-api-client.js"></script>
-  <script src="lib/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
+  <script src="vendor/moment/moment.js"></script>
+  <script src="vendor/underscore/underscore.js"></script>
+  <script src="vendor/ionic/release/js/ionic.js"></script>
+  <script src="vendor/ionic/release/js/ionic-angular.js"></script>
+  <script src="vendor/ngCordova/dist/ng-cordova.js"></script>
+  <script src="vendor/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
+  <script src="vendor/ng-cordova-oauth/dist/ng-cordova-oauth.js"></script>
+  <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="vendor/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="vendor/angular-json-api-client/dist/angular-json-api-client.js"></script>
   <!-- endbower -->
 
-  <!-- Vendor -->
-  <script src="vendor/facebookConnectPlugin.js"></script>
-  <script src="vendor/ionRadio.js"></script>
-  <script src="vendor/checklist-model.js"></script>
+  <!-- Lib -->
+  <script src="lib/ionRadio.js"></script>
+  <script src="lib/checklist-model.js"></script>
 
   <!-- app module -->
   <script src="js/givdo.module.js"></script>
@@ -66,6 +65,7 @@
   <!-- auth -->
   <script src="js/auth/auth.module.js"></script>
   <script src="js/auth/auth.service.js"></script>
+  <script src="js/auth/session.service.js"></script>
   <script src="js/auth/session.interceptor.js"></script>
   <script src="js/auth/config.js"></script>
 
