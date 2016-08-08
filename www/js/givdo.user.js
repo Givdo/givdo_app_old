@@ -24,6 +24,21 @@
             }
           }
         })
+        .state('friend', {
+          url: '/friend/show/:friendId',
+          parent: 'app',
+          views: {
+            'friends-content': {
+              templateUrl: 'templates/user/friend_show.html',
+              controller: 'FriendShowCtrl'
+            }
+          },
+          resolve:{
+            friendId: ['$stateParams', function($stateParams){
+              return $stateParams.friendId;
+            }]
+          }
+        })
         .state('friends', {
           url: '/friends',
           parent: 'app',
@@ -100,6 +115,25 @@
       $scope.activityNameToLabel = function (name) {
         return (name === 'won_scores') ? 'You Won' : 'You Lose';
       }
+    }
+
+    FriendShowCtrl.$inject = ['$scope', '$http', '$cordovaFacebook', '$stateParams', 'givdo'];
+
+    function FriendShowCtrl($scope, $http, $cordovaFacebook, $stateParams, givdo) {
+      givdo.user.get_friend($stateParams.friendId).then(function(friend){
+        $scope.user = friend;
+
+        $cordovaFacebook
+          .getLoginStatus()
+          .then(function(response) {
+            var token = response.authResponse.accessToken,
+                url_cover = "https://graph.facebook.com/" + friend.attr('uid') + "?fields=cover&access_token=" + token;
+
+            $http.get(url_cover).success(function(response){
+              $scope.user.cover = response.cover.source;
+            });
+          });
+      });
     }
 
     ProfileCtrl.$inject = ['$rootScope', '$scope', '$ionicModal', 'session', 'givdo', 'OrganizationPicker'];
