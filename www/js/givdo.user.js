@@ -2,16 +2,17 @@
   'use strict';
 
   angular
-    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model'])
+    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model', 'ui.router'])
     .config(config)
     .controller('ActivityCtrl', ActivityCtrl)
+    .controller('FriendShowCtrl', FriendShowCtrl)
     .controller('ProfileCtrl', ProfileCtrl)
     .controller('FriendsCtrl', FriendsCtrl)
     .controller('ModalCausesCtrl', ModalCausesCtrl);
 
-    config.$inject = ['$stateProvider'];
+    config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider) {
+    function config($stateProvider, $urlRouterProvider) {
       $stateProvider
         .state('activity', {
           url: '/activity',
