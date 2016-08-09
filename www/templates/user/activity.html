@@ -17,7 +17,7 @@
   <div class="grand-total">
     <h2 class="title title--give-money">
       Total Donations:
-      <span>{{ totalScore | currency }}</span>
+      <span>{{ (totalScore/100).toFixed(2) | currency }}</span>
     </h2>
   </div>
 </ion-view>
