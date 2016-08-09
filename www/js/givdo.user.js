@@ -2,16 +2,17 @@
   'use strict';
 
   angular
-    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model'])
+    .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model', 'ui.router'])
     .config(config)
     .controller('ActivityCtrl', ActivityCtrl)
+    .controller('FriendShowCtrl', FriendShowCtrl)
     .controller('ProfileCtrl', ProfileCtrl)
     .controller('FriendsCtrl', FriendsCtrl)
     .controller('ModalCausesCtrl', ModalCausesCtrl);
 
-    config.$inject = ['$stateProvider'];
+    config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider) {
+    function config($stateProvider, $urlRouterProvider) {
       $stateProvider
         .state('activity', {
           url: '/activity',
@@ -21,6 +22,21 @@
               templateUrl: 'templates/user/activity.html',
               controller: 'ActivityCtrl'
             }
+          }
+        })
+        .state('friend', {
+          url: '/friend/show/:friendId',
+          parent: 'app',
+          views: {
+            'friends-content': {
+              templateUrl: 'templates/user/friend_show.html',
+              controller: 'FriendShowCtrl'
+            }
+          },
+          resolve:{
+            friendId: ['$stateParams', function($stateParams){
+              return $stateParams.friendId;
+            }]
           }
         })
         .state('friends', {
@@ -99,6 +115,25 @@
       $scope.activityNameToLabel = function (name) {
         return (name === 'won_scores') ? 'You Won' : 'You Lose';
       }
+    }
+
+    FriendShowCtrl.$inject = ['$scope', '$http', '$cordovaFacebook', '$stateParams', 'givdo'];
+
+    function FriendShowCtrl($scope, $http, $cordovaFacebook, $stateParams, givdo) {
+      givdo.user.get_friend($stateParams.friendId).then(function(friend){
+        $scope.user = friend;
+
+        $cordovaFacebook
+          .getLoginStatus()
+          .then(function(response) {
+            var token = response.authResponse.accessToken,
+                url_cover = "https://graph.facebook.com/" + friend.attr('uid') + "?fields=cover&access_token=" + token;
+
+            $http.get(url_cover).success(function(response){
+              $scope.user.cover = response.cover.source;
+            });
+          });
+      });
     }
 
     ProfileCtrl.$inject = ['$rootScope', '$scope', '$ionicModal', 'session', 'givdo', 'OrganizationPicker'];

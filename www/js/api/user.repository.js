@@ -31,6 +31,10 @@
         return transport.load(baseUrl + '/notifications', { method: 'GET' });
       }
 
+      repository.get_friend = function (id) {
+        return transport.load(baseUrl + '/friends/' + id, { method: 'GET' });
+      }
+
       return repository;
     }
 })();
