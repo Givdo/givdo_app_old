@@ -44,4 +44,12 @@
   &--give-money{
     background-image: url(../img/give-money.png);
   }
+
+  &--box{
+    padding-top: 5px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    color: darken($gray, 10%);
+    border-bottom: dotted 1px rgba($gray, .4);
+  }
 }
