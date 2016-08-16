@@ -6,7 +6,10 @@
     </div>
 
     <div class="container">
+
       <ion-list type="card">
+        <h2 class="title title--box">Choose Organization</h2>
+
         <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
           <img ng-if-start="organization" ng-src="{{organization.attr('picture')}}">
           <h2>{{organization.attr('name')}}</h2>
