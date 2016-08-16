@@ -237,6 +237,7 @@
     function ShowGameCtrl($scope, $stateParams, game, facebook, givdo, QuizRound) {
       $scope.winner = game.relation('player').attr('winner?');
       $scope.players = game.relation('players');
+      $scope.points = game.relation('player').attr('score');
       $scope.playSingle = function () {
         givdo.game.singlePlayer().then(QuizRound.continue);
       };
