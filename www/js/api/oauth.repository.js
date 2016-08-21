@@ -12,6 +12,10 @@
           auth: false,
           method: 'POST',
           url: baseUrl + '/oauth/{{provider}}/callback',
+        },
+        profile: {
+          method: 'GET',
+          url: baseUrl + '/user'
         }
       });
     }

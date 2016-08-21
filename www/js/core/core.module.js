@@ -5,6 +5,7 @@
     'ionic',
     'ui.router',
     'ngCordova',
+    'ngCordovaOauth',
     'LocalStorageModule',
   ]);
 })();

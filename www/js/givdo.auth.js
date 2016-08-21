@@ -18,7 +18,6 @@
         if (newSession) {
           $rootScope.currentUser = newSession.relation('user');
           sessionDefer.resolve(newSession);
-          $rootScope.$emit('givdo:session:up');
         }
 
         return sessionDefer.promise;

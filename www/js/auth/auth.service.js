@@ -8,15 +8,19 @@
       '$rootScope',
       'events',
       'session',
+      'sessionService',
+      'facebookConfig',
+      '$cordovaOauth',
       'OAuthRepository',
       authService
     ]);
 
 
-    function authService($q, $rootScope, events, session, OAuthRepository) {
+    function authService($q, $rootScope, events, session, sessionService, config, $cordovaOauth, OAuthRepository) {
+      var deferred = $q.defer();
       var service = {
-        login: login,
-        signup: signup,
+        authenticate: authenticate,
+        facebookSignIn: facebookSignIn,
       };
 
       return service;
@@ -24,39 +28,54 @@
 
       function saveSession(s) {
         session(s);
+        sessionService.start(s.id, s.attr('exp_in'));
+      }
+
+      function loginSuccess(session) {
+        saveSession(session);
+        $rootScope.$broadcast(events.LOGIN_SUCCESS);
+        deferred.resolve();
+      }
+
+      function loginFailed(error) {
+        console.error(error);
+        $rootScope.$broadcast(events.LOGIN_FAILED);
+        deferred.reject(error);
       }
 
       function loginOrSignup(response) {
-        var deferred = $q.defer();
-
         var data = {
           provider: 'facebook',
           uid: response.userID,
-          expires_in: response.expiresIn,
-          access_token: response.accessToken,
+          expires_in: response.expires_in,
+          access_token: response.access_token,
         };
 
         OAuthRepository
           .callback(data)
-          .then(function (response) {
-            saveSession(response);
-            $rootScope.$emit(events.LOGIN_SUCCESS);
-            deferred.resolve();
-          })
+          .then(loginSuccess)
+          .catch(loginFailed);
+      }
+
+      function authenticate() {
+        OAuthRepository
+          .profile()
+          .then(loginSuccess)
+          .catch(loginFailed);
+
+          return deferred.promise;
+      }
+
+      function facebookSignIn() {
+        $cordovaOauth
+          .facebook(config.appID, config.scopes)
+          .then(loginOrSignup)
           .catch(function (error) {
-            $rootScope.$broadcast(events.LOGIN_FAILED);
+            console.error(error);
             deferred.reject(error);
           });
 
         return deferred.promise;
-      }
-
-      function login(response) {
-        return loginOrSignup(response);
-      }
-
-      function signup(response) {
-        return loginOrSignup(response);
       }
     }
 })();

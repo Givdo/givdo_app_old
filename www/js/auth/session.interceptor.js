@@ -7,12 +7,13 @@
       '$rootScope',
       'GivdoApiURL',
       'session',
+      'sessionService',
       '$q',
       sessionInterceptor
     ]);
 
 
-    function sessionInterceptor($rootScope, baseUrl, session, $q) {
+    function sessionInterceptor($rootScope, baseUrl, session, sessionService, $q) {
       var service = {
         request: request,
         responseError: responseError,
@@ -27,10 +28,11 @@
 
       function request(config) {
         if (shouldIntercept(config)) {
-          return session.token().then(function (token) {
-            config.headers.Authorization = 'Token token="' + token + '"';
-            return config;
-          });
+          var token = sessionService.getToken();
+
+          config.headers.Authorization = 'Token token="' + token + '"';
+
+          return config;
         }
 
         return config;
@@ -38,8 +40,7 @@
 
       function responseError(response) {
         if (shouldIntercept(response.config) && response.status == 401) {
-          session.clear();
-          $rootScope.$broadcast('givdo:session:down');
+          sessionService.destroy();
         }
 
         return $q.reject(response);

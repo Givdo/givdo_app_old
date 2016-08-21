@@ -5,82 +5,51 @@
     .module('givdo.welcome')
     .controller('WelcomeController', [
       '$state',
-      '$rootScope',
-      '$ionicLoading',
-      '$cordovaFacebook',
+      '$ionicPopup',
       'authService',
+      'sessionService',
       WelcomeController
     ]);
 
 
-    function WelcomeController($state, $rootScope, $ionicLoading, $cordovaFacebook, authService) {
+    function WelcomeController($state, $ionicPopup, authService, sessionService) {
       var vm = this;
-      $rootScope.login_screen = true;
+      var token = sessionService.getToken();
 
+      vm.isLoading = !!token;
       vm.facebookSignIn = facebookSignIn;
 
-      if(window.localStorage.getItem("accessToken")){
-        $rootScope.login_screen = false;
-        $ionicLoading.show({ template: 'Signing in...' });
-
-        $cordovaFacebook
-          .getLoginStatus()
-          .then(function(response) {
-            if (response.status === 'connected') {
-              authService
-                .login(response.authResponse)
-                .then(loginSuccess)
-                .catch(function (error) {
-                  console.log(error);
-                  $ionicLoading.hide();
-                });
-            }
-          });
+      if (token) {
+        authService
+          .authenticate()
+          .then(loginSuccess)
+          .catch(loginError);
       }
 
       function loginSuccess() {
-        $ionicLoading.hide();
         $state.go('profile');
       }
 
-      function fbLoginSuccess(response) {
-        authService
-          .signup(response.authResponse)
-          .then(loginSuccess);
-      }
+      function loginError(error) {
+        var alertOptions = {
+          title: 'Oops!',
+          template: 'There was an error while signing in. Try again later.'
+        };
 
-      function fbLoginError(error) {
-        $ionicLoading.hide();
+        $ionicPopup
+          .alert(alertOptions)
+          .then(function() {
+            vm.isLoading = false;
+          });
       }
 
       function facebookSignIn() {
-        $ionicLoading.show({ template: 'Signing in...' });
+        vm.isLoading = true;
 
-        $cordovaFacebook
-          .getLoginStatus()
-          .then(function(response) {
-            if (response.status === 'connected') {
-              authService
-                .login(response.authResponse)
-                .then(function(){
-                  window.localStorage.setItem("accessToken",   response.authResponse.accessToken);
-                  window.localStorage.setItem("expiresIn",     response.authResponse.expiresIn);
-                  window.localStorage.setItem("signedRequest", response.authResponse.signedRequest);
-                  window.localStorage.setItem("userID",        response.authResponse.userID);
-
-                  $ionicLoading.hide();
-                  $state.go('profile');
-                })
-                .catch(function (error) {
-                  console.log(error);
-                  $ionicLoading.hide();
-                });
-            } else {
-              var facebookPermissions = ['email', 'user_friends', 'user_about_me'];
-              $cordovaFacebook.login(facebookPermissions, fbLoginSuccess, fbLoginError);
-            }
-          });
+        authService
+          .facebookSignIn()
+          .then(loginSuccess)
+          .catch(loginError);
       }
     }
-
 })();

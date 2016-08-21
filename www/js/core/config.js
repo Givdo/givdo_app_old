@@ -3,17 +3,11 @@
 
   angular
     .module('givdo.core')
-    .config(['facebookConfig', '$cordovaFacebookProvider', configurePlugins])
     .config(['$httpProvider', configureSerializer])
     .config(['$ionicConfigProvider', configureIonic])
+    .config(['localStorageServiceProvider', configureStorage])
     .run(['$ionicPlatform', configurePlatform]);
 
-
-  function configurePlugins(facebookConfig, $facebookProvider) {
-    if (window.cordova) return;
-
-    $facebookProvider.browserInit(facebookConfig.appID, facebookConfig.version);
-  }
 
   function configureSerializer($httpProvider) {
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
@@ -21,6 +15,10 @@
 
   function configureIonic($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
+  }
+
+  function configureStorage(localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('givdo');
   }
 
   function configurePlatform($ionicPlatform) {

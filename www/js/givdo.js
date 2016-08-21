@@ -24,8 +24,13 @@
     MenuBarCtrl.$inject = ['$scope', 'session'];
 
     function MenuBarCtrl($scope, session) {
-      session.user().then(setUser);
-      $scope.$on('givdo:user-updated', function (_, user) { setUser(user); });
+      session.user().then(function(user) {
+        setUser(user);
+      });
+
+      $scope.$on('givdo:user-updated', function(_, user) {
+        setUser(user);
+      });
 
       function setUser(user) {
         $scope.organization = user.relation('organization');

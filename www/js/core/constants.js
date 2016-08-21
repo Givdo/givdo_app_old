@@ -9,6 +9,11 @@
   core.constant('facebookConfig', {
     version: 'v2.5',
     appID: '558889160934969',
+    scopes: [
+      'email',
+      'user_friends',
+      'user_about_me',
+    ],
   });
 
   // Application events constants
@@ -16,6 +21,8 @@
   core.constant('events', {
     LOGIN_FAILED: 'givdo:login:failed',
     LOGIN_SUCCESS: 'givdo:login:success',
+    SESSION_UP: 'givdo:session:up',
+    SESSION_DOWN: 'givdo:session:down',
   });
 
   // Givdo API v1.0
