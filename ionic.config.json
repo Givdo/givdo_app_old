@@ -1,0 +1,13 @@
+{
+  "name": "Givdo",
+  "app_id": "ff180539",
+  "gulpStartupTasks": [
+    "sass",
+    "wiredep",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}
