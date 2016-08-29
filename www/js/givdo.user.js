@@ -117,24 +117,29 @@
       }
     }
 
-    FriendShowCtrl.$inject = ['$scope', '$http', '$cordovaFacebook', '$stateParams', 'givdo'];
+    FriendShowCtrl.$inject = ['$cordovaKeyboard', '$scope', '$state', '$http', '$cordovaFacebook', '$stateParams', 'givdo', 'sessionService'];
+
+    function FriendShowCtrl($cordovaKeyboard, $scope, $state, $http, $cordovaFacebook, $stateParams, givdo, sessionService) {
       $scope.goBack = function() {
         $state.go('friends', {});
       };
 
-    function FriendShowCtrl($scope, $http, $cordovaFacebook, $stateParams, givdo) {
+      var FACEBOOK_APP_ID = "558889160934969",
+          FACEBOOK_APP_SECRET = "a8cc1e2ee43e949af1ffd62a8f86186c";
+
       givdo.user.get_friend($stateParams.friendId).then(function(friend){
         $scope.user = friend;
+        $scope.causes = friend.relationships.causes.data;
+        $scope.badges = friend.relationships.badges.data;
 
-        $cordovaFacebook
-          .getLoginStatus()
-          .then(function(response) {
-            var token = response.authResponse.accessToken,
-                url_cover = "https://graph.facebook.com/" + friend.attr('uid') + "?fields=cover&access_token=" + token;
+        var url_cover = "https://graph.facebook.com/" + friend.attr('uid') + "?fields=cover&access_token=" + FACEBOOK_APP_ID + "|" + FACEBOOK_APP_SECRET;
 
-            $http.get(url_cover).success(function(response){
-              $scope.user.cover = response.cover.source;
-            });
+        $http.get(url_cover)
+          .success(function(response){
+            $scope.user.cover = response.cover.source;
+          })
+          .catch(function(error){
+            console.log('error', error)
           });
       });
     }
