@@ -4,7 +4,11 @@
       <div class="profile-contents">
         <h2 class="title title--play">Requests to Play</h2>
 
-        <div class="request-to-play" ng-repeat="notification in notifications">
+        <div class="notification-msg" ng-if="notifications">
+          At the moment there are no notifications
+        </div>
+
+        <div class="request-to-play" ng-repeat="notification in notifications" ng-if="notifications">
           <div class="player" style="background-image: url('{{notification.attr('sender_image')}}')"></div>
 
           <span class="text-notification">

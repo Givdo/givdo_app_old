@@ -3,7 +3,11 @@
     <div class="container-activity">
       <h2 class="title title--task">Activity</h2>
 
-      <div class="alert-recent-user" ng-repeat="activity in activities">
+      <div class="notification-msg" ng-hide="activities">
+        At the moment there are no activities
+      </div>
+
+      <div class="alert-recent-user" ng-repeat="activity in activities" ng-hide="!activities">
         <div class="player" style="background-image: url('{{ activity.attr('organization_picture') }}')"></div>
         <span class="text-notification">
           <strong>{{ activity.attr('organization_name') }}</strong><br>
