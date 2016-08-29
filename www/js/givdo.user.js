@@ -118,6 +118,9 @@
     }
 
     FriendShowCtrl.$inject = ['$scope', '$http', '$cordovaFacebook', '$stateParams', 'givdo'];
+      $scope.goBack = function() {
+        $state.go('friends', {});
+      };
 
     function FriendShowCtrl($scope, $http, $cordovaFacebook, $stateParams, givdo) {
       givdo.user.get_friend($stateParams.friendId).then(function(friend){
