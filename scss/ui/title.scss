@@ -53,3 +53,23 @@
     border-bottom: dotted 1px rgba($gray, .4);
   }
 }
+
+.notification-msg{
+  width: 100%;
+  padding: 30px;
+  margin: 20px 0;
+  display: block;
+  font-size: 14px;
+  font-weight: 200;
+  text-align: center;
+  color: $gray;
+}
+
+.title-select-causes{
+  width: 144px;
+  height: 77px;
+  line-height: 77px;
+  display: block;
+  float: left;
+  font-size: 16px;
+}
