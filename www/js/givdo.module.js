@@ -9,6 +9,7 @@
     'givdo.user',
     'givdo.ui',
     'givdo.welcome',
+    'givdo.friends',
     'givdo.notifications',
   ]);
 })();

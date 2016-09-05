@@ -1,0 +1,41 @@
+<ion-view>
+  <ion-content>
+    <div class="cover" style="background-image: url('{{ vm.user.cover }}')">
+      <div class="profile-picture" style="background-image: url('{{ vm.user.attr('image') }}');"></div>
+      <span class="profile-name">{{ vm.user.attr('name') }}</span>
+    </div>
+
+    <div class="container">
+      <ion-list type="card">
+        <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
+          <img ng-if-start="vm.organization" ng-src="{{vm.organization.attr('picture')}}">
+          <h2>{{vm.organization.attr('name')}}</h2>
+          <p ng-if-end>{{vm.organization.attr('mission') | limitTo:100}}</p>
+        </ion-item>
+      </ion-list>
+
+      <div class="profile-contents" ng-hide="causes">
+        <h2 class="title title--causes">Causes</h2>
+
+        <p ng-hide="vm.hasCauses">Nothing here.</p>
+
+        <img ng-src="img/causes/{{cause.attributes.name}}.jpg" ng-repeat="cause in causes">
+      </div>
+
+      <div class="profile-contents">
+        <h2 class="title title--achievements">Achievements</h2>
+
+        <p ng-hide="vm.hasAchievements">Nothing here.</p>
+
+        <div class="badge-givdo" ng-repeat="badge in vm.badges">
+          <img ng-src="img/badges/{{$index + 1}}A.png">
+          {{badges_name[$index]}}
+        </div>
+      </div>
+
+      <div class="button-bar padding">
+        <button class="button button-royal" ng-click="vm.goBack()">Back to friends</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
