@@ -3,15 +3,15 @@
     <div class="container-activity">
       <h2 class="title title--task">Activity</h2>
 
-      <div class="notification-msg" ng-hide="activities">
-        At the moment there are no activities
+      <div class="notification-msg" ng-hide="vm.hasActivities">
+        <p>No activity to show</p>
       </div>
 
-      <div class="alert-recent-user" ng-repeat="activity in activities" ng-hide="!activities">
+      <div class="alert-recent-user" ng-repeat="activity in vm.activities">
         <div class="player" style="background-image: url('{{ activity.attr('organization_picture') }}')"></div>
         <span class="text-notification">
           <strong>{{ activity.attr('organization_name') }}</strong><br>
-          {{ activityNameToLabel(activity.attr('name')) }} - Score: {{ activity.attr('score') }}
+          {{ vm.activityNameToLabel(activity.attr('name')) }} - Score: {{ activity.attr('score') }}
         </span>
         <div class="clearfix"></div>
       </div>
@@ -21,7 +21,7 @@
   <div class="grand-total">
     <h2 class="title title--give-money">
       Total Donations:
-      <span>{{ (totalScore/100).toFixed(2) | currency }}</span>
+      <span>{{ vm.totalScore | currency }}</span>
     </h2>
   </div>
 </ion-view>

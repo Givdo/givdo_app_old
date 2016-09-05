@@ -12,21 +12,6 @@
 
     function config($stateProvider, $urlRouterProvider) {
       $stateProvider
-        .state('activity', {
-          url: '/activity',
-          parent: 'app',
-          views: {
-            'activity-content': {
-              templateUrl: 'templates/user/activity.html',
-              controller: 'ActivityCtrl'
-            }
-          },
-          resolve: {
-            feed: function(givdo) {
-              return givdo.user.activities();
-            },
-          }
-        })
         .state('profile', {
           url: '/profile',
           parent: 'app',
