@@ -7,13 +7,13 @@
 
     function config($stateProvider) {
       $stateProvider
-        .state('notification', {
-          url: '/notification',
+        .state('notifications', {
+          url: '/notifications',
           parent: 'app',
           views: {
-            'notification-content': {
+            'notifications-content': {
               controller: 'NotificationsController',
-              templateUrl: 'templates/user/notification.html',
+              templateUrl: 'templates/notifications/index.html',
             }
           },
           data: {
