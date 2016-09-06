@@ -4,12 +4,11 @@
   angular
     .module('givdo.friends')
     .controller('FriendsController', [
-      'givdo',
       'friends',
       FriendsController
     ]);
 
-    function FriendsController(givdo, friends) {
+    function FriendsController(friends) {
       var vm = this;
 
       vm.maxItems = 9;
