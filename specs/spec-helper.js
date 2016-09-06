@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('givdo.core', [])
+angular
+  .module('givdo.core')
   .constant('GivdoApiURL', 'http://test.com/api/v1');
 
-angular.module('givdo-test.custom-matchers', [])
+angular
+  .module('givdo-test.custom-matchers', [])
   .factory('toResolveTo', ['$rootScope', function ($rootScope) {
     return function (util, customEqualityTesters) {
       return {
@@ -29,7 +31,8 @@ angular.module('givdo-test.custom-matchers', [])
     });
   }]);
 
-angular.module('givdo-mocks', [])
+angular
+  .module('givdo-mocks', [])
   .factory('testSession', ['resource', function (resource) {
     return resource({
       id: 'user-token',
@@ -60,7 +63,13 @@ angular.module('givdo-mocks', [])
     session(testSession);
   }]);
 
-angular.module('givdo-test', ['givdo', 'givdo-mocks', 'ngCordovaMocks', 'givdo-test.custom-matchers']);
+angular
+  .module('givdo-test', [
+    'givdo',
+    'givdo-mocks',
+    'ngCordovaMocks',
+    'givdo-test.custom-matchers'
+  ]);
 
 beforeEach(module('givdo-test'));
 

@@ -2,6 +2,7 @@
 
 describe('OrganizationPicker', function() {
   var modal, modalScope;
+
   beforeEach(inject(function ($q, $ionicModal, givdo) {
     modal = jasmine.createSpyObj('modal', ['show', 'remove']);
     spyOn($ionicModal, 'fromTemplateUrl').and.callFake(function (_, options) {

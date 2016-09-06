@@ -1,43 +1,38 @@
 'use strict';
 
 describe('sessionInterceptor', function () {
-  describe('request interception', function () {
-    it('applies the auth token to the request if going to the givdo api and user has a token', inject(function (GivdoApiURL, session, $rootScope, sessionInterceptor) {
-      var config = {
-        url: GivdoApiURL,
-        headers: {}
-      };
+  var apiUrl, sessionService, sessionInterceptor;
 
-      sessionInterceptor.request(config).then(function (modifiedConfig) {
-        expect(modifiedConfig.headers.Authorization).toEqual('Token token="user-token"');
-      });
-      $rootScope.$digest();
-    }));
+  beforeEach(inject(function(GivdoApiURL, _sessionService_, _sessionInterceptor_) {
+    apiUrl = GivdoApiURL;
+    sessionService = _sessionService_;
+    sessionInterceptor = _sessionInterceptor_;
+  }));
 
-    it('does not intercept the request if not going to the givdo api', inject(function (GivdoApiURL, session, $rootScope, sessionInterceptor) {
-      var config = {
-        url: 'http://www.google.com/',
-        headers: {}
-      };
+  describe('request', function() {
+    it('adds authorization header on requests to Givdo API', function() {
+      var config = { url: apiUrl, headers: {} };
+      var modifiedConfig = sessionInterceptor.request(config);
+
+      expect(modifiedConfig.headers.Authorization).toBeDefined();
+    });
+
+    it('uses user token on requests to Givdo API', function() {
+      var config = { url: apiUrl, headers: {} };
+      sessionService.getToken = jasmine.createSpy();
+      sessionService.getToken.and.returnValue('user-token');
 
       var modifiedConfig = sessionInterceptor.request(config);
 
-      expect(modifiedConfig.headers.Authorization).toEqual(undefined);
-    }));
+      expect(modifiedConfig.headers.Authorization).toEqual('Token token="user-token"');
+    });
 
-    it('does not intercept the request if token is not set', inject(function (GivdoApiURL, session, $rootScope, sessionInterceptor) {
-      var config = {
-        url: GivdoApiURL,
-        headers: {}
-      };
-      var modifiedConfig = jasmine.createSpy();
+    it('does not add authorization header on requests to other urls', function() {
+      var config = { url: 'http://google.com', headers: {} };
+      var modifiedConfig = sessionInterceptor.request(config);
 
-      session.clear();
-      sessionInterceptor.request(config).then(modifiedConfig);
-      $rootScope.$digest();
-
-      expect(modifiedConfig).not.toHaveBeenCalled();
-    }));
+      expect(modifiedConfig.headers.Authorization).toBeUndefined();
+    });
   });
 
   describe('response interception', function () {
@@ -62,10 +57,10 @@ describe('sessionInterceptor', function () {
         }
       };
 
-      spyOn(session, 'clear');
+      spyOn(sessionService, 'destroy');
       sessionInterceptor.responseError(response);
 
-      expect(session.clear).toHaveBeenCalled();
+      expect(sessionService.destroy).toHaveBeenCalled();
     }));
 
     it('does not clear the session when it is not a 401', inject(function (GivdoApiURL, session, sessionInterceptor) {

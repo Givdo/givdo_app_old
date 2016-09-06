@@ -2,12 +2,14 @@
 
 describe('GameRepository', function() {
   var GameRepository;
+
   beforeEach(inject(function (_GameRepository_) {
     GameRepository = _GameRepository_;
   }));
 
   describe('class methods', function () {
     var $http;
+
     beforeEach(inject(function ($httpBackend) {
       $http = $httpBackend;
     }));
@@ -19,7 +21,7 @@ describe('GameRepository', function() {
 
     describe('versus', function () {
       it('gets the game versus the given user', function () {
-        $http.expectGET('http://test.com/api/v1/games/versus/12345').respond({
+        $http.expectGET('http://localhost:3000/api/v1/games/versus/12345').respond({
           data: {id: 10}
         });
 
@@ -32,7 +34,7 @@ describe('GameRepository', function() {
 
     describe('singlePlayer', function () {
       it('posts to create a new game', function () {
-        $http.expectGET('http://test.com/api/v1/games/single').respond({
+        $http.expectGET('http://localhost:3000/api/v1/games/single').respond({
           data: {id: 10}
         });
 
