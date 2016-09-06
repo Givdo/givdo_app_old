@@ -8,18 +8,6 @@ describe('session', function () {
     session.clear();
   }));
 
-  describe('session(newSession)', function () {
-    it('emits a ession up signal when session is set', inject(function (session, $rootScope) {
-      var sessionUp = jasmine.createSpy();
-      $rootScope.$on('givdo:session:up', sessionUp);
-
-      session(sessionData);
-      $rootScope.$digest();
-
-      expect(sessionUp).toHaveBeenCalled();
-    }));
-  });
-
   describe('user', function () {
     it('is the current user when set', inject(function (session, $rootScope) {
       var user = jasmine.createSpy();

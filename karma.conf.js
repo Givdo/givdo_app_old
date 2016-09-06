@@ -16,23 +16,24 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // External Dependencies
-      'www/lib/ionic/release/js/ionic.bundle.js',
-      'www/lib/angular-animate/angular-animate.js',
-      'www/lib/angular-sanitize/angular-sanitize.js',
-      'www/lib/angular-ui-router/release/angular-ui-router.js',
-      'www/lib/ionic/release/js/ionic.js',
-      'www/lib/ionic/release/js/ionic-angular.js',
-      'www/lib/ngCordova/dist/ng-cordova.js',
-      'www/lib/angular-local-storage/dist/angular-local-storage.js',
-      'www/lib/ngCordova/dist/ng-cordova-mocks.js',
-      'www/lib/underscore/underscore.js',
-      'www/lib/angular-json-api-client/dist/angular-json-api-client.js',
-      'www/lib/ionic-filter-bar/dist/ionic.filter.bar.js',
-      'www/vendor/facebookConnectPlugin.js',
-      'www/vendor/checklist-model.js',
+      'www/vendor/ionic/release/js/ionic.bundle.js',
+      'www/vendor/angular-animate/angular-animate.js',
+      'www/vendor/angular-sanitize/angular-sanitize.js',
+      'www/vendor/angular-ui-router/release/angular-ui-router.js',
+      'www/vendor/ionic/release/js/ionic.js',
+      'www/vendor/ionic/release/js/ionic-angular.js',
+      'www/vendor/ngCordova/dist/ng-cordova.js',
+      'www/vendor/angular-local-storage/dist/angular-local-storage.js',
+      'www/vendor/ngCordova/dist/ng-cordova-mocks.js',
+      'www/vendor/underscore/underscore.js',
+      'www/vendor/angular-json-api-client/dist/angular-json-api-client.js',
+      'www/vendor/ionic-filter-bar/dist/ionic.filter.bar.js',
+      'www/vendor/ng-cordova-oauth/dist/ng-cordova-oauth.js',
+      'www/lib/facebookConnectPlugin.js',
+      'www/lib/checklist-model.js',
 
       // Test dependency
-      'www/lib/angular-mocks/angular-mocks.js',
+      'www/vendor/angular-mocks/angular-mocks.js',
 
       // Givdo
       // -----
@@ -42,26 +43,29 @@ module.exports = function(config) {
 
       // core
       'www/js/core/core.module.js',
-      'www/js/core/constants.js',
-      'www/js/core/config.js',
+      'www/js/core/*.js',
 
       // api
-      'www/js/api/api.module.js',
-      'www/js/api/oauth.repository.js',
-      'www/js/api/device.repository.js',
-      'www/js/api/game.repository.js',
-      'www/js/api/user.repository.js',
-      'www/js/api/organization.repository.js',
+      'www/js/api/*.js',
 
       // auth
-      'www/js/auth/auth.module.js',
-      'www/js/auth/session.interceptor.js',
-      'www/js/auth/config.js',
+      'www/js/auth/*.js',
 
       // welcome
       'www/js/welcome/welcome.module.js',
-      'www/js/welcome/welcome.controller.js',
-      'www/js/welcome/config.routes.js',
+      'www/js/welcome/*.js',
+
+      // notifications
+      'www/js/notifications/notifications.module.js',
+      'www/js/notifications/*.js',
+
+      // friends
+      'www/js/friends/friends.module.js',
+      'www/js/friends/*.js',
+
+      // activities
+      'www/js/activities/activities.module.js',
+      'www/js/activities/*.js',
 
       'www/js/givdo.notifications.js',
       'www/js/givdo.util.js',
