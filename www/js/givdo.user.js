@@ -5,50 +5,13 @@
     .module('givdo.user', ['givdo.api', 'givdo.auth', 'givdo.util', 'checklist-model', 'ui.router'])
     .config(config)
     .controller('ActivityCtrl', ActivityCtrl)
-    .controller('FriendShowCtrl', FriendShowCtrl)
     .controller('ProfileCtrl', ProfileCtrl)
-    .controller('FriendsCtrl', FriendsCtrl)
     .controller('ModalCausesCtrl', ModalCausesCtrl);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
     function config($stateProvider, $urlRouterProvider) {
       $stateProvider
-        .state('activity', {
-          url: '/activity',
-          parent: 'app',
-          views: {
-            'activity-content': {
-              templateUrl: 'templates/user/activity.html',
-              controller: 'ActivityCtrl'
-            }
-          }
-        })
-        .state('friend', {
-          url: '/friend/show/:friendId',
-          parent: 'app',
-          views: {
-            'friends-content': {
-              templateUrl: 'templates/user/friend_show.html',
-              controller: 'FriendShowCtrl'
-            }
-          },
-          resolve:{
-            friendId: ['$stateParams', function($stateParams){
-              return $stateParams.friendId;
-            }]
-          }
-        })
-        .state('friends', {
-          url: '/friends',
-          parent: 'app',
-          views: {
-            'friends-content': {
-              templateUrl: 'templates/user/friends.html',
-              controller: 'FriendsCtrl'
-            }
-          }
-        })
         .state('profile', {
           url: '/profile',
           parent: 'app',
@@ -62,55 +25,16 @@
         });
     }
 
-    NotificationCtrl.$inject = ['$scope', 'givdo', 'QuizRound'];
 
-    function NotificationCtrl($scope, givdo, QuizRound) {
-      var page = 0;
-      $scope.notifications = [];
-      $scope.moreDataCanBeLoaded = true;
+    ActivityCtrl.$inject = ['$scope', 'givdo', 'feed'];
 
-      $scope.loadMore = function(){
-        page++
+    function ActivityCtrl($scope, givdo, feed) {
+      var vm = this;
+      var totalScore = feed.attr('total_score') || 0;
 
-        givdo.user.notifications('?page[number]=' + page + '&page[size]=10').then(function(notifications) {
-          $scope.notifications = $scope.notifications.concat(notifications);
-
-          notifications.last().then(function(){})
-          .catch(function(){
-            $scope.moreDataCanBeLoaded = false;
-          });
-
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
-      };
-
-      $scope.accept = function(notification) {
-        givdo.notification.accept(notification).then(function() {
-          console.log('accept');
-          // QuizRound.continue(notification.relation('game'));
-        });
-      }
-
-      $scope.reject = function(notification) {
-        givdo.notification.reject(notification).then(function () {
-          $scope.notifications = $scope.notifications.filter(function (item) {
-            return item.id != notification.id;
-          });
-        });
-      }
-    }
-
-    ActivityCtrl.$inject = ['$scope', 'givdo'];
-
-    function ActivityCtrl($scope, givdo) {
-      var setActivities = function (feed) {
-        $scope.totalScore = feed.attr('total_score');
-        $scope.activities = feed.relation('activities');
-      };
-
-      $scope.$on('$ionicView.enter', function () {
-        givdo.user.activities().then(setActivities);
-      });
+      vm.totalScore = (totalScore/100).toFixed(2);
+      vm.activities = feed.relation('activities');
+      vm.hasActivities = !!vm.activities.length;
 
       $scope.activityNameToLabel = function (name) {
         return (name === 'won_scores') ? 'You Won' : 'You Lose';
@@ -124,8 +48,7 @@
         $state.go('friends', {});
       };
 
-      var FACEBOOK_APP_ID = "558889160934969",
-          FACEBOOK_APP_SECRET = "a8cc1e2ee43e949af1ffd62a8f86186c";
+      var FACEBOOK_APP_ID = "558889160934969";
 
       givdo.user.get_friend($stateParams.friendId).then(function(friend){
         $scope.user = friend;
@@ -176,15 +99,6 @@
         scope: $scope
       }).then(function(modal) {
         $scope.modal = modal;
-      });
-    }
-
-    FriendsCtrl.$inject = ['$scope', 'givdo'];
-
-    function FriendsCtrl($scope, givdo) {
-      givdo.user.friends().then(function (friends) {
-        $scope.friends = friends.relation('users');
-        $scope.quantity = 9;
       });
     }
 

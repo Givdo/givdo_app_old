@@ -1,0 +1,28 @@
+<ion-view>
+  <ion-content>
+    <div class="container">
+      <h2 class="title title--your-friends">Your Friends</h2>
+
+      <div class="notification-msg" ng-hide="vm.friends">
+        <p>Sorry, we couldn't find any friend.</p>
+      </div>
+
+      <div class="friend-list">
+        <div class="friend-list__item" ng-repeat="friend in vm.friends | limitTo:vm.maxItems">
+          <a href="#/app/friend/show/{{ friend.id }}">
+            <figure class="friend-list__photo">
+              <img src="{{ friend.attr('image') }}" />
+            </figure>
+            <div class="friend-list__badge">
+              <img src="img/badges/1A.png" />
+            </div>
+          </a>
+        </div>
+
+        <div ng-if="vm.showMore" class="button-bar padding">
+          <button class="button orange"></button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
