@@ -1,13 +1,15 @@
 <ion-view>
   <ion-content>
-    <div class="cover" style="background-image: url('{{ vm.user.cover }}')">
+    <div class="cover" style="background-image: url('{{ vm.user.attr('cover') }}')">
       <div class="profile-picture" style="background-image: url('{{ vm.user.attr('image') }}');"></div>
       <span class="profile-name">{{ vm.user.attr('name') }}</span>
     </div>
 
     <div class="container">
-      <ion-list type="card">
-        <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
+      <ion-list type="card" ng-show="vm.organization">
+        <ion-item class="item-button-right"
+                  ng-class="organization ? 'item-avatar' : ''"
+                  ng-click="changeOrganization()">
           <img ng-if-start="vm.organization" ng-src="{{vm.organization.attr('picture')}}">
           <h2>{{vm.organization.attr('name')}}</h2>
           <p ng-if-end>{{vm.organization.attr('mission') | limitTo:100}}</p>

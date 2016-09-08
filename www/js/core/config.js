@@ -3,13 +3,16 @@
 
   angular
     .module('givdo.core')
-    .config(['$httpProvider', configureSerializer])
+    .config(['$httpProvider', 'DEBUG', configureHttpService])
     .config(['$ionicConfigProvider', configureIonic])
     .config(['localStorageServiceProvider', configureStorage])
     .run(['$ionicPlatform', configurePlatform]);
 
 
-  function configureSerializer($httpProvider) {
+  function configureHttpService($httpProvider, DEBUG) {
+    if (!DEBUG)
+      $httpProvider.defaults.cache = true;
+
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
   }
 
