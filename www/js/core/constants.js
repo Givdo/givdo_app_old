@@ -3,6 +3,10 @@
 
   var core = angular.module('givdo.core');
 
+  // Debugging configuration
+  // -------------------------
+  var DEBUG = true;
+  core.constant('DEBUG', DEBUG);
 
   // Facebook configuration
   // ----------------------
@@ -30,9 +34,6 @@
   core.constant('GivdoApiURL', getApiUrl());
 
   function getApiUrl() {
-    var hostname = window.location.hostname;
-    var serverUrl = (hostname === 'localhost' ? 'http://localhost:3000' : 'https://givdo-qa.herokuapp.com');
-
-    return serverUrl + '/api/v1';
+    return (DEBUG) ? 'http://localhost:3000/api/v1' : 'https://givdo-qa.herokuapp.com/api/v1';
   }
 })();
