@@ -193,6 +193,8 @@
     SurveyCtrl.$inject = ['$state', '$scope', '$stateParams'];
 
     function SurveyCtrl($state, $scope, $stateParams) {
+      $scope.survey = [];
+
       $scope.like_app = [
         'Playing trivia',
         'Playing against friends',
@@ -204,6 +206,22 @@
         'Being able to see my total giving across orgs'
       ]
 
+      $scope.surveyForm = function(survey) {
+        $scope.survey = {
+          difficulty:        survey.difficulty,
+          play:              survey.play,
+          nonprofit:         survey.nonprofit,
+          questions:         survey.questions,
+          back_to_play:      survey.back_to_play,
+          length_play:       survey.length_play,
+          like_app:          survey.like_app,
+          sponsor:           survey.sponsor,
+          bugs:              survey.bugs,
+          recommend_frinend: survey.recommend_frinend
+        };
+
+        // Send data for api and return for player if sucess!
+        $state.go('play', {}, { reload: true });
       };
     }
 
