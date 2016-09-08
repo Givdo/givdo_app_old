@@ -193,6 +193,17 @@
     SurveyCtrl.$inject = ['$state', '$scope', '$stateParams'];
 
     function SurveyCtrl($state, $scope, $stateParams) {
+      $scope.like_app = [
+        'Playing trivia',
+        'Playing against friends',
+        'Knowing my points are donated to charity',
+        'Swiping and learning about nonprofits',
+        'Winning badges',
+        'Being able to log in easily with FaceBook',
+        'The look of the app',
+        'Being able to see my total giving across orgs'
+      ]
+
       };
     }
 
