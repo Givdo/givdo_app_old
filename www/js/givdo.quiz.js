@@ -193,35 +193,6 @@
     SurveyCtrl.$inject = ['$state', '$scope', '$stateParams'];
 
     function SurveyCtrl($state, $scope, $stateParams) {
-      $scope.survey = {
-        difficulty:        '',
-        play:              '',
-        nonprofit:         '',
-        questions:         '',
-        back_to_play:      '',
-        length_play:       '',
-        like_app:          '',
-        sponsor:           '',
-        bugs:              '',
-        recommend_frinend: ''
-      };
-
-      $scope.survey = function(form) {
-        if(form.$valid) {
-          $scope.survey = {
-            difficulty:        '',
-            play:              '',
-            nonprofit:         '',
-            questions:         '',
-            back_to_play:      '',
-            length_play:       '',
-            like_app:          '',
-            sponsor:           '',
-            bugs:              '',
-            recommend_frinend: ''
-          };
-          $state.go('play', {}, { reload: true });
-        }
       };
     }
 
