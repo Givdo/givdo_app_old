@@ -65,18 +65,14 @@
         </div>
 
         <div class="form-givdo__item">
-          <label class="form-givdo__label" for="like_app">What did you like most about the app?</label>
-          <select class="form-givdo__select" name="like_app" ng-model="survey.like_app">
-            <option value="" disabled selected>Select an option</option>
-            <option value="A">Playing trivia</option>
-            <option value="B">Playing against friends</option>
-            <option value="C">Knowing my points are donated to charity</option>
-            <option value="D">Swiping and learning about nonprofits</option>
-            <option value="E">Winning badges</option>
-            <option value="F">Being able to log in easily with FaceBook</option>
-            <option value="G">The look of the app</option>
-            <option value="H">Being able to see my total giving across orgs</option>
-          </select>
+          <label class="form-givdo__label">What did you like most about the app?</label>
+
+          <div ng-repeat="question in like_app">
+            <label class="item">
+              <input type="checkbox" data-checklist-model="survey.like_app" data-checklist-value="question">
+              {{ question }}
+            </label>
+          </div>
         </div>
 
         <div class="form-givdo__item">
