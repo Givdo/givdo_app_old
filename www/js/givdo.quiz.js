@@ -190,9 +190,9 @@
       };
     }
 
-    SurveyCtrl.$inject = ['$state', '$scope', '$stateParams'];
+    SurveyCtrl.$inject = ['$state', '$scope', '$stateParams', '$http', 'GivdoApiURL'];
 
-    function SurveyCtrl($state, $scope, $stateParams) {
+    function SurveyCtrl($state, $scope, $stateParams, $http, GivdoApiURL) {
       $scope.survey = [];
 
       $scope.like_app = [
@@ -220,8 +220,11 @@
           recommend_frinend: survey.recommend_frinend
         };
 
-        // Send data for api and return for player if sucess!
-        $state.go('play', {}, { reload: true });
+        $http
+          .post(GivdoApiURL + '/api/v1/surveys', { answers: $scope.survey })
+          .then(function () {
+            $state.go('play', {}, { reload: true });
+          });
       };
     }
 
