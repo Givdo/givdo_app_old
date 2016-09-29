@@ -11,6 +11,7 @@
     .config(config)
     .directive('gameScore', gameScore)
     .service('QuizRound', QuizRound)
+    .service('Survey', Survey)
     .controller('SponsorCtrl', SponsorCtrl)
     .controller('SurveyCtrl', SurveyCtrl)
     .controller('ShowGameCtrl', ShowGameCtrl)
@@ -246,21 +247,39 @@
       };
     }
 
-    NewGameCtrl.$inject = ['$state', '$scope', 'facebook', 'givdo', 'QuizRound'];
+    Survey.$inject = ['$cordovaInAppBrowser'];
 
-    function NewGameCtrl($state, $scope, facebook, givdo, QuizRound) {
+    function Survey($browser) {
+      var service = {
+        show: show,
+      };
+
+      return service;
+
+      function show() {
+        var options = {
+          location: 'yes',
+          clearcache: 'yes',
+          toolbar: 'yes'
+        };
+
+        return $browser.open('https://givdo.typeform.com/to/vZf8Nq', '_blank', options);
+      }
+    }
+
+    NewGameCtrl.$inject = ['$state', '$scope', 'facebook', 'givdo', 'QuizRound', 'Survey'];
+
+    function NewGameCtrl($state, $scope, facebook, givdo, QuizRound, Survey) {
       $scope.playSingle = function () {
         givdo.game.singlePlayer()
         .then(QuizRound.continue)
-        .catch(function(response) {
-          $state.go('survey', {}, {reload: true});
-        });
+        .catch(Survey.show);
       };
     }
 
-    ChallengeFriendCtrl.$inject = ['$scope', 'facebook', 'givdo', 'QuizRound'];
+    ChallengeFriendCtrl.$inject = ['$scope', 'facebook', 'givdo', 'QuizRound', 'Survey'];
 
-    function ChallengeFriendCtrl($scope, facebook, givdo, QuizRound) {
+    function ChallengeFriendCtrl($scope, facebook, givdo, QuizRound, Survey) {
       givdo.user.friends().then(function (friends) {
         $scope.friends = friends.relation('users');
       });
@@ -268,7 +287,9 @@
       $scope.invite = facebook.invite;
 
       $scope.challenge = function (friend) {
-        givdo.game.versus(friend).then(QuizRound.continue);
+        givdo.game.versus(friend)
+          .then(QuizRound.continue)
+          .catch(Survey.show);
       };
     }
 

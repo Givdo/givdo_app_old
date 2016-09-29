@@ -12,6 +12,7 @@
   // ----------------------
   core.constant('facebookConfig', {
     version: 'v2.5',
+    //appID: '536213639869188',
     appID: '558889160934969',
     scopes: [
       'email',
@@ -34,6 +35,6 @@
   core.constant('GivdoApiURL', getApiUrl());
 
   function getApiUrl() {
-    return (DEBUG) ? 'http://localhost:3000/api/v1' : 'https://givdo-qa.herokuapp.com/api/v1';
+    return (DEBUG) ? 'http://localhost:3000/api/v1' : 'https://api.givdo.com/api/v1';
   }
 })();
