@@ -24,7 +24,7 @@
       });
 
       repository.update = function (user, data) {
-        return user.load('self', { data: data, method: 'PATCH' });
+        return transport.load(baseUrl + '/user', { data: data, method: 'PATCH' });
       }
 
       repository.notifications = function (page) {
