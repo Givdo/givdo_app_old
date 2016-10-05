@@ -10,9 +10,6 @@
 
 
   function configureHttpService($httpProvider, DEBUG) {
-    if (!DEBUG)
-      $httpProvider.defaults.cache = true;
-
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
   }
 
