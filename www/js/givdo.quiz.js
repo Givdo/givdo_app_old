@@ -127,37 +127,37 @@
     function QuizRound($state, $q, givdo, OrganizationPicker) {
       var currentGame, currentTrivia, currentPlayer;
 
-      var setCurrentGame = function (game) {
+      var setCurrentGame = function(game) {
         currentGame = game;
         currentTrivia = game.relation('trivia');
         currentPlayer = game.relation('player');
       };
 
-      var revealAnser = function (answer) {
+      var revealAnser = function(answer) {
         (currentTrivia.relation('options') || []).forEach(function (option) {
           option.attributes.correct = option.id == answer.attr('correct_option_id');
         });
       };
 
-      var asPromised = function (value) {
+      var asPromised = function(value) {
         if (value) {
           return $q.resolve(value);
         }
         return $q.reject();
       };
 
-      var savePlayerOrganization = function (organization) {
+      var savePlayerOrganization = function(organization) {
         return givdo.game.playFor(currentGame, organization);
       };
 
       var self = {
-        trivia: function () {
+        trivia: function() {
           return asPromised(currentTrivia);
         },
-        game: function () {
+        game: function() {
           return asPromised(currentGame);
         },
-        continue: function (newGame) {
+        continue: function(newGame) {
           if (newGame) {
             setCurrentGame(newGame);
           }
@@ -169,7 +169,7 @@
             OrganizationPicker.open().then(savePlayerOrganization).then(self.continue);
           }
         },
-        answer: function (option) {
+        answer: function(option) {
           return givdo.game.answer(currentGame, currentTrivia, option).then(function (answer) {
             revealAnser(answer);
             setCurrentGame(answer.relation('game'));

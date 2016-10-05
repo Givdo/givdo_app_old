@@ -3,10 +3,15 @@
 
   angular
     .module('givdo.api')
-    .factory('GameRepository', ['GivdoApiURL', 'repository', GameRepository]);
+    .factory('GameRepository', [
+      'GivdoApiURL',
+      'repository',
+      'transport',
+      GameRepository
+    ]);
 
 
-    function GameRepository(baseUrl, Repository) {
+    function GameRepository(baseUrl, Repository, transport) {
       var repository = Repository({
         query: { url: baseUrl + '/games' },
         singlePlayer: { url: baseUrl + '/games/single' },
@@ -22,7 +27,7 @@
           trivia_option_id: option.id,
         };
 
-        return game.load('answers', { data: data, method: 'POST' });
+        return transport.load(baseUrl + '/games/'+ game.id + '/answers', { data: data, method: 'POST' });
       };
 
       repository.playFor = function (game, organization) {
