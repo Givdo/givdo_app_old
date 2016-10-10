@@ -70,7 +70,7 @@
     ProfileCtrl.$inject = ['$rootScope', '$scope', '$ionicModal', 'session', 'givdo', 'OrganizationPicker'];
 
     function ProfileCtrl($rootScope, $scope, $ionicModal, session, givdo, OrganizationPicker) {
-      $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Philanthropist', 'Grantor'];
+      $scope.badges_name = ['Giver', 'Samaritan', 'Altruist', 'Benefactor', 'Patron', 'Grantor', 'Philanthropist'];
 
       $scope.range = function(min, max, step){
         step = step || 1;
