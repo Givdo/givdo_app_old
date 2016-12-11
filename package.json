@@ -6,7 +6,8 @@
     "cordova-common": "^1.0.0",
     "cordova-config-utils": "^2.1.0",
     "cordova-lib": "^5.4.1",
-    "elementtree": "^0.1.6"
+    "elementtree": "^0.1.6",
+    "lodash": "^4.17.2"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",

@@ -20,49 +20,8 @@
   <platform name="ios">
     <config-file parent="NSAppTransportSecurity" target="*-Info.plist">
       <dict>
-        <key>NSExceptionDomains</key>
-        <dict>
-          <key>facebook.com</key>
-          <key>fbcdn.net</key>
-          <key>akamaihd.net</key>
-          <key>givdo.ngrok.com</key>
-          <key>Givdo API v1</key>
-          <key>api.givdo.com</key>
-          <dict>
-            <key>NSIncludesSubdomains</key>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <true/>
-            <false/>
-          </dict>
-          <dict>
-            <key>NSIncludesSubdomains</key>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <true/>
-            <false/>
-          </dict>
-          <dict>
-            <key>NSIncludesSubdomains</key>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <true/>
-            <false/>
-          </dict>
-          <dict>
-            <key>NSIncludesSubdomains</key>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-            <true/>
-            <false/>
-          </dict>
-          <dict>
-            <key>NSIncludesSubdomains</key>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-            <true/>
-            <false/>
-          </dict>
-        </dict>
+          <key>NSAllowsArbitraryLoads</key>
+          <true/>
       </dict>
     </config-file>
     <config-file parent="LSApplicationQueriesSchemes" target="*-Info.plist">
