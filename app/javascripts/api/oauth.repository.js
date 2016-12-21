@@ -1,22 +1,19 @@
-(function () {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.api')
-    .factory('OAuthRepository', ['GivdoApiURL', 'repository', OAuthRepository]);
+OAuthRepository.$inject = ['config', 'repository'];
 
-
-    function OAuthRepository(baseUrl, Repository) {
-      return Repository({
-        callback: {
-          auth: false,
-          method: 'POST',
-          url: baseUrl + '/oauth/{{provider}}/callback',
-        },
-        profile: {
-          method: 'GET',
-          url: baseUrl + '/user'
-        }
-      });
+function OAuthRepository(config, Repository) {
+  return Repository({
+    callback: {
+      auth: false,
+      method: 'POST',
+      url: config.api + '/oauth/{{provider}}/callback',
+    },
+    profile: {
+      method: 'GET',
+      url: config.api + '/user'
     }
-})();
+  });
+}
+
+export default OAuthRepository;

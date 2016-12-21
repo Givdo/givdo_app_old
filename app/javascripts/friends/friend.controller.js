@@ -1,28 +1,22 @@
-(function() {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.friends')
-    .controller('FriendController', [
-      '$state',
-      'friend',
-      FriendController
-    ]);
+FriendController.$inject = ['$state', 'friend'];
 
-    function FriendController($state, friend) {
-      var vm = this;
+function FriendController($state, friend) {
+  var vm = this;
 
-      vm.user = friend;
-      vm.goBack = goBack;
-      vm.causes = friend.relation('causes');
-      vm.badges = friend.relation('badges');
-      vm.organization = friend.relation('organization');
-      vm.hasCauses = !!vm.causes.length;
-      vm.hasAchievements = !!vm.badges.length;
+  vm.user = friend;
+  vm.goBack = goBack;
+  vm.causes = friend.relation('causes');
+  vm.badges = friend.relation('badges');
+  vm.organization = friend.relation('organization');
+  vm.hasCauses = !!vm.causes.length;
+  vm.hasAchievements = !!vm.badges.length;
 
 
-      function goBack() {
-        $state.go('friends');
-      }
-    }
-})();
+  function goBack() {
+    $state.go('friends');
+  }
+}
+
+export default FriendController;

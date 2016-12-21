@@ -1,14 +1,11 @@
-(function () {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.api')
-    .factory('DeviceRepository', ['GivdoApiURL', 'repository', DeviceRepository]);
+DeviceRepository.$inject = ['config', 'repository'];
 
+function DeviceRepository(config, Repository) {
+  return Repository({
+    register: { url: '/devices' },
+  });
+}
 
-    function DeviceRepository(baseUrl, Repository) {
-      return Repository({
-        register: { url: '/devices' },
-      });
-    }
-})();
+export default DeviceRepository;

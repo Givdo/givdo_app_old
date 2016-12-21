@@ -1,19 +1,17 @@
-(function () {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.api')
-    .factory('CauseRepository', ['GivdoApiURL', 'repository', CauseRepository]);
+CauseRepository.$inject = ['config', 'repository'];
 
-    function CauseRepository(baseUrl, Repository) {
-      var repository = Repository({
-        all: {
-          method: 'GET',
-          params: false,
-          url: baseUrl + '/causes',
-        },
-      });
+function CauseRepository(config, Repository) {
+  var repository = Repository({
+    all: {
+      method: 'GET',
+      params: false,
+      url: config.api + '/causes',
+    },
+  });
 
-      return repository;
-    }
-})();
+  return repository;
+}
+
+export default CauseRepository;

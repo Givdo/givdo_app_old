@@ -1,31 +1,28 @@
-(function () {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.api')
-    .service('NotificationRepository', [
-      '$http',
-      'GivdoApiURL',
-      'repository',
-      'transport',
-      NotificationRepository
-    ]);
+NotificationRepository.$inject = [
+  '$http',
+  'config',
+  'repository',
+  'transport',
+];
 
-    function NotificationRepository($http, baseUrl, Repository, transport) {
-      var repository = Repository({});
+function NotificationRepository($http, config, Repository, transport) {
+  var repository = Repository({});
 
-      repository.accept = function (notification) {
-        var url = baseUrl + '/notifications/' + notification.id + '/accept';
+  repository.accept = function (notification) {
+    var url = config.api + '/notifications/' + notification.id + '/accept';
 
-        return transport.load(url, { method: 'PUT' });
-      };
+    return transport.load(url, { method: 'PUT' });
+  };
 
-      repository.reject = function (notification) {
-        var url = baseUrl + '/notifications/' + notification.id + '/reject';
+  repository.reject = function (notification) {
+    var url = config.api + '/notifications/' + notification.id + '/reject';
 
-        return $http.put(url);
-      };
+    return $http.put(url);
+  };
 
-      return repository;
-    }
-})();
+  return repository;
+}
+
+export default NotificationRepository;

@@ -1,18 +1,13 @@
-(function() {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.friends')
-    .controller('FriendsController', [
-      'friends',
-      FriendsController
-    ]);
+FriendsController.$inject = ['friends'];
 
-    function FriendsController(friends) {
-      var vm = this;
+function FriendsController(friends) {
+  var vm = this;
 
-      vm.maxItems = 9;
-      vm.friends = friends.relation('users');
-      vm.showMore = (vm.friends.length > vm.maxItems);
-    }
-})();
+  vm.maxItems = 9;
+  vm.friends = friends.relation('users');
+  vm.showMore = (vm.friends.length > vm.maxItems);
+}
+
+export default FriendsController;

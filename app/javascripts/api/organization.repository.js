@@ -1,14 +1,11 @@
-(function () {
-  'use strict';
+import 'angular';
 
-  angular
-    .module('givdo.api')
-    .factory('OrganizationRepository', ['GivdoApiURL', 'repository', OrganizationRepository]);
+OrganizationRepository.$inject = ['config', 'repository'];
 
+function OrganizationRepository(config, Repository) {
+  return Repository({
+    query: { url: config.api + '/organizations' },
+  });
+}
 
-    function OrganizationRepository(baseUrl, Repository) {
-      return Repository({
-        query: { url: baseUrl + '/organizations' },
-      });
-    }
-})();
+export default OrganizationRepository;
