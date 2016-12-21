@@ -1,58 +1,99 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
-var bower = require('bower');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
-var wiredep = require('wiredep').stream;
+var path = require('path');
+var $ = require('gulp-load-plugins')();
 
-var paths = {
-  sass: ['./scss/**/*.scss']
+var express = require('express');
+var runSequence = require('run-sequence');
+var connectLivereload = require('connect-livereload');
+
+var build = gulp.build = false;
+
+var settings = gulp.givdoSettings = {
+  build: false,
+
+  environment: process.env.NODE_ENV || 'development',
+
+  // Folders and paths
+  paths: {
+    root: path.resolve(),
+    src: path.resolve('app'),
+    build: path.resolve('www'),
+    config: path.resolve('config'),
+
+    indexFile: path.resolve('app', 'index.html'),
+    images: path.resolve('app', 'images', '**/*'),
+    templates: path.resolve('app', 'templates', '**/*.html'),
+    stylesheets: path.resolve('app', 'stylesheets', '**/*.scss'),
+    javascripts: path.resolve('app', 'javascripts', '**/*.js'),
+  },
+
+};
+
+var errorHandler = gulp.errorHandler = function(error) {
+  if (build) {
+    throw error;
+  } else {
+    $.util.log(error);
+  }
 };
 
 
-gulp.task('default', ['sass']);
+require('./gulp/building.js');
+require('./gulp/ionic.js');
+require('./gulp/injecting.js');
+require('./gulp/linting.js');
+require('./gulp/testing.js');
 
-gulp.task('sass', function() {
-  gulp.src('./scss/givdo.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'));
+
+gulp.task('default', function(done) {
+  runSequence(
+    'clean',
+    [
+      'fonts',
+      'stylesheets',
+      'images',
+      'vendor',
+    ],
+    'inject',
+    build ? 'noop' : 'serve',
+    build ? 'noop' : 'watchers',
+    done);
 });
 
-gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+gulp.task('noop', function() {});
+
+gulp.task('test', function() {
+  console.log('images: ' + settings.paths.images);
+  console.log('styles: ' + settings.paths.stylesheets);
+  console.log('scripts: ' + settings.paths.javascripts);
 });
 
-gulp.task('wiredep', function () {
-  gulp.src('./www/index.html')
-  .pipe(wiredep({
-    exclude: "www/lib/angular/angular.js"
-  }))
-  .pipe(gulp.dest('./www'));
+gulp.task('clean', function() {
+  return gulp
+    .src(settings.paths.build, { read: false })
+    .pipe($.clean());
 });
 
-gulp.task('install', ['git-check'], function() {
-  return bower.commands.install()
-  .on('log', function(data) {
-    gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-  });
+
+gulp.task('watchers', function() {
+  $.livereload.listen();
+
+  gulp.watch(settings.paths.stylesheets, ['stylesheets']);
+  gulp.watch(settings.paths.javascripts, ['inject']);
+  gulp.watch(settings.paths.images, ['images']);
+  gulp.watch(settings.paths.templates, ['templates']);
+  gulp.watch(settings.paths.indexFile, ['inject']);
+
+  gulp
+    .watch(settings.paths.build + '/**/*')
+    .on('change', $.livereload.changed)
+    .on('error', errorHandler);
 });
 
-gulp.task('git-check', function(done) {
-  if (!sh.which('git')) {
-    console.log(
-      '  ' + gutil.colors.red('Git is not installed.'),
-      '\n  Git, the version control system, is required to download Ionic.',
-      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-      );
-    process.exit(1);
-  }
-  done();
+gulp.task('serve', function() {
+  var server = express()
+    .use(connectLivereload())
+    .use(express.static(settings.paths.build))
+    .use(express.static(path.join(settings.paths.src, 'bower_components')))
+    .listen(8000);
 });
