@@ -13,7 +13,7 @@
         <ion-item class="item-button-right"  ng-class="organization ? 'item-avatar' : ''" ng-click="changeOrganization()">
           <img ng-if-start="organization" ng-src="{{organization.attr('picture')}}">
           <h2>{{organization.attr('name')}}</h2>
-          <p ng-if-end>{{organization.attr('mission') | limitTo:100}}</p>
+          <p ng-if-end>{{organization.attr('mission') | limitTo:1000}}</p>
           <span ng-hide="organization">Select an organization to give</span>
           <button class="button button-royal">
             <i class="icon ion-edit"></i>
