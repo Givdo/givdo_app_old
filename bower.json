@@ -1,5 +1,5 @@
 {
-  "name": "Givdo",
+  "name": "givdo",
   "private": "true",
   "devDependencies": {
     "angular-mocks": "~1.4.8"
