@@ -1,0 +1,347 @@
+.purple {
+  background-color: #564256 !important;
+  color: #fff !important;
+}
+
+.gray {
+  background-color: #96939b !important;
+  color: #fff !important;
+}
+.gold {
+  background-color: #ffcc00 !important;
+  color: 564256 !important;
+}
+
+.orange {
+  background-color: #ff9933 !important;
+  color: #fff !important;
+}
+
+
+.bar.bar-energized {
+  background-color: #96939b !important;
+}
+
+.profile-picture,
+.cover,
+.player {
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  position: relative;
+}
+
+.cover{
+  width: 100%;
+}
+
+.profile-picture, .profile-name {
+  position: absolute;
+}
+
+.profile-picture, .player {
+  border-radius: 100%;
+  border: solid 2px #ddd;
+  width: 60px;
+  height: 60px;
+  bottom: 15px;
+  left: 15px;
+}
+
+.player {
+  width: 60px;
+  height: 60px;
+  bottom: 0px;
+  left: 0px;
+  float: right;
+}
+.player:first-child {
+  float: left;
+}
+
+.versus, .title-box {
+  margin: 20px 10px;
+}
+
+.profile-name{
+  display: block;
+  color: #fff;
+  font-size: 25px;
+  bottom: 35px;
+  left: 90px;
+}
+.profile-contents{
+  @include clearfix;
+  padding: 10px;
+  color: #96939b;
+  font-size: 20px;
+
+}
+.profile-contents > img {
+  width: calc((100% / 4) - 6px);
+  display: block;
+  float: left;
+  margin: 0px 3px 10px;
+}
+.profile-contents > span {
+  display: block;
+  border-bottom: solid 1px #564256;
+  padding: 4px 0px 10px 0px;
+}
+
+.new-game, .welcome, .no-guest {
+  background-color: #fff !important;
+}
+.calm-item {
+  background-color: none !important;
+}
+
+.title-box {
+  color: #564256;
+  text-align: center;
+  font-size: 21px;
+  line-height: 31px;
+  font-weight: 300;
+}
+
+/* sizes */
+.half-width { width: 50%}
+
+
+
+.card, .list-inset, .item {
+  background: none !important;
+}
+
+
+/* Looser and Winner */
+
+.margin-bottom-30{
+  margin-bottom: 30px !important;
+}
+
+
+.winner {
+  border: solid 3px #ffcc00;
+  width: 80px;
+  height: 80px;
+}
+
+
+.givdo-option {
+  color: #ff9933 !important;
+  margin: 10px !important;
+  border: solid 1px #ff9933 !important;
+  margin: 11px !important;
+  font-weight: 400;
+}
+.givdo-option .item-content {
+  background: 0 0 !important;
+}
+
+.badge-givdo {
+  width: calc((100% / 4) - 6px);
+  display: block;
+  float: left;
+  margin: 0px 3px 10px;
+  font-size: 12px;
+  text-align: center;
+}
+.badge-givdo img {
+  width: 100%;
+}
+
+.welcome-box, .wheater-box {
+  background: url('/img/welcome-screen-background.png');
+  height: 204px;
+  text-align: center;
+}
+
+.welcome-box > .profile-picture {
+  bottom: -118px !important;
+  position: relative;
+  margin: auto;
+  left: 0px;
+}
+
+.wheater-box {
+  background: none;
+  background-color: #fff;
+  height: 220px;
+}
+
+.message-box {
+  background: #fff;
+  padding: 16px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 300;
+  color: #564256;
+  line-height: 27px;
+}
+
+
+/* generic */
+.clearfix {
+  clear: both;
+}
+
+
+/* Notifications Screen */
+.request-to-play, .alert-recent-user, .alert-following {
+  border: solid 1px #ccc;
+  padding: 12px;
+  font-size: 15px;
+  border-bottom: solid 3px #ff9933;
+  line-height: 26px;
+  margin-bottom: 11px;
+}
+
+.alert-recent-user {
+  border-bottom: solid 3px #ffcc00;
+}
+
+.alert-following {
+  border-bottom: solid 3px #564256;
+}
+
+.request-to-play > .player, .alert-recent-user > .player, .alert-following > .player {
+  margin-right: 10px;
+}
+
+.text-notification > button {
+  border: none;
+  padding: 3px 20px;
+  border-radius: 5px;
+  font-weight: 200;
+}
+
+/* activity screen */
+
+/* Wheater CSS*/
+
+/* main element */
+.weather {
+  position: relative; overflow: hidden;
+}
+/* pseudo elements: positioning and setup */
+.weather:before, .weather:after {
+  content: "";
+  position: absolute; left: -50%; top: -50%; right: -50%; bottom: -50%;
+  z-index: 1;
+  pointer-events: none;
+
+  background: transparent repeat;
+  opacity: 0.7;
+
+  -webkit-transform: rotate(10deg);
+  -moz-transform: rotate(10deg);
+  -ms-transform: rotate(10deg);
+  -o-transform: rotate(10deg);
+  transform: rotate(10deg);
+
+  -webkit-animation-name: weather;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: weather;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.weather:after {
+  opacity: 0.8;
+  -webkit-animation-name: weather2;
+  animation-name: weather2;
+}
+/* rain (fast, rain.png) */
+.weather.rain:before, .weather.rain:after {
+  background-image: url(/img/rain.png);
+  -webkit-animation-duration: 6s;
+  animation-duration: 6s;
+}
+.weather.rain:after {
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+}
+/* snow (slow, snow.png) */
+.weather.snow:before, .weather.snow:after {
+  background-image: url(/img/stars.png);
+  -webkit-animation-duration: 6s;
+  animation-duration: 6s;
+}
+.weather.snow:after {
+  -webkit-animation-duration: 4.5s;
+  animation-duration: 4.5s;
+}
+/* animation keyframes */
+@-webkit-keyframes weather {
+  from { background-position: 0 0px; }
+  to { background-position: 0 1024px; }
+}
+@keyframes weather {
+  from { background-position: 0 0px; }
+  to { background-position: 0 1024px; }
+}
+@-webkit-keyframes weather2 {
+  from { background-position: 64px 64px; }
+  to { background-position: 64px 1088px; }
+}
+@keyframes weather2 {
+  from { background-position: 64px 64px; }
+  to { background-position: 64px 1088px; }
+}
+
+
+
+
+
+/* FOOTER */
+.footer-button {
+  width: 19%;
+  padding: 4px;
+  text-align: center
+}
+
+.bar-footer {
+  height: 49px !important;
+}
+
+.footer-button img {
+  max-width: 50%;
+}
+.tab-item .icon {
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.notification-icon {
+  background-image: url('../img/notification.png');
+}
+.friends-icon {
+  background-image: url('../img/friends.png');
+}
+.giving-love-icon {
+  background-image: url('../img/giving-love.png');
+}
+.task-icon {
+  background-image: url('../img/task.png');
+}
+.organization-logo-icon {
+  background-image: url('../img/dog-rescue.jpg');
+  background-size: 70px 70px !important;
+  width: 70px;
+  height: 70px !important;
+  overflow-y: visible;
+  border: solid 3px #96939b;
+}
+
+.tab-item{
+  border-top: none !important;
+  margin-top: 0 !important;
+}
+
+.givdo-option{
+  &:hover{
+    background-color: orange !important;
+    color: #fff !important;
+  }
+}

@@ -1,0 +1,30 @@
+.scroll{
+  padding-bottom: 20px;
+}
+
+.container {
+  padding: 5px 5px 40px 5px;
+  display: block;
+  position: relative;
+
+  & .column{
+    margin-right: 20px;
+    margin: 10px;
+
+    &--triple{
+      width: calc((100% / 3) - 20px);
+    }
+  }
+
+  &-activity {
+    @extend .container;
+    padding-bottom: 90px;
+  }
+}
+
+a,
+button{
+  &:hover{
+    opacity: .7 !important;
+  }
+}
