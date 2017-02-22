@@ -12,8 +12,8 @@
   // ----------------------
   core.constant('facebookConfig', {
     version: 'v2.5',
-    //appID: '536213639869188',
-    appID: '558889160934969',
+    appID: '536213639869188',
+    // appID: '558889160934969',
     scopes: [
       'email',
       'user_friends',
