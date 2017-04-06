@@ -5,7 +5,7 @@
 
   // Debugging configuration
   // -------------------------
-  var DEBUG = true;
+  var DEBUG = false;
   core.constant('DEBUG', DEBUG);
 
   // Facebook configuration
@@ -35,6 +35,6 @@
   core.constant('GivdoApiURL', getApiUrl());
 
   function getApiUrl() {
-    return (DEBUG) ? 'http://localhost:3000/api/v1' : 'https://api.givdo.com/api/v1';
+    return (DEBUG) ? 'http://localhost:3000/api/v1' : 'https://givdo-prod.herokuapp.com/api/v1';
   }
 })();
