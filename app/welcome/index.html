@@ -1,0 +1,17 @@
+<ion-view>
+  <ion-content padding="true" style="padding: 12px">
+    <div class="title-box">
+      <img src="img/givdo-icon-orange.png" class="half-width"><br>
+      <img src="img/gdlogoold.png" class="full-width">
+    </div>
+
+    <center>
+      <ion-spinner icon="spiral" ng-show="vm.isLoading"></ion-spinner>
+    </center>
+
+    <button class="button button-stable button-block icon-left ion-social-facebook"
+            style="color: #ff9900"
+            ng-hide="vm.isLoading"
+            ng-click="vm.facebookSignIn()">CONNECT WITH FACEBOOK</button>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="<%= htmlWebpackPlugin.options.securityPolicy %>">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title><%= htmlWebpackPlugin.options.title || 'Givdo' %></title>
+  </head>
+
+  <body ng-app="givdo" ng-strict-di="">
+    <ion-nav-view></ion-nav-view>
+  </body>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+</html>

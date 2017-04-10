@@ -1,0 +1,75 @@
+.title{
+  width: 100%;
+  height: 35px;
+  line-height: 35px;
+  padding-left: 30px;
+  margin-bottom: 20px;
+  border-bottom: dotted 1px rgba($gray, .2);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  display: block;
+  font-size: 18px;
+  font-weight: 200;
+  color: $gray;
+
+  &--your-friends{
+    background-image: url(../img/icons/friends.png);
+  }
+
+  &--potential-friends{
+    background-image: url(../img/icons/friends-potential.png);
+  }
+
+  &--play{
+    background-image: url(../img/icons/play.png);
+  }
+
+  &--notification{
+    background-image: url(../img/icons/notification.png);
+  }
+
+  &--causes{
+    background-image: url(../img/causes-icon.png);
+  }
+
+  &--achievements{
+    background-image: url(../img/achievements-icon.png);
+  }
+
+  &--task{
+    background-image: url(../img/task-small.png);
+  }
+
+  &--give-money{
+    background-image: url(../img/give-money.png);
+  }
+
+  &--box{
+    padding-top: 5px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    color: darken($gray, 10%);
+    border-bottom: dotted 1px rgba($gray, .4);
+  }
+}
+
+.notification-msg{
+  width: 100%;
+  padding: 30px;
+  margin: 20px 0;
+  display: block;
+  font-size: 14px;
+  font-weight: 200;
+  text-align: center;
+  color: $gray;
+}
+
+.title-select-causes{
+  width: 144px;
+  height: 77px;
+  line-height: 77px;
+  display: block;
+  float: left;
+  font-size: 16px;
+}

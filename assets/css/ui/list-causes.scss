@@ -1,0 +1,41 @@
+.list-causes{
+  @include clearfix();
+
+  &__item{
+    width: calc(50% - 5px);
+    margin-bottom: 10px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+
+    &:nth-child(odd){ float: left; }
+    &:nth-child(even){ float: right; }
+
+    img{
+      width: 100%;
+      display: block;
+    }
+
+    .item{
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0 !important;
+      position: absolute;
+
+      .checkbox{
+        left: 0;
+        right: 0;
+        top: initial;
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.bar.bar-positive .title{
+  left: 0 !important;
+  right: 0 !important;
+  text-align: left !important;
+  font-size: 16px;
+}
