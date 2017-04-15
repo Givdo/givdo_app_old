@@ -5,8 +5,6 @@ class WelcomeController {
     this.$state = $state;
     this.$popup = $ionicPopup;
     this.isLoading = false;
-
-    this.api = config.api;
   }
 
   success() {
