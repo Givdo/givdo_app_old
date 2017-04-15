@@ -4,7 +4,7 @@
   "description": "givdo: An Ionic project",
   "scripts": {
     "test": "karma start karma.conf.js",
-    "start": "webpack-dev-server --hot --inline --colors"
+    "start": "webpack-dev-server --hot --inline"
   },
   "cordovaPlatforms": [
     "android",

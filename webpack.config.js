@@ -1,27 +1,45 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-let ENV = process.env.ENV || 'dev';
+let env = process.env.ENV || 'dev';
 
 module.exports = {
+  context: path.resolve(__dirname, 'app'),
+
+  devtool: (env.prod ? 'source-map': 'eval'),
+
   entry: {
-    app: path.resolve(__dirname, 'app/app.js'),
+    app: './app.js',
   },
 
-  devtool: 'source-map',
+  resolve: {
+    extensions: ['.js'],
+
+    modules: [
+      'node_modules',
+      path.resolve(__dirname, 'app'),
+      path.resolve(__dirname, 'assets/css'),
+    ],
+
+    alias: {
+      config: path.join(__dirname, 'config', 'development'),
+      'ionic$': 'ionic-angular/release/js/ionic.js',
+      'ionic-angular$': 'ionic-angular/release/js/ionic-angular.js',
+    },
+  },
 
   output: {
-    filename: 'js/[name].bundle.js',
+    filename: `bundle.[name].${env.prod? '[chunkhash]':'[hash]'}.js`,
     path: path.resolve(__dirname, 'www'),
-    chunkFilename: 'js/[chunkhash].js'
   },
 
   devServer: {
-    compress: true,
+    hot: true,
     contentBase: [
       path.join(__dirname, 'www'),
-      path.join(__dirname, 'assets')
+      path.join(__dirname, 'assets'),
     ],
   },
 
@@ -31,10 +49,10 @@ module.exports = {
         test: /\.js?$/,
         exclude: [
           /node_modules/,
-          path.resolve(__dirname, 'assets'),
         ],
         loader: 'babel-loader',
         options: {
+          babelrc: false,
           presets: ['es2017'],
         },
       },
@@ -43,7 +61,6 @@ module.exports = {
         test: /\.scss?$/,
         use: ExtractTextPlugin.extract({
           allChunks: true,
-          filename: 'css?sourceMap!sass?sourceMap',
           use: ['css-loader', 'sass-loader'],
         }),
       },
@@ -57,6 +74,11 @@ module.exports = {
       {
         test: /\.html$/,
         loader: 'raw-loader',
+      },
+
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=fonts/[name].[ext]',
       },
     ],
   },
@@ -75,19 +97,9 @@ module.exports = {
     })
   ],
 
-  resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'app'),
-      path.resolve(__dirname, 'assets/css'),
-    ],
-
-    extensions: ['.js'],
-
-    alias: {
-      config: path.join(__dirname, 'config', 'development.js'),
-      'ionic$': 'ionic-angular/release/js/ionic.js',
-      'ionic-angular$': 'ionic-angular/release/js/ionic-angular.js',
-    },
+  stats: {
+    colors: true,
+    reasons: true,
+    chunks: true
   },
 };
