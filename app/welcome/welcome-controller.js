@@ -1,14 +1,12 @@
-import config from 'config';
-
-class WelcomeController {
+export default class WelcomeController {
   constructor($state, $ionicPopup) {
-    this.$state = $state;
-    this.$popup = $ionicPopup;
+    this.state = $state;
+    this.popup = $ionicPopup;
     this.isLoading = false;
   }
 
   success() {
-    this.$state.go('profile');
+    this.state.go('profile');
   }
 
   error(response) {
@@ -18,23 +16,14 @@ class WelcomeController {
     };
 
     if (response.data)
-      options.template = error.data.error;
+      options.template = response.data.error;
 
     this.popup
       .alert(options)
       .then(() => this.isLoading = true);
   }
 
-  facebookSignIn() {
+  signIn() {
     this.isLoading = true;
-
-    auth
-      .facebookSignIn()
-      .then(this.success)
-      .catch(this.error)
   }
-}
-
-WelcomeController.$inject = ['$state', '$ionicPopup'];
-
-export default WelcomeController;
+};

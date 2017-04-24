@@ -1,4 +1,4 @@
-import indexView from './index.html';
+import welcomeView from './welcome.html';
 
 routes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
@@ -8,7 +8,8 @@ export default function routes($stateProvider, $urlRouter) {
   $stateProvider.
     state('welcome', {
       url: '/welcome',
-      template: indexView,
-      controller: 'WelcomeController as vm',
+      template: welcomeView,
+      controllerAs: 'vm',
+      controller: 'WelcomeController',
     });
 }

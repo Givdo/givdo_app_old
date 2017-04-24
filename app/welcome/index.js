@@ -5,6 +5,6 @@ const welcomeModule = angular.module('givdo.welcome', []);
 
 angular.module('givdo.welcome')
   .config(routes)
-  .controller('WelcomeController', WelcomeController);
+  .controller('WelcomeController', ['$state', '$ionicPopup', WelcomeController]);
 
 export default welcomeModule.name;
