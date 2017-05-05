@@ -13,6 +13,9 @@
     "test-ci": "karma start ./config/karma.conf.js --single-run",
     "e2e": "webdriver-manager update --standalone false --gecko false; protractor ./config/protractor.conf.js"
   },
+  "config": {
+    "ionic_webpack": "./config/webpack.config.js"
+  },
   "dependencies": {
     "@angular/common": "4.0.2",
     "@angular/compiler": "4.0.2",
