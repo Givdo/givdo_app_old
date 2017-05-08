@@ -9,7 +9,7 @@ var config = require(path.join(appScriptsDir, 'config', 'webpack.config.js'));
 
 config.resolve = config.resolve || {};
 config.resolve.alias = {
-  'config$': path.resolve(projectRootDir, 'src', 'config', env),
+  'config$': path.resolve(projectRootDir, 'src', 'config', env + '.ts'),
 };
 
 config.plugins = config.plugins || [];
