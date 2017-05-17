@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 
 import { WelcomePage } from '../pages/welcome/welcome';
+import { FacebookService } from './auth/facebook.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,8 +16,9 @@ export class GivdoApp {
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
+    public facebook: FacebookService,
     public splashScreen: SplashScreen,
-    private translate: TranslateService,
+    public translate: TranslateService,
   ) {
     translate.setDefaultLang('en');
     this.initializePlatform();
@@ -24,6 +26,7 @@ export class GivdoApp {
 
   initializePlatform() {
     this.platform.ready().then(() => {
+      this.facebook.checkLogin();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

@@ -15,7 +15,7 @@ module.exports = {
         loaders: [
           {
             loader: 'ts-loader'
-          } , 'angular2-template-loader'
+          }
         ]
       },
       {
@@ -27,6 +27,13 @@ module.exports = {
         loader: 'null-loader'
       }
     ]
+  },
+
+  resolve: {
+    extensions: ['.ts', '.js'],
+    alias: {
+      'config$': path.resolve('src', 'config', 'dev.ts')
+    }
   },
 
   plugins: [
