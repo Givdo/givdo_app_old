@@ -1,3 +1,40 @@
 page-welcome {
+  ion-spinner{
+    margin: 0 auto;
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
 
+  .welcome{
+    &-logo{
+      text-align: center;
+
+      &__icon{ width: 50%; }
+      &__name{ width: 100%; }
+    }
+
+    &-button{
+      height: 50px;
+      background-color: #f8f8f8;
+      padding-left: 40px;
+      border: none;
+      border-radius: 4px;
+      box-shadow: none;
+      font-size: 16px;
+      font-weight: 400;
+      color: #ff9900;
+      position: relative;
+
+      &__icon{
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        position: absolute;
+      }
+    }
+  }
 }
