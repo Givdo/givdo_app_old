@@ -1,6 +1,5 @@
 {
   "name": "givdo_app",
   "app_id": "ff180539",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }
