@@ -1,3 +1,85 @@
 page-notifications {
+  .profile-contents{
+    padding: 10px;
+    color: #96939b;
+    font-size: 20px;
 
+    & > img {
+      width: calc((100% / 4) - 6px);
+      display: block;
+      float: left;
+      margin: 0px 3px 10px;
+    }
+
+    & > span {
+      display: block;
+      border-bottom: solid 1px #564256;
+      padding: 4px 0px 10px 0px;
+    }
+  }
+}
+
+.purple {
+  background-color: #564256 !important;
+  color: #fff !important;
+}
+
+.gray {
+  background-color: #96939b !important;
+  color: #fff !important;
+}
+.gold {
+  background-color: #ffcc00 !important;
+  color: 564256 !important;
+}
+
+.orange {
+  background-color: #ff9933 !important;
+  color: #fff !important;
+}
+
+.list-notification{
+  padding: 10px;
+  border: solid 1px #e2dfe0;
+  border-bottom: solid 4px orange;
+  margin-bottom: 10px;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+
+  & > figure{
+    width: 50px;
+    height: 50px;
+    padding: 0 0;
+    margin: 0 10px 0 0;
+    background: black no-repeat center center;
+    background-size: cover;
+    border-radius: 100%;
+    overflow: hidden;
+    display: block;
+    float: left;
+    position: relative;
+
+    img{
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      position: absolute;
+    }
+  }
+
+   & .text-notification{
+    div{
+      margin-bottom: 10px;
+    }
+
+    button{
+      height: 30px;
+      padding: 0 20px;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+   }
 }
