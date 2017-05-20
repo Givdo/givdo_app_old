@@ -12,7 +12,7 @@ import { FacebookService } from '../../app/auth/facebook.service';
 import {
   State,
   getAuthError,
-  getAuthSession,
+  getAuthToken,
   getLoginInProcess,
 } from '../../app/app.reducer';
 
@@ -24,7 +24,7 @@ import {
 export class WelcomePage {
 
   error$: Observable<any>;
-  session$: Observable<any>;
+  token$: Observable<any>;
   loginInProcess$: Observable<boolean>;
 
   constructor(
@@ -34,15 +34,15 @@ export class WelcomePage {
     public toast: ToastController,
   ) {
     this.error$ = this.store.select(getAuthError);
-    this.session$ = this.store.select(getAuthSession);
+    this.token$ = this.store.select(getAuthToken);
     this.loginInProcess$ = this.store.select(getLoginInProcess);
 
     this.error$.subscribe((error) => {
       this.showError(error);
     });
 
-    this.session$.subscribe((session) => {
-      if (session)
+    this.token$.subscribe((token) => {
+      if (token)
         this.navCtrl.push(TabsPage);
     });
   }

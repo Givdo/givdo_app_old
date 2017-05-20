@@ -16,6 +16,7 @@ import { UserModule } from './user';
 import { UiModule } from './ui';
 
 import { reducer } from './app.reducer';
+
 import { createTranslateLoader } from './util/translate';
 
 import { TabsPage } from '../pages/tabs/tabs';

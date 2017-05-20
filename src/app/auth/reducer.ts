@@ -1,59 +1,54 @@
 import { Action } from '@ngrx/store';
 
-import { Session } from './session';
 import { ApiError } from '../util/error';
 
 import {
+  Actions,
+  LOGIN_STARTED,
+  LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT_RECEIVED,
-  LOGIN_IN_PROCESS,
-  USER_AUTHENTICATED,
-  AUTH_TOKEN_EXPIRED,
-  FACEBOOK_NOT_AUTHORIZED
+  FACEBOOK_NOT_AUTHORIZED,
+  FACEBOOK_AUTHORIZATION_STARTED,
 } from './actions';
 
 
 export interface State {
-  loginInProcess: boolean,
+  loading: boolean,
+  token: string | null,
+  userId: number | null,
+  expiresIn: number | null,
   error: ApiError | string,
-  session: Session,
 }
 
-export const initialState: State = {
+export const initialState : State = {
+  loading: false,
+  token: null,
+  userId: null,
+  expiresIn: null,
   error: null,
-  session: null,
-  loginInProcess: false,
 }
 
-export function reducer(state = initialState, action: Action) {
+export function reducer(state = initialState, action: Actions) {
   switch(action.type) {
-    case LOGIN_IN_PROCESS:
-      return Object.assign({}, state, {
-        loginInProcess: action.payload,
-      });
+    case LOGIN_STARTED:
+    case FACEBOOK_AUTHORIZATION_STARTED:
+      return Object.assign({}, state, { loading: true });
 
-    case USER_AUTHENTICATED:
+    case LOGIN_SUCCESS:
       return Object.assign({}, state, {
-        error: null,
-        loginInProcess: false,
-        session: action.payload,
+        loading: false,
+        token: action.payload.token,
+        userId: action.payload.userId,
+        expiresIn: action.payload.expiresIn,
       });
-
-    case LOGOUT_RECEIVED:
-      return Object.assign({}, state, initialState);
 
     case LOGIN_FAILURE:
-    case AUTH_TOKEN_EXPIRED:
-      return Object.assign({}, state, {
-        session: null,
-        loginInProcess: false,
-        error: action.payload,
-      });
+      return Object.assign({}, state, { loading: false, error: action.payload });
 
     case FACEBOOK_NOT_AUTHORIZED:
       return Object.assign({}, state, {
         error: action.payload,
-        loginInProcess: false,
+        loading: false,
       });
 
     default:
@@ -61,6 +56,6 @@ export function reducer(state = initialState, action: Action) {
   }
 }
 
+export const getToken = (state: State) => state.token;
 export const getError = (state: State) => state.error;
-export const getSession = (state: State) => state.session;
-export const getLoginInProcess = (state: State) => state.loginInProcess;
+export const getLoading = (state: State) => state.loading;

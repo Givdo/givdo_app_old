@@ -1,45 +1,32 @@
 import { Config } from 'config';
 
 import { Store } from '@ngrx/store';
-import { Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 
-import { FacebookLoginResponse } from '@ionic-native/facebook';
-import { Facebook as NativeFacebook } from '@ionic-native/facebook';
-
 import { InitParams } from 'ngx-facebook';
-import { FacebookService as BrowserFacebook } from 'ngx-facebook';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 import { State } from '../app.reducer';
 
 import {
-  LoginInProcessAction,
   FacebookAuthorizedAction,
   FacebookNotAuthorizedAction,
+  FacebookAuthorizationStartedAction,
 } from '../../app/auth/actions';
 
 @Injectable()
 export class FacebookService {
 
-  private fb: any;
-
   constructor(
-    private platform: Platform,
+    private fb: Facebook,
     private store: Store<State>,
-    private nativeFb: NativeFacebook,
-    private browserFb: BrowserFacebook,
   ) {
-    if (this.platform.is('ios')) {
-      this.fb = nativeFb;
-    } else {
-      this.fb = browserFb;
+    if ('init' in this.fb) {
       this.browserInit();
     }
   }
 
   checkLogin() {
-    this.store.dispatch(new LoginInProcessAction(true));
-
     this.fb
       .getLoginStatus()
       .then(this.handleSuccess)
@@ -47,7 +34,7 @@ export class FacebookService {
   }
 
   login() {
-    this.store.dispatch(new LoginInProcessAction(true));
+    this.store.dispatch(new FacebookAuthorizationStartedAction());
 
     this.fb
       .login(Config.facebook.scopes)
@@ -63,17 +50,18 @@ export class FacebookService {
       appId: Config.facebook.appId,
     };
 
-    this.fb.init(params);
+    (this.fb as any).init(params);
   }
 
   private handleSuccess = (response: FacebookLoginResponse) => {
     switch (response.status) {
       case 'connected':
-        return this.store.dispatch(new FacebookAuthorizedAction(response));
-      case 'unknown':
-        return this.store.dispatch(new LoginInProcessAction(false));
+        this.store.dispatch(new FacebookAuthorizedAction(response));
+        break;
       case 'not_authorized':
         return this.store.dispatch(new FacebookNotAuthorizedAction(response.status));
+      case 'unknown':
+        return;
     }
   }
 

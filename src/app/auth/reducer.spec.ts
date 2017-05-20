@@ -5,163 +5,125 @@ import { User } from '../user/user';
 import { ApiError } from '../util/error';
 
 import {
+  LoginStartedAction,
+  LoginSuccessAction,
   LoginFailureAction,
-  LOGOUT_RECEIVED,
-  LoginInProcessAction,
-  UserAuthenticatedAction,
-  AuthTokenExpiredAction,
-  FacebookNotAuthorizedAction
+  FacebookNotAuthorizedAction,
+  FacebookAuthorizationStartedAction,
 } from './actions';
 
 
 describe('[Auth] reducer', () => {
-  let user = {
-    id: '123',
-    uid: '123',
-    name: 'Harry Potter',
-    image: 'my-image',
-    cover: 'my-cover',
-    email: 'email@example.com',
-  } as User;
-
   function buildState(params) {
     return Object.assign({}, initialState, params);
   }
 
   describe('with undefined action', () => {
     it('returns the state unchanged', () => {
-      const action = {} as any;
-      let state = {
-        error: { code: '123', error: 'some error'},
-        session: {},
-        loginInProcess: true
-      } as State;
+      let state = buildState({});
 
-      const result = reducer(state, action);
+      const result = reducer(state, {} as any);
 
       expect(result).toEqual(state);
     });
   });
 
-  describe('with LOGIN_IN_PROCESS action', () => {
-    it('updates loginInProcess as specified in the payload', () => {
-      const actionTrue = new LoginInProcessAction(true);
-      const actionFalse = new LoginInProcessAction(false);
+  describe('with LOGIN_STARTED action', () => {
+    it('sets loading to true', () => {
+      const action = new LoginStartedAction();
 
-      const resultTrue = reducer(undefined, actionTrue);
-      const resultFalse = reducer(undefined, actionFalse);
+      const result = reducer(undefined, action);
 
-      expect(resultTrue.loginInProcess).toBeTruthy();
-      expect(resultFalse.loginInProcess).toBeFalsy();
+      expect(result.loading).toBeTruthy();
     });
   });
 
-  describe('with LOGOUT_RECEIVED action', () => {
-    it('returns the initial state', () => {
-      const action = {
-        type: LOGOUT_RECEIVED,
-        payload: {}
-      };
+  describe('with LOGIN_SUCCESS action', () => {
+    let payload = {
+      userId: 123,
+      token: 'super-token',
+      expiresIn: 1234,
+    };
+
+    it('updates loading to false', () => {
+      const action = new LoginSuccessAction(payload);
 
       const result = reducer(undefined, action);
 
-      expect(result).toEqual(initialState);
-    });
-  });
-
-  describe('with USER_AUTHENTICATED action', () => {
-    it('sets loginInProcess to false', () => {
-      const payload = {
-        user: user,
-        expiresIn: '1234',
-        token: 'some-fancy-token',
-      } as Session;
-
-      const action = new UserAuthenticatedAction(payload);
-
-      const result = reducer(undefined, action);
-
-      expect(result.loginInProcess).toBeFalsy();
+      expect(result.loading).toBeFalsy();
     });
 
-    it('sets the session', () => {
-      const payload = {
-        user: user,
-        expiresIn: '1234',
-        token: 'some-fancy-token',
-      } as Session;
-
-      const action = new UserAuthenticatedAction(payload);
+    it('updates token as specified in the payload', () => {
+      const action = new LoginSuccessAction(payload);
 
       const result = reducer(undefined, action);
 
-      expect(result.session).toEqual(payload);
+      expect(result.token).toEqual(payload.token);
+    });
+
+    it('updates userId as specified in the payload', () => {
+      const action = new LoginSuccessAction(payload);
+
+      const result = reducer(undefined, action);
+
+      expect(result.userId).toEqual(payload.userId);
+    });
+
+    it('updates expiresIn as specified in the payload', () => {
+      const action = new LoginSuccessAction(payload);
+
+      const result = reducer(undefined, action);
+
+      expect(result.expiresIn).toEqual(payload.expiresIn);
     });
   });
 
   describe('with LOGIN_FAILURE action', () => {
-    it('sets loginInProcess to false', () => {
-      const state = buildState({ loginInProcess: true });
+    let payload = {
+      code: 'auth',
+      error: 'Some error message'
+    } as ApiError;
 
-      const payload = {
-        code: 'auth',
-        error: 'Some error message'
-      };
-
+    it('updates loading to false', () => {
+      const state = buildState({ loading: true });
       const action = new LoginFailureAction(payload);
+
       const result = reducer(state, action);
 
-      expect(result.loginInProcess).toBeFalsy();
+      expect(result.loading).toBeFalsy();
     });
 
-    it('returns the state with the error in the payload', () => {
-      const payload = {
-        code: 'auth',
-        error: 'Some error message'
-      } as ApiError;
-
+    it('updates error as specified in the payload', () => {
       const action = new LoginFailureAction(payload);
 
       const result = reducer(undefined, action);
 
-      expect(result).toEqual({
-        session: null,
-        error: payload,
-        loginInProcess: false,
-      });
+      expect(result.error).toEqual(payload);
     });
   });
 
-  describe('with AUTH_TOKEN_EXPIRED action', () => {
-    it('returns the state with the error in the payload', () => {
-      const payload = {
-        code: 'toke-expired',
-        error: 'Some error message',
-      };
+  describe('with FACEBOOK_AUTHORIZATION_STARTED action', () => {
+    it('updates loading to true', () => {
+      const state = buildState({ loading: false });
+      const action = new FacebookAuthorizationStartedAction();
 
-      const action = new AuthTokenExpiredAction(payload);
+      const result = reducer(state, action);
 
-      const result = reducer(undefined, action);
-
-      expect(result).toEqual({
-        session: null,
-        error: action.payload,
-        loginInProcess: false,
-      });
+      expect(result.loading).toBeTruthy();
     });
   });
 
   describe('with FACEBOOK_AUTHORIZATION_FAILED action', () => {
-    it('sets loginInProcess to false', () => {
-      const state = { loginInProcess: true } as State;
+    it('updates loading to false', () => {
+      const state = { loading: true } as State;
       const action = new FacebookNotAuthorizedAction('error');
 
       const result = reducer(state, action);
 
-      expect(result.loginInProcess).toBeFalsy();
+      expect(result.loading).toBeFalsy();
     });
 
-    it('sets error to the message in the payload', () => {
+    it('updates error to the message in the payload', () => {
       const action = new FacebookNotAuthorizedAction('error');
 
       const result = reducer(undefined, action);

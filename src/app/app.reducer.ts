@@ -35,6 +35,6 @@ export function reducer(state: any, action: any) {
 export const getAuthState = (state: State) => state.auth;
 export const getUserState = (state: State) => state.user;
 
+export const getAuthToken = createSelector(getAuthState, auth.getToken);
 export const getAuthError = createSelector(getAuthState, auth.getError);
-export const getLoginInProcess = createSelector(getAuthState, auth.getLoginInProcess);
-export const getAuthSession = createSelector(getAuthState, auth.getSession);
+export const getLoginInProcess = createSelector(getAuthState, auth.getLoading);

@@ -13,8 +13,9 @@ import { Session } from './session';
 import { State } from '../app.reducer';
 
 import {
+  LoginStartedAction,
   LoginFailureAction,
-  UserAuthenticatedAction,
+  LoginSuccessAction,
 } from '../../app/auth/actions';
 
 @Injectable()
@@ -26,6 +27,8 @@ export class AuthService {
   ) {}
 
   login(facebookToken) {
+    this.store.dispatch(new LoginStartedAction());
+
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -35,14 +38,18 @@ export class AuthService {
     return this.http
       .post(url, params, options)
       .map(this.mapResponse)
-      .map(session => new UserAuthenticatedAction(session))
+      .map(session => new LoginSuccessAction(session))
       .catch(this.handleError);
   }
 
   private mapResponse = (res: Response) => {
-    let json = res.json();
+    let data = res.json().data;
 
-    return json.data as Session;
+    return {
+      token: data.id,
+      expiresIn: 0,
+      userId: data.relationships.user.data.id,
+    } as Session;
   }
 
   private handleError = (error) => {
