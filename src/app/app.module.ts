@@ -1,21 +1,21 @@
-import { Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule } from '@angular/http';
+import { Http, HttpModule, JsonpModule } from '@angular/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreLogMonitorModule, useLogMonitor } from '@ngrx/store-log-monitor';
-
 import { GivdoApp } from './app.component';
 
+// Application modules
 import { AuthModule } from './auth';
 import { UserModule } from './user';
 import { UiModule } from './ui';
+import { UtilModule } from './util';
+import { NotificationsModule } from './notifications'
 
 import { reducer } from './app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { createTranslateLoader } from './util/translate';
 
@@ -29,6 +29,8 @@ import { NotificationsPage } from '../pages/notifications/notifications';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { NotificationItemComponent } from '../components/notification-item';
+
 @NgModule({
   declarations: [
     GivdoApp,
@@ -37,14 +39,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     WelcomePage,
     FriendsPage,
     NotificationsPage,
-    TabsPage
+    TabsPage,
+    NotificationItemComponent,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     JsonpModule,
 
-    StoreLogMonitorModule,
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentStore({}),
 
@@ -56,9 +58,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
       }
     }),
 
+    UtilModule,
     AuthModule,
     UserModule,
     UiModule,
+    NotificationsModule,
 
     IonicModule.forRoot(GivdoApp),
   ],
@@ -75,7 +79,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}

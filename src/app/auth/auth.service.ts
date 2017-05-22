@@ -1,7 +1,5 @@
-import { Config } from 'config';
-
 import { Store } from '@ngrx/store';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
@@ -9,8 +7,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/timeout'
 
+import { urlFor } from '../util/url';
 import { Session } from './session';
-import { State } from '../app.reducer';
+import { State, getAuthToken } from '../app.reducer';
 
 import {
   LoginStartedAction,
@@ -21,22 +20,23 @@ import {
 @Injectable()
 export class AuthService {
 
+  token = null;
+
   constructor(
     private http: Http,
     private store: Store<State>,
-  ) {}
+  ) {
+    store.select(getAuthToken).subscribe(token => this.token = token);
+  }
 
   login(facebookToken) {
     this.store.dispatch(new LoginStartedAction());
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    const url = `${Config.api.host}/${Config.api.version}/oauth/facebook/callback`;
+    const url = urlFor('oauth/facebook/callback');
     const params = { access_token: facebookToken };
 
     return this.http
-      .post(url, params, options)
+      .post(url, params)
       .map(this.mapResponse)
       .map(session => new LoginSuccessAction(session))
       .catch(this.handleError);
