@@ -1,3 +1,5 @@
 {
-  "welcome.login": "Login with Facebook"
+  "welcome": {
+    "login": "Login with Facebook"
+  }
 }

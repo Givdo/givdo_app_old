@@ -1,13 +1,23 @@
+import { StoreModule } from '@ngrx/store';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule } from '@angular/http';
+import { Http, HttpModule, JsonpModule } from '@angular/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Http } from '@angular/http';
-
 import { GivdoApp } from './app.component';
+
+// Application modules
+import { AuthModule } from './auth';
+import { UserModule } from './user';
+import { UiModule } from './ui';
+import { UtilModule } from './util';
+import { NotificationsModule } from './notifications'
+
+import { reducer } from './app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { createTranslateLoader } from './util/translate';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { ProfilePage } from '../pages/profile/profile';
@@ -19,9 +29,7 @@ import { NotificationsPage } from '../pages/notifications/notifications';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-export function createTranslateLoader(http: Http) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { NotificationItemComponent } from '../components/notification-item';
 
 @NgModule({
   declarations: [
@@ -31,12 +39,17 @@ export function createTranslateLoader(http: Http) {
     WelcomePage,
     FriendsPage,
     NotificationsPage,
-    TabsPage
+    TabsPage,
+    NotificationItemComponent,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     JsonpModule,
+
+    StoreModule.provideStore(reducer),
+    StoreDevtoolsModule.instrumentStore({}),
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -44,6 +57,13 @@ export function createTranslateLoader(http: Http) {
         deps: [Http]
       }
     }),
+
+    UtilModule,
+    AuthModule,
+    UserModule,
+    UiModule,
+    NotificationsModule,
+
     IonicModule.forRoot(GivdoApp),
   ],
   bootstrap: [IonicApp],
@@ -59,7 +79,7 @@ export function createTranslateLoader(http: Http) {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}
