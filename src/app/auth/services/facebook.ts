@@ -6,13 +6,13 @@ import { Injectable } from '@angular/core';
 import { InitParams } from 'ngx-facebook';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
-import { State } from '../app.reducer';
+import { State } from '../reducer';
 
 import {
   FacebookAuthorizedAction,
   FacebookNotAuthorizedAction,
   FacebookAuthorizationStartedAction,
-} from '../../app/auth/actions';
+} from '../actions/facebook';
 
 @Injectable()
 export class FacebookService {

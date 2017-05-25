@@ -1,16 +1,17 @@
-import { Action } from '@ngrx/store';
-
-import { ApiError } from '../util/error';
-
 import {
-  Actions,
+  Actions as LoginActions,
   LOGIN_STARTED,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+} from './actions/login';
+
+import {
+  Actions as FacebookActions,
   FACEBOOK_NOT_AUTHORIZED,
   FACEBOOK_AUTHORIZATION_STARTED,
-} from './actions';
+} from './actions/facebook';
 
+import { ApiError } from '../util/error';
 
 export interface State {
   loading: boolean,
@@ -27,6 +28,8 @@ export const initialState : State = {
   expiresIn: null,
   error: null,
 }
+
+export type Actions = LoginActions | FacebookActions;
 
 export function reducer(state = initialState, action: Actions) {
   switch(action.type) {

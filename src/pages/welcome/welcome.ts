@@ -8,7 +8,7 @@ import {
 } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
-import { FacebookService } from '../../app/auth/facebook.service';
+import { FacebookService } from '../../app/auth';
 import {
   State,
   getAuthError,

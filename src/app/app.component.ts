@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 
 import { WelcomePage } from '../pages/welcome/welcome';
-import { FacebookService } from './auth/facebook.service';
+import { FacebookService } from './auth';
 
 @Component({
   templateUrl: 'app.html'
