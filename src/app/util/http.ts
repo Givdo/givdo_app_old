@@ -4,12 +4,18 @@ import {
   Response,
   ConnectionBackend,
   RequestOptions,
+  XHRBackend,
   RequestOptionsArgs
 } from '@angular/http';
+import { NgModule } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth';
+
+export const httpClientFactory = (backend: XHRBackend, options: RequestOptions, auth: AuthService) => {
+  return new HttpClient(backend, options, auth);
+}
 
 @Injectable()
 export class HttpClient extends Http {

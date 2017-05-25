@@ -1,3 +1,2 @@
-export * from './module';
-export * from './url';
-export * from './http';
+export { urlFor } from './url';
+export { HttpClient, httpClientFactory } from './http';

@@ -8,11 +8,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { GivdoApp } from './app.component';
 
 // Application modules
-import { AuthModule } from './auth';
 import { UserModule } from './user';
 import { UiModule } from './ui';
-import { UtilModule } from './util';
-import { NotificationsModule } from './notifications'
+import { AuthModule } from './auth';
+import { NotificationsModule } from './notifications';
 
 import { reducer } from './app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -64,7 +63,6 @@ import { QuizComponent } from '../components/quiz/quiz';
       }
     }),
 
-    UtilModule,
     AuthModule,
     UserModule,
     UiModule,

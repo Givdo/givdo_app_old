@@ -1,16 +1,17 @@
 import { reducer, State, initialState } from './reducer';
 
-import { Session } from './session';
-import { User } from '../user/user';
 import { ApiError } from '../util/error';
 
 import {
   LoginStartedAction,
   LoginSuccessAction,
   LoginFailureAction,
+} from './actions/login';
+
+import {
   FacebookNotAuthorizedAction,
-  FacebookAuthorizationStartedAction,
-} from './actions';
+  FacebookAuthorizationStartedAction
+} from './actions/facebook';
 
 
 describe('[Auth] reducer', () => {

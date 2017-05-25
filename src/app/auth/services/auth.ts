@@ -7,15 +7,15 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/timeout'
 
-import { urlFor } from '../util/url';
-import { Session } from './session';
-import { State, getAuthToken } from '../app.reducer';
+import { urlFor } from '../../util';
+import { Session } from '../models/session';
+import { State, getToken } from '../reducer';
 
 import {
   LoginStartedAction,
   LoginFailureAction,
   LoginSuccessAction,
-} from '../../app/auth/actions';
+} from '../actions/login';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +26,7 @@ export class AuthService {
     private http: Http,
     private store: Store<State>,
   ) {
-    store.select(getAuthToken).subscribe(token => this.token = token);
+    store.select(getToken).subscribe(token => this.token = token);
   }
 
   login(facebookToken) {

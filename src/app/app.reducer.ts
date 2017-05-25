@@ -7,7 +7,7 @@ import { compose } from '@ngrx/core/compose';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 
-import * as auth from './auth/reducer';
+import * as auth from './auth';
 import * as user from './user/reducer';
 
 export interface State {

@@ -1,25 +1,18 @@
-import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
+export { AuthModule } from './module';
 
-import { FacebookProvider } from '../app.providers';
+// Models
+export { Session } from './models/session';
 
-import { AuthEffects } from './effects';
-import { AuthService } from './auth.service';
-import { FacebookService } from './facebook.service';
+// Effects
+export { AuthEffects } from './effects/login';
 
-@NgModule({
-  declarations: [
+// Actions
+export { Actions as LoginActions } from './actions/login';
+export { Actions as FacebookActions } from './actions/facebook';
 
-  ],
+// Reducers and state
+export { State, initialState, reducer, getToken, getError, getLoading } from './reducer';
 
-  imports: [
-    EffectsModule.run(AuthEffects),
-  ],
-
-  providers: [
-    AuthService,
-    FacebookProvider,
-    FacebookService,
-  ],
-})
-export class AuthModule {}
+// Services
+export { AuthService } from './services/auth';
+export { FacebookService } from './services/facebook';
