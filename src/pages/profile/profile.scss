@@ -23,7 +23,11 @@ $blur: 5px;
   padding-top: 0;
 }
 
-page-profile {
+page-profile{
+  .content-md{
+    background-color: #fff !important;
+  }
+
   .profile-header{
     margin-bottom: 40px;
     position: relative;
