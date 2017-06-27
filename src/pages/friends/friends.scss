@@ -1,3 +1,69 @@
-page-friends {
+page-friends{
+  .friends-list{
+    padding: 20px 20px 0 20px;
 
+    &__item{
+      width: calc(100% / 2 - 10px);
+      min-height: 150px;
+      padding: 0 0;
+      margin-bottom: 20px;
+      margin-right: 20px;
+      display: inline-block;
+      text-decoration: none;
+      // background-color: red;
+
+      &:nth-child(even){
+        margin-right: 0;
+      }
+    }
+
+    &__photo{
+      width: 100%;
+      min-height: 100px;
+      margin-bottom: 10px;
+      position: relative;
+
+      & > figure{
+        width: 120px;
+        height: 120px;
+        border-radius: 100%;
+        background-color: white;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, .2);
+        border: solid 4px white;
+        display: block;
+        margin: 0 auto;
+        padding: 0 0;
+        overflow: hidden;
+      }
+
+      & > div{
+        width: 40px;
+        height: 40px;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+      }
+    }
+
+    &__info{
+      & > strong,
+      & > span{
+        text-align: center;
+        display: block;
+      }
+
+      & > strong{
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        color: $dark-gray;
+      }
+
+      & > span{
+        font-size: 12px;
+        font-weight: 400;
+        color: darken($light-gray, 10%);
+      }
+    }
+  }
 }

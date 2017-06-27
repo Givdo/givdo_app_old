@@ -1,45 +1,19 @@
 page-notifications {
-  .profile-contents {
-    padding: 10px;
-    color: $gray;
-    font-size: 20px;
+  .notifications{
+    position: relative;
 
-    & > img {
-      width: calc((100% / 4) - 6px);
+    &:before{
+      width: 3px;
+      top: -20px;
+      bottom: -20px;
+      left: 20px;
       display: block;
-      float: left;
-      margin: 0px 3px 10px;
+      content: '';
+      background-color: gray;
+      opacity: .2;
+      position: absolute;
+
+      display: none;
     }
-
-    & > span {
-      display: block;
-      border-bottom: solid 1px $purple;
-      padding: 4px 0px 10px 0px;
-    }
-  }
-}
-
-.purple {
-  background-color: $purple !important;
-  color: #fff !important;
-}
-
-.gray {
-  background-color: $gray !important;
-  color: #fff !important;
-}
-.gold {
-  background-color: $gold !important;
-  color: 564256 !important;
-}
-
-.orange {
-  background-color: $orange !important;
-  color: #fff !important;
-}
-
-.notifications {
-  &:last-child{
-    margin-bottom: 0;
   }
 }
