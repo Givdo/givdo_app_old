@@ -1,16 +1,21 @@
-<div class="notification-item">
+<div class="notification-item" [ngClass]="{'notification-item__activity' : buttons}">
   <figure class="avatar">
     <img src="{{ notification.sender_image }}" alt="">
   </figure>
 
-  <span class="text-notification">
-    <div>
-      <strong>{{ notification.name }}</strong>
-      would like to play you in {{ notification.category }}!
-    </div>
+  <div class="text-notification">
+    <strong>{{ notification.name }}</strong>
+    <span *ngIf="!buttons">would like to play you in {{ notification.category }}!</span>
+    <span *ngIf="buttons">You Won - Score 8</span>
+  </div>
 
-    <button class="gold" (click)="accept.emit(notification)">Accept</button>
-    <button class="purple" (click)="reject.emit(notification)">Reject</button>
-  </span>
-  <div class="clearfix"></div>
+  <div class="buttons" *ngIf="!buttons">
+    <button class="button-reject" (click)="reject.emit(notification)">
+      reject
+    </button>
+
+    <button class="button-accept" (click)="accept.emit(notification)">
+      accept
+    </button>
+  </div>
 </div>
