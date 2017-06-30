@@ -15,11 +15,15 @@
 
   <section class="content-app">
     <div class="notifications">
-      <notification-item [buttons]="true"
+      <notification-item [buttons]="false"
                          *ngFor="let notification of notifications"
                          [notification]="notification"
       >
       </notification-item>
     </div>
   </section>
+
+  <div class="activity-score">
+    Total donations: <strong>${{ score }}</strong>
+  </div>
 </ion-content>
