@@ -13,7 +13,7 @@ import { UiModule } from './ui';
 import { AuthModule } from './auth';
 import { NotificationsModule } from './notifications';
 
-import { reducer } from './app.reducer';
+import { reducer } from './store/reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { createTranslateLoader } from './util/translate';
