@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { InitParams } from 'ngx-facebook';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
-import { State } from '../reducer';
+import { State } from '../../store/reducer';
 
 import {
   FacebookAuthorizedAction,
@@ -27,7 +27,7 @@ export class FacebookService {
   }
 
   checkLogin() {
-    this.fb
+    return this.fb
       .getLoginStatus()
       .then(this.handleSuccess)
       .catch(this.handleError);

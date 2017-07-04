@@ -1,33 +1,28 @@
 import { Store } from '@ngrx/store';
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/timeout'
+import 'rxjs/add/operator/timeout';
 
+import { State } from '../../store/reducer';
 import { urlFor } from '../../util';
-import { Session } from '../models/session';
-import { State, getToken } from '../reducer';
 
 import {
   LoginStartedAction,
   LoginFailureAction,
-  LoginSuccessAction,
-} from '../actions/login';
+  toLoginSuccessAction,
+} from '../../store/auth/actions';
 
 @Injectable()
 export class AuthService {
 
-  token = null;
-
   constructor(
     private http: Http,
     private store: Store<State>,
-  ) {
-    store.select(getToken).subscribe(token => this.token = token);
-  }
+  ) {}
 
   login(facebookToken) {
     this.store.dispatch(new LoginStartedAction());
@@ -37,19 +32,8 @@ export class AuthService {
 
     return this.http
       .post(url, params)
-      .map(this.mapResponse)
-      .map(session => new LoginSuccessAction(session))
+      .map(toLoginSuccessAction)
       .catch(this.handleError);
-  }
-
-  private mapResponse = (res: Response) => {
-    let data = res.json().data;
-
-    return {
-      token: data.id,
-      expiresIn: 0,
-      userId: data.relationships.user.data.id,
-    } as Session;
   }
 
   private handleError = (error) => {
