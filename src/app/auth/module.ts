@@ -5,6 +5,7 @@ import { FacebookProvider } from '../../providers/facebook';
 
 import { AuthEffects } from './effects/login';
 import { AuthService } from './services/auth';
+import { TokenService } from './services/token';
 import { FacebookService } from './services/facebook';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { FacebookService } from './services/facebook';
 
   providers: [
     AuthService,
+    TokenService,
     FacebookProvider,
     FacebookService,
   ],
