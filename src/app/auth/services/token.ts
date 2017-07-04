@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { State } from '../../app.reducer';
+import { State } from '../../store/reducer';
 
 @Injectable()
 export class TokenService {

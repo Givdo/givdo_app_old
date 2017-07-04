@@ -12,7 +12,7 @@ import {
   FacebookAuthorizedAction,
   FacebookNotAuthorizedAction,
   FacebookAuthorizationStartedAction,
-} from '../actions/facebook';
+} from '../../store/auth/actions';
 
 @Injectable()
 export class FacebookService {
@@ -68,9 +68,8 @@ export class FacebookService {
   private handleError = (error) => {
     console.error(`[FacebookService] ${error}`);
 
-    this.store.dispatch(new FacebookNotAuthorizedAction({
-      code: 'facebook_not_authorized',
-      error: 'You must authorize Givdo to login.',
-    }));
+    this.store.dispatch(new FacebookNotAuthorizedAction(
+      'You must authorize Givdo to login.'
+    ));
   }
 }
