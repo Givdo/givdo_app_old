@@ -20,6 +20,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { createTranslateLoader } from './util/translate';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { QuizPage } from '../pages/quiz/quiz';
 import { ProfilePage } from '../pages/profile/profile';
 import { FriendsPage } from '../pages/friends/friends';
 import { WelcomePage } from '../pages/welcome/welcome';
@@ -34,6 +35,7 @@ import { NotificationItemComponent } from '../components/notification-item';
 @NgModule({
   declarations: [
     GivdoApp,
+    QuizPage,
     ActivityPage,
     ProfilePage,
     WelcomePage,
@@ -69,6 +71,7 @@ import { NotificationItemComponent } from '../components/notification-item';
   bootstrap: [IonicApp],
   entryComponents: [
     GivdoApp,
+    QuizPage,
     FriendsPage,
     ProfilePage,
     WelcomePage,
