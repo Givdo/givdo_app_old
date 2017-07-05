@@ -17,14 +17,12 @@ export class ProfilePage {
   constructor(private _location: Location, public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  goback(){
-    console.log('back');
-    this._location.back();
-    console.log('back');
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad Profile');
+  }
+
+  goback(){
+    console.log('back');
   }
 
   profile = {

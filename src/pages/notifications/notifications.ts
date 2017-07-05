@@ -24,11 +24,11 @@ export class NotificationsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
-  goback(){
-    console.log('back');
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad Notifications');
+  }
+
+  goback(){
+    console.log('back');
   }
 }

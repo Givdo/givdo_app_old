@@ -28,12 +28,11 @@ export class FriendsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  goback(){
-    console.log('back');
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad Friends');
   }
 
+  goback(){
+    console.log('back');
+  }
 }

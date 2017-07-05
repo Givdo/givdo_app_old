@@ -30,9 +30,6 @@ export class ActivityPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  goback(){
-  }
-
   ionViewDidLoad() {
     let score: number = this.score;
 
@@ -43,4 +40,7 @@ export class ActivityPage {
     this.score = (score / 100)
   }
 
+  goback(){
+    console.log('back');
+  }
 }
