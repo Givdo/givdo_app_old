@@ -31,6 +31,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NotificationItemComponent } from '../components/notification-item';
+import { QuizComponent } from '../components/quiz/quiz';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { NotificationItemComponent } from '../components/notification-item';
     NotificationsPage,
     TabsPage,
     NotificationItemComponent,
+    QuizComponent,
   ],
   imports: [
     BrowserModule,
