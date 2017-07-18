@@ -26,6 +26,7 @@ import { FriendsPage } from '../pages/friends/friends';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { ActivityPage } from '../pages/activity/activity';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { OrganizationModalPage } from '../pages/organization-modal/organization-modal';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -42,6 +43,7 @@ import { QuizComponent } from '../components/quiz/quiz';
     WelcomePage,
     FriendsPage,
     NotificationsPage,
+    OrganizationModalPage,
     TabsPage,
     NotificationItemComponent,
     QuizComponent,
@@ -79,6 +81,7 @@ import { QuizComponent } from '../components/quiz/quiz';
     WelcomePage,
     ActivityPage,
     NotificationsPage,
+    OrganizationModalPage,
     TabsPage
   ],
   providers: [

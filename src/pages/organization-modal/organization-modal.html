@@ -1,0 +1,27 @@
+<ion-header no-border class="header-black">
+  <ion-toolbar transparent>
+    <ion-title class="theme-black">Save</ion-title>
+
+    <button end ion-button menuToggle (click)="closeModal()">
+      <ion-icon name="checkmark"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="content-app">
+    <section class="causes">
+      <h2 class="section-title section-title--causes"><span>Select your organization</span></h2>
+
+      <ul class="profile__list">
+        <li class="profile__list__item" *ngFor='let organization of organizations'>
+          <figure>
+            <img src="{{organization.image}}" alt="{{organization.name}}">
+          </figure>
+
+          <h4>{{ organization.name }}</h4>
+        </li>
+      </ul>
+    </section>
+  </section>
+</ion-content>
