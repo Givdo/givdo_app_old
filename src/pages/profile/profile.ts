@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Location } from '@angular/common';
+import { OrganizationModalPage } from '../organization-modal/organization-modal';
 
 /**
  * Generated class for the Profile page.
@@ -14,7 +15,7 @@ import { Location } from '@angular/common';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  constructor(private _location: Location, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private _location: Location, public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
@@ -23,6 +24,11 @@ export class ProfilePage {
 
   goback(){
     console.log('back');
+  }
+
+  openModal() {
+    let myModal = this.modalCtrl.create(OrganizationModalPage, this.profile);
+    myModal.present();
   }
 
   profile = {

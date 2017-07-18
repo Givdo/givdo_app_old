@@ -25,7 +25,7 @@
       <h4>{{ profile.organization }}</h4>
     </div>
 
-    <button class="profile-header__button">Choose Organization</button>
+    <button class="profile-header__button" (click)="openModal()">Choose Organization</button>
   </header>
 
   <section class="causes">
@@ -42,7 +42,7 @@
     </ul>
 
     <h2 class="section-title section-title--causes"><span>Your Achievements</span></h2>
-    <ul class="profile__list">
+    <ul class="profile__list profile__achievements">
       <li class="profile__list__item" *ngFor='let achievement of profile.achievements'>
         <figure>
           <img src="assets/images/achievements/on/{{achievement.slug}}.png" alt="{{achievement.name}}">

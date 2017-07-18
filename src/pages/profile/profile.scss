@@ -139,7 +139,7 @@ page-profile{
 
       &:hover{
         border: none;
-        background-image: linear-gradient(to right, #000 0%, #333 100%);
+        background-image: linear-gradient(to right, #564256 0%, lighten(#564256, 10%) 100%);
         color: white;
       }
     }
@@ -219,6 +219,28 @@ page-profile{
         &--causes{
           width: 220px;
         }
+      }
+    }
+  }
+
+  &__achievements{
+    & > li{
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    h4{
+      margin-top: 0;
+    }
+
+    figure{
+      height: auto;
+
+      img{
+        top: inherit;
+        left: inherit;
+        transform: inherit;
+        position: relative;
       }
     }
   }
