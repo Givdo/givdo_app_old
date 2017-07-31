@@ -3,13 +3,14 @@
     <name>Givdo</name>
     <description>Where playing a game gives money to charity.</description>
     <author email="contact@givdo.com" href="http://givdo.com/">Givdo Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.2.12:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://192.168.0.12:8100" />
     <allow-navigation href="http://192.168.100.144:8100" />
     <allow-navigation href="http://192.168.2.14:8100" />
     <allow-navigation href="http://192.168.2.13:8100" />
+    <allow-navigation href="http://192.168.2.12:8100" />
     <allow-navigation href="https://givdo-qa.herokuapp.com" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
