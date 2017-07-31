@@ -1,26 +1,41 @@
-import { Observable } from 'rxjs/Rx';
-import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
 
-import { urlFor } from '../../util';
-// import { NotificationsLoadedAction } from '../store/notifications/actions';
+import {
+  State,
+  getNotificationsState,
+} from '../../store/reducer';
+import { urlFor, toData } from '../../util';
+import { toMostRecentFirst } from '../../mappers/common';
+import { toNotifications, toNotificationsLoadedAction } from '../../mappers/notifications';
+
 
 @Injectable()
 export class NotificationsService {
 
+  public notifications;
+
   constructor(
     private http: Http,
-  ) {}
+    private store: Store<State>,
+  ) {
+    this.notifications = this.store
+      .select(getNotificationsState)
+      .map(toNotifications)
+      .map(toMostRecentFirst);
+  }
 
   load() {
     const url = urlFor('notifications');
 
-    // return this.http
-    //   .get(url)
-    //   .map(response => {
-    //     console.log(response.json());
-    //     return new NotificationsLoadedAction(response.json());
-    //   })
-    //   .catch(error => Observable.throw('Error'));
+    this.http
+      .get(url)
+      .map(toData)
+      .map(toNotificationsLoadedAction)
+      .subscribe(action => this.store.dispatch(action));
+  }
+
+  check() {
   }
 }

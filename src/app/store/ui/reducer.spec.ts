@@ -15,6 +15,7 @@ import {
   LoginSuccessAction,
   LoginSuccessPayload,
   loginSuccessPayloadFactory,
+  FacebookNotAuthorizedAction,
 } from '../auth/actions';
 
 
@@ -84,6 +85,18 @@ describe('[UI] reducer', () => {
 
       expect(result.error).toEqual('OMG! Aliens!');
     })
+  })
+
+  describe('with FACEBOOK_NOT_AUTHORIZED type', () => {
+    it('sets error message', () => {
+      const action = new FacebookNotAuthorizedAction(
+        'OMG! Have panic!'
+      );
+
+      const result = reducer(initialState, action);
+
+      expect(result.error).toEqual('OMG! Have panic!');
+    });
   })
 });
 

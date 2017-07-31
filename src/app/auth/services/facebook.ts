@@ -66,7 +66,8 @@ export class FacebookService {
   }
 
   private handleError = (error) => {
-    console.error(`[FacebookService] ${error}`);
+    if (error)
+      console.error(`[FacebookService] ${error}`);
 
     this.store.dispatch(new FacebookNotAuthorizedAction(
       'You must authorize Givdo to login.'

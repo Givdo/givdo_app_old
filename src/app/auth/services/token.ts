@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { State } from '../../store/reducer';
+import { State, getAuthState } from '../../store/reducer';
 
 @Injectable()
 export class TokenService {
@@ -11,10 +11,8 @@ export class TokenService {
 
   constructor(private store: Store<State>) {
     this.store
-      // .select(getAuthToken)
-      // .subscribe(token => {
-      //   this._token = token
-      // });
+      .select(getAuthState)
+      .subscribe(state => this._token = state.token);
   }
 
   get() {

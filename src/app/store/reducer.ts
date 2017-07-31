@@ -8,15 +8,18 @@ import { storeFreeze } from 'ngrx-store-freeze';
 
 import * as ui from './ui/reducer';
 import * as auth from './auth/reducer';
+import * as notifications from './notifications/reducer';
 
 export interface State {
   ui: ui.State,
   auth: auth.State,
+  notifications: notifications.State,
 }
 
 const reducers = {
   ui: ui.reducer,
   auth: auth.reducer,
+  notifications: notifications.reducer,
 }
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -36,3 +39,6 @@ export const getUiLoading = createSelector(getUiState, ui.getLoading);
 export const getCurrentUserId = createSelector(getUiState, ui.getCurrentUserId);
 
 export const getAuthState = (state: State) => state.auth;
+
+export const getNotificationsState = (state: State) => state.notifications;
+export const getNotificationsEntities = createSelector(getNotificationsState, notifications.getEntities);
