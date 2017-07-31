@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { Token } from './model';
-import { LOGIN_SUCCESS } from './actions';
+import { LOGIN_SUCCESS, FACEBOOK_NOT_AUTHORIZED } from './actions';
 
 export interface State {
   token: Token,

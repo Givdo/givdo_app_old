@@ -18,4 +18,9 @@ export class TabsPage {
 
   constructor(private nav: NavController) {
   }
+
+  ionViewCanEnter() {
+    // Check if user is logged in
+    // it gets called before all events
+  }
 }

@@ -1,6 +1,11 @@
 import { Action } from '@ngrx/store';
 
-import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILURE } from '../auth/actions';
+import {
+  LOGIN_STARTED,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  FACEBOOK_NOT_AUTHORIZED,
+} from '../auth/actions';
 
 export interface State {
   userId: number,
@@ -30,6 +35,11 @@ export function reducer(state = initialState, action: Action) {
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
         error: action.payload.message,
+      });
+
+    case FACEBOOK_NOT_AUTHORIZED:
+      return Object.assign({}, state, {
+        error: action.payload,
       });
 
     default:

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { RequestOptions, XHRBackend } from '@angular/http';
+import { Http, RequestOptions, XHRBackend } from '@angular/http';
 
+import { httpClientFactory } from '../util';
 import { TokenService } from '../auth/services/token';
-import { HttpClient, httpClientFactory } from '../util';
 
 import { NotificationsService } from './services/notifications';
 
@@ -13,7 +13,7 @@ import { NotificationsService } from './services/notifications';
 
   providers: [
     {
-      provide: HttpClient,
+      provide: Http,
       useFactory: httpClientFactory,
       deps: [XHRBackend, RequestOptions, TokenService],
     },
