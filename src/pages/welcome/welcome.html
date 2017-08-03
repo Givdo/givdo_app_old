@@ -1,0 +1,17 @@
+<ion-content padding>
+  <div class="welcome-logo">
+    <img src="assets/images/logo/icon-orange.png" class="welcome-logo__icon" alt="">
+    <img src="assets/images/logo/logo-orange.png" class="welcome-logo__name" alt="">
+  </div>
+
+  <div *ngIf="loginInProcess$ | async; else loginButton">
+    <ion-spinner name="ios-small"></ion-spinner>
+  </div>
+
+  <ng-template #loginButton>
+    <button class="welcome-button welcome-button--login" ion-button full (click)="login()">
+      <img class="welcome-button__icon" src="assets/images/icons/facebook-app-symbol.svg" alt="">
+      {{ 'welcome.login' | translate }}
+    </button>
+  </ng-template>
+</ion-content>

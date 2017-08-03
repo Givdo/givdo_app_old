@@ -1,0 +1,16 @@
+<div class="notification-item">
+  <figure class="avatar">
+    <img src="{{ notification.sender_image }}" alt="">
+  </figure>
+
+  <span class="text-notification">
+    <div>
+      <strong>{{ notification.name }}</strong>
+      would like to play you in {{ notification.category }}!
+    </div>
+
+    <button class="gold" (click)="accept.emit(notification)">Accept</button>
+    <button class="purple" (click)="reject.emit(notification)">Reject</button>
+  </span>
+  <div class="clearfix"></div>
+</div>
