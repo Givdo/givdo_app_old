@@ -6,13 +6,13 @@ import { Injectable } from '@angular/core';
 import { InitParams } from 'ngx-facebook';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
-import { State } from '../app.reducer';
+import { State } from '../../store/reducer';
 
 import {
   FacebookAuthorizedAction,
   FacebookNotAuthorizedAction,
   FacebookAuthorizationStartedAction,
-} from '../../app/auth/actions';
+} from '../../store/auth/actions';
 
 @Injectable()
 export class FacebookService {
@@ -27,7 +27,7 @@ export class FacebookService {
   }
 
   checkLogin() {
-    this.fb
+    return this.fb
       .getLoginStatus()
       .then(this.handleSuccess)
       .catch(this.handleError);
@@ -66,11 +66,11 @@ export class FacebookService {
   }
 
   private handleError = (error) => {
-    console.error(`[FacebookService] ${error}`);
+    if (error)
+      console.error(`[FacebookService] ${error}`);
 
-    this.store.dispatch(new FacebookNotAuthorizedAction({
-      code: 'facebook_not_authorized',
-      error: 'You must authorize Givdo to login.',
-    }));
+    this.store.dispatch(new FacebookNotAuthorizedAction(
+      'You must authorize Givdo to login.'
+    ));
   }
 }

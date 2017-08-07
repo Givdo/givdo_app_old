@@ -4,12 +4,20 @@ import {
   Response,
   ConnectionBackend,
   RequestOptions,
+  XHRBackend,
   RequestOptionsArgs
 } from '@angular/http';
+
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from '../auth/auth.service';
+import { TokenService } from '../auth/services/token';
+
+export const httpClientFactory = (backend: XHRBackend, options: RequestOptions, token: TokenService) => {
+  console.log('here')
+  return new HttpClient(backend, options, token);
+}
 
 @Injectable()
 export class HttpClient extends Http {
@@ -17,7 +25,7 @@ export class HttpClient extends Http {
   constructor(
     protected backend: ConnectionBackend,
     protected defaultOptions: RequestOptions,
-    protected auth: AuthService
+    protected token: TokenService,
   ) {
     super(backend, defaultOptions);
   }
@@ -33,16 +41,12 @@ export class HttpClient extends Http {
       .catch(this.catchAuthError);
   }
 
-  private get token() {
-    return this.auth.token;
-  }
-
   private setCustomHeaders(options?: RequestOptionsArgs) : RequestOptionsArgs {
     if(!options) options = new RequestOptions({});
     if (!options.headers) options.headers = new Headers();
 
-    if (this.token)
-      options.headers.append('Authorization', `Token token="${this.token}"`)
+    if (this.token.get())
+      options.headers.append('Authorization', `Token token="${this.token.get()}"`)
 
     console.log(`Authorization: ${options.headers.get('Authorization')}`);
 

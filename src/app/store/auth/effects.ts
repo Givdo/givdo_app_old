@@ -5,8 +5,7 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 
 import 'rxjs/add/operator/switchMap';
 
-import { AuthService } from './auth.service';
-
+import { AuthService } from '../../auth';
 import { FACEBOOK_AUTHORIZED } from './actions';
 
 @Injectable()
@@ -20,7 +19,7 @@ export class AuthEffects {
     });
 
   constructor(
-    private auth: AuthService,
     private actions$: Actions,
+    private auth: AuthService,
   ) { }
 }

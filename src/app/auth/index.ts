@@ -1,25 +1,6 @@
-import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
+export { AuthModule } from './module';
 
-import { FacebookProvider } from '../app.providers';
-
-import { AuthEffects } from './effects';
-import { AuthService } from './auth.service';
-import { FacebookService } from './facebook.service';
-
-@NgModule({
-  declarations: [
-
-  ],
-
-  imports: [
-    EffectsModule.run(AuthEffects),
-  ],
-
-  providers: [
-    AuthService,
-    FacebookProvider,
-    FacebookService,
-  ],
-})
-export class AuthModule {}
+// Services
+export { AuthService } from './services/auth';
+export { TokenService } from './services/token';
+export { FacebookService } from './services/facebook';

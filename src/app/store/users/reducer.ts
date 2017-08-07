@@ -1,15 +1,18 @@
 import { Action } from '@ngrx/store';
 
+import { User } from './model';
+
 export interface State {
-  loading: boolean,
+  entities: { [id: number]: User },
 }
 
-export const initialState: State = {
-  loading: false,
+export const initialState : State = {
+  entities: {}
 }
 
 export function reducer(state = initialState, action: Action) {
   switch(action.type) {
-    // case
+    default:
+      return state;
   }
 }

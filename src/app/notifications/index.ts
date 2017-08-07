@@ -1,2 +1,4 @@
-export * from './module';
-export * from './services/notifications';
+export { NotificationsModule } from './module';
+
+// Services
+export { NotificationsService } from './services/notifications';
