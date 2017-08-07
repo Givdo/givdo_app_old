@@ -1,0 +1,55 @@
+<ion-content>
+  <ion-header no-border>
+    <ion-toolbar transparent>
+      <button start ion-button menuToggle (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+
+      <ion-title>Profile</ion-title>
+
+      <button end ion-button menuToggle>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-toolbar>
+  </ion-header>
+
+  <header class="profile-header">
+    <figure class="profile-header__photo" [ngStyle]="{'background-image': 'url(' + profile.photo + ')'}"></figure>
+
+    <div class="profile-header__cover">
+       <div [ngStyle]="{'background-image': 'url(' + profile.cover + ')'}"></div>
+    </div>
+
+    <div class="profile-header__info">
+      <h2>{{ profile.name }}</h2>
+      <h4>{{ profile.organization }}</h4>
+    </div>
+
+    <button class="profile-header__button" (click)="openModal()">Choose Organization</button>
+  </header>
+
+  <section class="causes">
+    <h2 class="section-title section-title--causes"><span>Your Causes</span></h2>
+
+    <ul class="profile__list">
+      <li class="profile__list__item" *ngFor='let cause of profile.causes'>
+        <figure>
+          <img src="assets/images/causes/{{cause.slug}}.jpg" alt="{{cause.name}}">
+        </figure>
+
+        <h4>{{ cause.name }}</h4>
+      </li>
+    </ul>
+
+    <h2 class="section-title section-title--causes"><span>Your Achievements</span></h2>
+    <ul class="profile__list profile__achievements">
+      <li class="profile__list__item" *ngFor='let achievement of profile.achievements'>
+        <figure>
+          <img src="assets/images/achievements/on/{{achievement.slug}}.png" alt="{{achievement.name}}">
+        </figure>
+
+        <h4>{{ achievement.name }}</h4>
+      </li>
+    </ul>
+  </section>
+</ion-content>

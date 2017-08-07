@@ -1,0 +1,207 @@
+@keyframes fullProgress {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+page-quiz {
+  $purple: lighten($purple, 0%);
+
+  ion-content{
+    background: #fff !important;
+  }
+
+  .timer{
+    width: 100%;
+    height: 3px;
+    top: 0;
+    left: 0;
+    background-color: lighten(gray, 25%);
+    position: fixed;
+
+    &:after{
+      width: 100%;
+      height: 100%;
+      background-color: orange;
+      display: block;
+      animation: fullProgress 12s linear;
+      content: '';
+    }
+  }
+
+  .quiz{
+    &__welcome{
+      padding-top: 50px;
+
+      & > .logo{
+        width: 50%;
+        margin: 0 auto 20px;
+        display: block;
+      }
+
+      & > .title{
+        margin-bottom: 50px;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 22px;
+        font-weight: 100;
+        color: darken($dark-grey, 10%);
+        text-align: center;
+      }
+
+      & > .buttons{
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+
+        button{
+          width: 100%;
+          height: 50px;
+          background: linear-gradient(to bottom, orange 0%, darken(orange, 5%) 100%);
+          box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+          border-radius: 5px;
+          display: block;
+          margin-bottom: 20px;
+          font-family: 'PT Sans', sans-serif;
+          font-size: 16px;
+          font-weight: 400;
+          color: white;
+        }
+      }
+    }
+
+    &__game{
+      padding: 30px 20px 20px 20px;
+
+      &__questions{
+        & > .title{
+          display: block;
+          margin-bottom: 50px;
+          font-family: 'PT Sans', sans-serif;
+          font-size: 100;
+          font-size: 20px;
+          color: gray;
+        }
+
+        & > .action-buttons button,
+        & > .options > .item{
+          width: 100%;
+          height: 50px;
+          box-shadow: 3px 3px 6px rgba(0, 0, 0, .3);
+          border-radius: 5px;
+          display: block;
+          font-family: 'PT Sans', sans-serif;
+          font-size: 16px;
+          font-weight: 400;
+          color: white;
+          transition: all .2s ease-in-out;
+        }
+
+        & > .options{
+          margin-bottom: 40px;
+
+          & > .item{
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, orange 0%, darken(orange, 3%) 100%);
+
+            &:focus,
+            &:hover{
+              background: linear-gradient(to bottom, darken(orange, 10%) 0%, darken(orange, 13%) 100%);
+              box-shadow: 0px 0px 6px rgba(0, 0, 0, .4);
+            }
+          }
+        }
+
+        .action-buttons{
+          &__button{
+            background-color: red;
+
+            &--confirm{
+              background: linear-gradient(to bottom, #67be9e 0%, darken(#67be9e, 3%) 100%);
+            }
+
+            &--next{
+              background: linear-gradient(to bottom, $purple 0%, darken($purple, 3%) 100%);
+            }
+          }
+        }
+      }
+
+      &__sponsored{
+        padding: 20px 20px 50px 20px;
+
+        & > .title{
+          display: block;
+          margin-bottom: 30px;
+          font-family: 'PT Sans', sans-serif;
+          font-size: 100;
+          font-size: 20px;
+          color: gray;
+        }
+
+        &__banner{
+          padding: 0;
+          margin: 0;
+          padding-bottom: 56.25%;
+          position: relative;
+
+          a{
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: block;
+            background-size: cover;
+            position: absolute;
+          }
+
+          &:after {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            content: '';
+          }
+        }
+
+        &__description{
+          margin-bottom: 40px;
+          display: block;
+          font-family: 'PT Sans', sans-serif;
+          font-size: 100;
+          font-size: 14px;
+          color: gray;
+        }
+
+        &__button{
+          width: 100%;
+          height: 50px;
+          line-height: 50px;
+          background: linear-gradient(to bottom, orange 0%, darken(orange, 3%) 100%);
+          box-shadow: 3px 3px 6px rgba(0, 0, 0, .3);
+          border-radius: 5px;
+          display: block;
+          text-align: center;
+          text-decoration: none;
+          font-family: 'PT Sans', sans-serif;
+          font-size: 16px;
+          font-weight: 400;
+          color: white;
+          transition: all .2s ease-in-out;
+
+          &:hover{
+            background: linear-gradient(to bottom, darken(orange, 10%) 0%, darken(orange, 13%) 100%);
+          }
+        }
+      }
+
+      &__winner{}
+      &__lost{}
+    }
+  }
+
+  .sponsored{
+    &__banner{}
+    &__description{}
+    &__button{}
+  }
+}

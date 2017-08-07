@@ -1,0 +1,42 @@
+{
+  "name": "angular-json-api-client",
+  "version": "0.5.1",
+  "authors": [
+    "Carlos Palhares <chjunior@gmail.com>"
+  ],
+  "description": "Angular JSON API client",
+  "main": "dist/angular-json-api-client.js",
+  "moduleType": [],
+  "keywords": [
+    "angular",
+    "json",
+    "api",
+    "restful",
+    "client"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/xjunior/angular-json-api-client",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.8.3"
+  },
+  "devDependencies": {
+    "angular": "~1.4.8",
+    "angular-mocks": "~1.4.8"
+  },
+  "_release": "0.5.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.1",
+    "commit": "be95dd4f143050df77dc680d2036f9328e9e7913"
+  },
+  "_source": "https://github.com/xjunior/angular-json-api-client.git",
+  "_target": "~0.5.0",
+  "_originalSource": "angular-json-api-client"
+}

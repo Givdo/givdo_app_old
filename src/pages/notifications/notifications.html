@@ -1,0 +1,29 @@
+<ion-content>
+  <ion-header no-border class="header-black">
+    <ion-toolbar transparent>
+      <button start ion-button menuToggle (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+
+      <ion-title class="theme-black">Notifications</ion-title>
+
+      <button end ion-button menuToggle>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-toolbar>
+  </ion-header>
+
+  <section class="content-app">
+    <div class="notification-msg" *ngIf="!notifications">
+      <p>Nothing new to show here</p>
+    </div>
+
+    <div class="notifications">
+      <notification-item [buttons]="true"
+                         *ngFor="let notification of notifications"
+                         [notification]="notification"
+      >
+      </notification-item>
+    </div>
+  </section>
+</ion-content>

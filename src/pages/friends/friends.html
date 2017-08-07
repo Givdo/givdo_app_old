@@ -1,0 +1,34 @@
+<ion-content>
+  <ion-header no-border class="header-black">
+    <ion-toolbar transparent>
+      <button start ion-button menuToggle (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+
+      <ion-title class="theme-black">Friends</ion-title>
+
+      <button end ion-button menuToggle>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-toolbar>
+  </ion-header>
+
+  <section class="content-app">
+    <div class="friends-list">
+      <a class="friends-list__item" href="#" *ngFor="let friend of friends">
+        <div class="friends-list__photo">
+          <figure>
+            <img src="{{ friend.photo }}" alt="{{ friend.name }}">
+          </figure>
+
+          <div><img src="assets/images/achievements/on/{{ friend.achievements[0].slug }}.png" alt="{{ friend.achievements[0].name }}"></div>
+        </div>
+
+        <div class="friends-list__info">
+          <strong>{{ friend.name }}</strong>
+          <span>{{ friend.achievements[0].name }}</span>
+        </div>
+      </a>
+    </div>
+  </section>
+</ion-content>

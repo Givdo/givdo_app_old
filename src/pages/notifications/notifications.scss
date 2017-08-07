@@ -1,0 +1,19 @@
+page-notifications {
+  .notifications{
+    position: relative;
+
+    &:before{
+      width: 3px;
+      top: -20px;
+      bottom: -20px;
+      left: 20px;
+      display: block;
+      content: '';
+      background-color: gray;
+      opacity: .2;
+      position: absolute;
+
+      display: none;
+    }
+  }
+}

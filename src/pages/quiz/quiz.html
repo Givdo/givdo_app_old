@@ -1,0 +1,52 @@
+<ion-content>
+  <div class="quiz__welcome" *ngIf="!quiz && !sponsored && !winner && !lost">
+    <img src="assets/images/logo/icon-orange.png" class="logo" alt="">
+
+    <h2 class="title">Choose your mode</h2>
+
+    <div class="buttons">
+      <button (click)="startSingleplay()">Single Player</button>
+      <button (click)="startMultiplayer()">Multiplayers</button>
+    </div>
+  </div>
+
+  <section class="quiz__game" *ngIf="quiz">
+    <div class="timer"></div>
+
+    <div class="quiz__game__questions" *ngFor="let question of questions">
+      <h2 class="title">{{ question.title }}</h2>
+
+      <div class="options">
+        <button class="item" *ngFor="let option of question.options" (click)="buttonQuestion()">{{ option.title }}</button>
+      </div>
+
+      <div class="action-buttons" *ngIf="buttons">
+        <button class="action-buttons__button action-buttons__button--confirm" *ngIf="!next_question" (click)="quizConfirm()">Confirm</button>
+        <button class="action-buttons__button action-buttons__button--next" *ngIf="next_question" (click)="quizNext()">Next Question</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="quiz__game__sponsored" *ngIf="sponsored">
+    <h2 class="title">Givdo is proudly sponsored by:</h2>
+
+    <figure class="quiz__game__sponsored__banner">
+      <a href="#" style="background-image: url('http://lorempixel.com/1280/980/');"></a>
+    </figure>
+    <article class="quiz__game__sponsored__description">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur accusamus corporis unde officiis, dicta a qui, accusantium molestias est impedit commodi eveniet animi. Asperiores neque, temporibus architecto voluptate velit nihil.</p>
+
+      <a href="#">www.loremipsum.com</a>
+    </article>
+
+    <button class="sponsored__button quiz__game__sponsored__button">Go to result</button>
+  </section>
+
+  <section class="quiz__game__winner" *ngIf="winner">
+    winner
+  </section>
+
+  <section class="quiz__game__lost" *ngIf="lost">
+    lost
+  </section>
+</ion-content>
