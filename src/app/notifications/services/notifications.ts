@@ -1,17 +1,41 @@
+import { Store } from '@ngrx/store';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-import { urlFor, HttpClient } from '../../util';
+import {
+  State,
+  getNotificationsState,
+} from '../../store/reducer';
+import { urlFor, toData } from '../../util';
+import { toMostRecentFirst } from '../../mappers/common';
+import { toNotifications, toNotificationsLoadedAction } from '../../mappers/notifications';
+
 
 @Injectable()
 export class NotificationsService {
 
+  public notifications;
+
   constructor(
-    private http: HttpClient,
-  ) {}
+    private http: Http,
+    private store: Store<State>,
+  ) {
+    this.notifications = this.store
+      .select(getNotificationsState)
+      .map(toNotifications)
+      .map(toMostRecentFirst);
+  }
 
   load() {
-    return this.http
-      .get(urlFor('notifications'))
-      .map(response => console.log(response.json()));
+    const url = urlFor('notifications');
+
+    this.http
+      .get(url)
+      .map(toData)
+      .map(toNotificationsLoadedAction)
+      .subscribe(action => this.store.dispatch(action));
+  }
+
+  check() {
   }
 }

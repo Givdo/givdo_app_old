@@ -1,21 +1,24 @@
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { Http, HttpModule, JsonpModule } from '@angular/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
+
+// Givdo app
 import { GivdoApp } from './app.component';
 
 // Application modules
-import { AuthModule } from './auth';
 import { UserModule } from './user';
-import { UiModule } from './ui';
-import { UtilModule } from './util';
-import { NotificationsModule } from './notifications'
+import { ErrorModule } from './error';
+import { AuthModule } from './auth';
+import { NotificationsModule } from './notifications';
 
-import { reducer } from './app.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducer } from './store/reducer';
+import { effects } from './store/effects';
 
 import { createTranslateLoader } from './util/translate';
 
@@ -54,6 +57,7 @@ import { QuizComponent } from '../components/quiz/quiz';
     JsonpModule,
 
     StoreModule.provideStore(reducer),
+    ...effects.map(e => EffectsModule.run(e)),
     StoreDevtoolsModule.instrumentStore({}),
 
     TranslateModule.forRoot({
@@ -64,10 +68,9 @@ import { QuizComponent } from '../components/quiz/quiz';
       }
     }),
 
-    UtilModule,
     AuthModule,
     UserModule,
-    UiModule,
+    ErrorModule,
     NotificationsModule,
 
     IonicModule.forRoot(GivdoApp),
