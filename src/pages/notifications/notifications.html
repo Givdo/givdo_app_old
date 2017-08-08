@@ -10,13 +10,13 @@
   </ion-header>
 
   <section class="content-app">
-    <div class="notification-msg" *ngIf="!notifications">
+    <div class="notification-msg" *ngIf="!notifications$">
       <p>Nothing new to show here</p>
     </div>
 
     <div class="notifications">
       <notification-item [buttons]="true"
-                         *ngFor="let notification of notifications | async"
+                         *ngFor="let notification of notifications$ | async"
                          [notification]="notification"
       >
       </notification-item>
