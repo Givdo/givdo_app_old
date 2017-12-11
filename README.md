@@ -94,6 +94,7 @@ js/notifications/notifications.controller.js > templates/notifications/index.htm
 js/welcome/welcome.controller.js > templates/welcome/index.html
 js/friends/friends.controller.js > js/friends/index.html
 js/friends/friend.controller.js > js/friends/show.html
+
 /www.old/js/givdo.quiz.js:
 SponsorCtrl > templates/quiz/sponsor.html
 SurveyCtrl > templates/quiz/survey.html
@@ -129,6 +130,7 @@ In AngularJS, a factory is a specific type of service, which is simply an object
 store data and pass it between diferent parts of the app. With factories and services, you define
 some attribute or attributes and give them a value, ofen also performing operations on the
 data. The original Givdo app has factories at the following locations that should be noted:
+
 /www.old/js/auth/session.interceptor.js
 /www.old/js/auth/session.service.js
 /www.old/js/givdo.api.js
@@ -139,6 +141,7 @@ data. The original Givdo app has factories at the following locations that shoul
 We also have additional services here:
 /www.old/js/auth/auth.service.js
 /www.old/js/givdo.quiz.js
+
 In general, the factories and services in the old app need to be converted to Ionic 2 providers.
 Providers perform the same function as services, but are implemented as objects, so they store
 information as simple class instance data. This can be accomplished by creating a new provider
