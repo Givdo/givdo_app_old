@@ -1,13 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the Activity page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-@IonicPage()
 @Component({
   selector: 'page-activity',
   templateUrl: 'activity.html',
@@ -27,7 +19,7 @@ export class ActivityPage {
     { id: 9, name: 'Sierra Club',                            sender_image: 'http://placehold.it/50x50', score: 11 },
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor() {
   }
 
   ionViewDidLoad() {
@@ -40,7 +32,4 @@ export class ActivityPage {
     this.score = (score / 100)
   }
 
-  goback(){
-    console.log('back');
-  }
 }
