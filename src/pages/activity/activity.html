@@ -11,16 +11,28 @@
   </ion-header>
 
   <section class="content-app">
-    <div class="notifications">
+    <!-- 
+      Originally, the customized web component 'notifications' is used as following.
+      But, I don't know why it is used. So, I replaced it.
+     -->
+    <!-- <div class="notifications">
       <notification-item [buttons]="false"
-                         *ngFor="let notification of notifications"
+                         *ngFor="let activity of activities"
                          [notification]="notification"
       >
       </notification-item>
-    </div>
+    </div> -->
+    <ion-list>
+      <ion-card class="activity" *ngFor='let activity of activities'>
+        <img class="avater" src="{{activity.sender_image}}">  
+        <p> {{activity.orgName}} </p>
+        <p> You {{activity.gameResult}} : {{activity.score}} </p>
+      </ion-card>
+    </ion-list>
+
   </section>
 
   <div class="activity-score">
-    Total donations: <strong>${{ score }}</strong>
+    Total donations: <strong>${{ totalDonation }}</strong>
   </div>
 </ion-content>

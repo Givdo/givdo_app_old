@@ -36,6 +36,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NotificationItemComponent } from '../components/notification-item';
 import { QuizComponent } from '../components/quiz/quiz';
+import { activityService } from '../pages/activity/activity.sevice';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { QuizComponent } from '../components/quiz/quiz';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    activityService
   ]
 })
 export class AppModule {}
