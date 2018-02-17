@@ -23,7 +23,7 @@
       </notification-item>
     </div> -->
     <ion-list>
-      <ion-card class="activity" *ngFor='let activity of activities'>
+      <ion-card class="activity" *ngFor='let activity of activities$ | async'>
         <img class="avater" src="{{activity.sender_image}}">  
         <p> {{activity.orgName}} </p>
         <p> You {{activity.gameResult}} : {{activity.score}} </p>
