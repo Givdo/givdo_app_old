@@ -37,6 +37,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { NotificationItemComponent } from '../components/notification-item';
 import { QuizComponent } from '../components/quiz/quiz';
 
+import { ProfileService } from '../services/profile.service';
+import { OrganizationService } from '../services/organization.service';
+
+
 @NgModule({
   declarations: [
     GivdoApp,
@@ -90,7 +94,9 @@ import { QuizComponent } from '../components/quiz/quiz';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ProfileService,
+    OrganizationService
   ]
 })
 export class AppModule {}
