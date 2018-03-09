@@ -1,5 +1,5 @@
 import { OnInit, Injectable } from '@angular/core';
-import { Activity } from './activityModel';
+import { Activity } from '../pages/activity/activityModel';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 

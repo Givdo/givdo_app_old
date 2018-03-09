@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Activity } from './activityModel'
-import { activityService } from './activity.sevice';
-import { Observable } from 'rxjs/Observable'
+import { activityService } from '../../providers/activity.service';
 
 @Component({
   selector: 'page-activity',

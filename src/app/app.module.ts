@@ -36,7 +36,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NotificationItemComponent } from '../components/notification-item';
 import { QuizComponent } from '../components/quiz/quiz';
-import { activityService } from '../pages/activity/activity.sevice';
+import { activityService } from '../providers/activity.service';
 
 @NgModule({
   declarations: [
