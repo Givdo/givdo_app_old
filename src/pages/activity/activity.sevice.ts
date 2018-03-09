@@ -1,73 +1,36 @@
 import { OnInit, Injectable } from '@angular/core';
 import { Activity } from './activityModel';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class activityService implements OnInit {
-    private activities : any[];
 
-    constructor(public http:Http){
-        console.log("activityService is constructed")
-    }
+    constructor(public http: Http){ }
 
-    // Question: Do I readlly need this function?
-    // data is loaded when 'getActivities' function is fired.
-    ngOnInit(){
-        // this.load()
-        console.log("call ngOnInit()")
-    }
-
-    // Function to load data from server (so far from data mock)
-    // load(){    
-    //     //TODO:HTTP request to load data
-    //     this.http.get('./activity.data.ts')
-    //         .map(res => res.json())
-    //         .subscribe(
-    //             data => console.log(data)        
-    //         );
-    // }
+    ngOnInit(){ }
     
     // Function to send data to server
     save(){
         //TODO: HTTP request to save data
     }
 
-    // Function to get data from this Service
-    getActivities() : Observable<Activity[]>{
-        console.log("call getActivities")
-        return this.http.get("http://localhost:8100/assets/activity.data.json")
-                        .map(res => {
-                            console.log(res)
-                            console.log(res.json())
-                            return res.json().map(item => {
-                                console.log(item)
-                                return new Activity(
-                                    item.id, item.orgName,item.sender_image,item.score,item.gameResult
-                                );
-                            });
-                        });
+    // Function to do http request to server. 
+    getActivities(): Observable<Activity[]> {
+       return this.http.get("http://localhost:8100/assets/activity.data.json")
+                        .map( (res: Response) => res.json())
+                        .catch(this.handleError)
     }
-    
-    // Function to add data to this Service 
-    addItem(orgName: string){
-        const id = this.activities.length;
-        //TODO: Import the organization image from organization Service, which may not be created so far.
-        const sender_image = 'http://placehold.it/50x50';
-        //TODO: Get scrore from the result of game
-        const score = 2
-        //TODO: Get the game result
-        const gameResult = "lost"
 
-        this.activities.push(new Activity(id,orgName,sender_image,score, gameResult));
+    private handleError (error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console 
+        return Observable.throw(errMsg);
     }
-    // // Function to calculate and get the total score 
-    // getTotalScore(){
-    //     let totalScore: number = 0;
-    //     this.activities.forEach( (activity) => {
-    //         totalScore += activity.score 
-    //     })
-    //     return totalScore;
-    // }
+
 }

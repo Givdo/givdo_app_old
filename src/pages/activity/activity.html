@@ -13,7 +13,7 @@
   <section class="content-app">
     <!-- 
       Originally, the customized web component 'notifications' is used as following.
-      But, I don't know why it is used. So, I replaced it.
+      But, I replaced it.
      -->
     <!-- <div class="notifications">
       <notification-item [buttons]="false"
@@ -23,11 +23,13 @@
       </notification-item>
     </div> -->
     <ion-list>
-      <ion-card class="activity" *ngFor='let activity of activities$ | async'>
-        <img class="avater" src="{{activity.sender_image}}">  
+      <ion-item class="activity" *ngFor='let activity of activities'>
+        <ion-avatar item-left>
+          <img class="avater" src="{{activity.sender_image}}">
+        </ion-avatar>
         <p> {{activity.orgName}} </p>
         <p> You {{activity.gameResult}} : {{activity.score}} </p>
-      </ion-card>
+      </ion-item>
     </ion-list>
 
   </section>

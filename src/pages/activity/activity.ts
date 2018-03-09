@@ -9,24 +9,22 @@ import { Observable } from 'rxjs/Observable'
 })
 
 export class ActivityPage {
-  private activities$: Observable<Activity[]>;
-  private totalDonation : number;
+  private activities: Activity[];
+  private totalDonation: number;
 
   constructor(private activityService: activityService) {}
 
   ionViewDidLoad() {
-    this.activities$ = this.activityService.getActivities()
-                            // (data) => { this.activities.push(data); },
-                            // (err)  => { console.log(err); },
-                            // () => { this.getTotalDonation()} 
+    var totalScore : number = 0;
+    this.activityService.getActivities()
+                        .subscribe(
+                          (data)  => {this.activities = data;
+                                      data.map(item => totalScore = totalScore + item.score)
+                                      },
+                          (error) => {console.log(error) },
+                          () => {this.totalDonation = totalScore / 100 ;
+                                console.log("Observable streaming is completed")
+                                }       
+                        ) 
   }
-
-  // Function to calculate and get the total score 
-//   getTotalDonation(){
-//     let totalScore: number = 0;
-//     this.activities.forEach( (activity) => {
-//         totalScore += activity.score 
-//     })
-//     this.totalDonation = totalScore / 100;
-// }
 }
