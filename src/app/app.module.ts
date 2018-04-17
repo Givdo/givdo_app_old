@@ -37,6 +37,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { NotificationItemComponent } from '../components/notification-item';
 import { QuizComponent } from '../components/quiz/quiz';
 import { activityService } from '../providers/activity.service';
+import { friendsService } from '../providers/friends.service';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { activityService } from '../providers/activity.service';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    activityService
+    activityService,
+    friendsService
   ]
 })
 export class AppModule {}
