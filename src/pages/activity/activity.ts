@@ -18,12 +18,10 @@ export class ActivityPage {
     this.activityService.getActivities()
                         .subscribe(
                           (data)  => {this.activities = data;
-                                      data.map(item => totalScore = totalScore + item.score)
+                                      data.map(item => totalScore = totalScore + item.score);
+                                      this.totalDonation = totalScore / 100 ;
+                                      console.log("Observable streaming is completed")
                                       },
-                          (error) => {console.log(error) },
-                          () => {this.totalDonation = totalScore / 100 ;
-                                console.log("Observable streaming is completed")
-                                }       
-                        ) 
+                          (error) => {console.log(error)});
   }
 }
