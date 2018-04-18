@@ -8,15 +8,16 @@ import { friendsService } from '../../providers/friends.service';
   templateUrl: 'friends.html',
 })
 export class FriendsPage {
+  private friends: any[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public friendsService: friendsService) { }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Friends');
-  }
-
-  goback(){
-    console.log('back');
+    this.friendsService.getFriends()
+                        .subscribe(
+                          (data)  => {this.friends = data;
+                                      console.log("Observable streaming is completed")
+                                      },
+                          (error) => {console.log(error)});
   }
 }
