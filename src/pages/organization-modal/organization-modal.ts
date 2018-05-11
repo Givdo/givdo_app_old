@@ -29,7 +29,6 @@ haveData: boolean = false;
                public _organizationService: OrganizationService) 
                {}
 
-
   ionViewDidLoad() {
    this._organizationService.getOrganizations()
                   .subscribe( organizations => {

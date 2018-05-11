@@ -37,7 +37,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { NotificationItemComponent } from '../components/notification-item';
 import { QuizComponent } from '../components/quiz/quiz';
 
-import { ProfileService } from '../services/profile.service';
+import { UserService } from '../services/userService.service';
 import { OrganizationService } from '../services/organization.service';
 
 
@@ -95,7 +95,7 @@ import { OrganizationService } from '../services/organization.service';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ProfileService,
+    UserService,
     OrganizationService
   ]
 })
