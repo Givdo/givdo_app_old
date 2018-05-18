@@ -230,14 +230,14 @@ $ yarn
 $ ionic state reset
 ```
 
-4) Edit `config/development.js` to tune configurations for development.
+4) Edit `dev.ts` to tune configurations for development.
 
 **Facebook IDs**
 
 | Environment | ID |
 | ------------ | ----------------- |
 | Production | 536213639869188 |
-| Development/Staging | 558889160934969 |
+| Development/Staging | 2103443323006031 |
 
 
 ### Running on a simulator
