@@ -5,7 +5,7 @@ export const Config = {
     host: 'http://localhost:3000/api',
   },
   facebook: {
-    appId: '558889160934969',
+    appId: '2103443323006031',
     scopes: [
       'email',
       'user_friends',

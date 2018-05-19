@@ -1,4 +1,20 @@
 
+# Levels of Achievements
+
+i. “Giver” $1 (100 givcoins)
+
+ii. “Samaritan” $5 (500 givcoins)
+
+iii. “Patron” $250 (25,000 givcoins)
+
+iV. “Altruist” $25 (2500 givcoins)
+
+v. “Benefactor” $100 (10,000 givcoins)
+
+vi. “Grantor” $500 (50,000 givcoins)
+
+vii. “Philanthropist” $1,000 (100,000 givcoins)
+
 # Givdo App Status as of December, 2017
 
 The original Givdo app was built with the Ionic v.1 framework with AngularJS, utilizing a Ruby
@@ -214,14 +230,14 @@ $ yarn
 $ ionic state reset
 ```
 
-4) Edit `config/development.js` to tune configurations for development.
+4) Edit `dev.ts` to tune configurations for development.
 
 **Facebook IDs**
 
 | Environment | ID |
 | ------------ | ----------------- |
 | Production | 536213639869188 |
-| Development/Staging | 558889160934969 |
+| Development/Staging | 2103443323006031 |
 
 
 ### Running on a simulator
