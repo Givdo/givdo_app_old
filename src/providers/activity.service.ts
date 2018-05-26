@@ -10,7 +10,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class activityService implements OnInit {
 
-    constructor(public http: Http){ }
+    private _activitiesURL = 'activity.data.json'
+
+    constructor(public _http: Http){ }
 
     ngOnInit(){ }
     
@@ -19,11 +21,12 @@ export class activityService implements OnInit {
         //TODO: HTTP request to save data
     }
 
-    // Function to do http request to server. 
+    // Function to do HTTP request to server. 
     getActivities(): Observable<Activity[]> {
-       return this.http.get("http://localhost:8100/assets/activity.data.json")
-                        .map( (res: Response) => res.json())
-                        .catch(this.handleError)
+       return this._http
+                    .get(this._activitiesURL)
+                    .map( (response: Response) => response.json())
+                    .catch(this.handleError)
     }
 
     private handleError (error: any) {
