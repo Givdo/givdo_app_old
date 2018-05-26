@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavController, NavParams } from 'ionic-angular';
-import { OrganizationService } from '../../services/organization.service';
+import { OrganizationService } from '../../providers/organization.service';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import 'rxjs/add/operator/map';

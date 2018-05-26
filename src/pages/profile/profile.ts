@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { Location } from '@angular/common';
 import { OrganizationModalPage } from '../organization-modal/organization-modal';
 //import { CausesModalPage } from '../causes-modal/causes-modal';
-import { UserService } from '../../services/userService.service';
+import { UserService } from '../../providers/userService.service';
 import { IUser } from './userInterface';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FacebookService } from '../../app/auth/services/facebook';

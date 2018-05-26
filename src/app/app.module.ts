@@ -38,9 +38,8 @@ import { NotificationItemComponent } from '../components/notification-item';
 import { QuizComponent } from '../components/quiz/quiz';
 import { activityService } from '../providers/activity.service';
 import { friendsService } from '../providers/friends.service';
-
-import { UserService } from '../services/userService.service';
-import { OrganizationService } from '../services/organization.service';
+import { UserService } from '../providers/userService.service';
+import { OrganizationService } from '../providers/organization.service';
 
 
 @NgModule({
