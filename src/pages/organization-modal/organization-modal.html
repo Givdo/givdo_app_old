@@ -1,27 +1,70 @@
 <ion-header no-border class="header-black">
   <ion-toolbar transparent>
     <ion-title class="theme-black">Save</ion-title>
-
     <button end ion-button menuToggle (click)="closeModal()">
       <ion-icon name="checkmark"></ion-icon>
     </button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <section class="content-app">
     <section class="causes">
-      <h2 class="section-title section-title--causes"><span>Select your organization</span></h2>
-
-      <ul class="profile__list">
-        <li class="profile__list__item" *ngFor='let organization of organizations'>
-          <figure>
-            <img src="{{organization.image}}" alt="{{organization.name}}">
-          </figure>
-
-          <h4>{{ organization.name }}</h4>
-        </li>
-      </ul>
+      <h2 class="section-title section-title--causes">
+        <span>Select your organization</span>
+      </h2>
+      <ion-list>
+        <ion-searchbar placeholder="Search an Organization" (ionInput)="getItems($event)"></ion-searchbar>
+        <div *ngIf="haveData">
+          <ion-item class="forItem selected" *ngFor="let organization of items" (click)="onOrganizationSelected($event, organization.attributes.name)">
+            <button ion-button class="forButton">
+              <ion-thumbnail item-start>
+                <img class="orgImage" src="assets/images/causes/environment.jpg">
+              </ion-thumbnail>
+              <p class="orgname"> {{organization.attributes.name}} </p>
+            </button>
+          </ion-item>
+          <ion-slides pager="true" (ionSlideDidChange)="slideChanged()">
+            <ion-slide *ngFor="let organization of items, let i = index">
+              <button ion-button class="forNavButton previous round" (click)="getPrev()">
+                <ion-icon name="arrow-back"></ion-icon>
+              </button>
+              <button ion-button class="forNavButton next round" (click)="getNext()">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </button>
+              <ion-list type="card">
+                <ion-item class="item-avatar">
+                  <img class="imgRound" src="assets/images/causes/science-research.jpg">
+                  <h2>{{ organization.attributes.name }}</h2>
+                </ion-item>
+                <ion-item class="item-text-wrap">
+                  <p>{{ organization.attributes.mission }}</p>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </ion-list>
     </section>
+    <div *ngIf="!haveData">
+      <ion-slides pager="true" style="max-height:400px" (ionSlideDidChange)="slideChanged()">
+        <ion-slide *ngFor="let organization of organizations, let i = index">
+          <button ion-button class="forNavButton previous round" (click)="getPrev()">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button ion-button class="forNavButton next round" (click)="getNext()">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+          <ion-list type="card">
+            <ion-item class="item-avatar">
+              <img class="imgRound" src="assets/images/causes/science-research.jpg">
+              <h2>{{ organization.attributes.name }}</h2>
+            </ion-item>
+            <ion-item class="item-text-wrap">
+              <p>{{ organization.attributes.mission }}</p>
+            </ion-item>
+          </ion-list>
+        </ion-slide>
+      </ion-slides>
+    </div>
   </section>
 </ion-content>

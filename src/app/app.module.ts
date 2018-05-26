@@ -39,6 +39,10 @@ import { QuizComponent } from '../components/quiz/quiz';
 import { activityService } from '../providers/activity.service';
 import { friendsService } from '../providers/friends.service';
 
+import { UserService } from '../services/userService.service';
+import { OrganizationService } from '../services/organization.service';
+
+
 @NgModule({
   declarations: [
     GivdoApp,
@@ -93,6 +97,8 @@ import { friendsService } from '../providers/friends.service';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    UserService,
+    OrganizationService,
     activityService,
     friendsService
   ]
