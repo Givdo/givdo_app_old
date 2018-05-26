@@ -8,15 +8,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class friendsService implements OnInit {
 
-    constructor(public http: Http){ }
+    private _friendsURL = 'friends.data.json'
+
+    constructor(public _http: Http){ }
 
     ngOnInit(){ }
     
     // Function to do http request to server. 
     getFriends(): Observable<any[]> {
-       return this.http.get("http://localhost:8100/assets/friends.data.json")
-                        .map( (res: Response) => res.json())
-                        .catch(this.handleError)
+       return this._http
+                .get(this._friendsURL)
+                .map( (response: Response) => response.json())
+                .catch(this.handleError)
     }
 
     private handleError (error: any) {
