@@ -40,6 +40,7 @@ import { activityService } from '../providers/activity.service';
 import { friendsService } from '../providers/friends.service';
 import { UserService } from '../providers/userService.service';
 import { OrganizationService } from '../providers/organization.service';
+import { quizService } from '../providers/quizService';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { OrganizationService } from '../providers/organization.service';
     UserService,
     OrganizationService,
     activityService,
-    friendsService
+    friendsService,
+    quizService
   ]
 })
 export class AppModule {}

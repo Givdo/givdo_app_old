@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Quiz } from "./quiz.model"
+import { quizService } from '../../providers/quizService';
+
 @IonicPage()
 @Component({
   selector: 'page-quiz',
@@ -13,30 +16,26 @@ export class QuizPage {
   sponsored = false;
   winner = false;
   lost = false;
-  questions = [
-    {
-      title: "On average, how many bags does ONE supermarket go through in one year",
-      options: [
-        { title: '60,500,000' },
-        { title: '5,000,000,000' },
-        { title: '15,000,000' }
-      ],
-      answer: 0
-    }
-  ]
+  
+  quizzes: Quiz[];
+  errMess: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private quizService: quizService) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad QuizPage');
-
     let $self = this;
 
     setTimeout(function() {
       $self.buttons = true;
       $self.next_question = true;
     }, 12000);
+
+    this.quizService.getQuizzes()
+      .subscribe(quizzes => this.quizzes = quizzes["data"],
+                  error => this.errMess = error,
+                  () => console.log("done getQuizzes()"))
   }
 
   startSingleplay(){
