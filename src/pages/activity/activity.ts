@@ -10,18 +10,17 @@ import { activityService } from '../../providers/activity.service';
 export class ActivityPage {
   private activities: Activity[];
   private totalDonation: number;
+  errorMessage: string;
 
   constructor(private activityService: activityService) {}
 
   ionViewDidLoad() {
     var totalScore : number = 0;
     this.activityService.getActivities()
-                        .subscribe(
-                          (data)  => {this.activities = data;
-                                      data.map(item => totalScore = totalScore + item.score);
-                                      this.totalDonation = totalScore / 100 ;
-                                      console.log("Observable streaming is completed")
-                                      },
-                          (error) => {console.log(error)});
+                        .subscribe( (activities) => {this.activities = activities,
+                                          activities.map(activity => totalScore = totalScore + activity.score);
+                                          this.totalDonation = totalScore / 100 },
+                                    (error) => this.errorMessage = error,
+                                    () => console.log('done getActivities()'))
   }
 }

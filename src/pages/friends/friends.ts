@@ -8,16 +8,16 @@ import { friendsService } from '../../providers/friends.service';
   templateUrl: 'friends.html',
 })
 export class FriendsPage {
+
   private friends: any[];
+  errorMessage: string;
 
   constructor(public friendsService: friendsService) { }
 
   ionViewDidLoad() {
     this.friendsService.getFriends()
-                        .subscribe(
-                          (data)  => {this.friends = data;
-                                      console.log("Observable streaming is completed")
-                                      },
-                          (error) => {console.log(error)});
+                        .subscribe( friends => this.friends = friends,
+                          error => this.errorMessage = <any>error,
+                          () => console.log('done getFriends()'));
   }
 }
