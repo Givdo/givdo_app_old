@@ -1,29 +1,29 @@
 <ion-content>
-  <div class="quiz__welcome" *ngIf="!quiz && !sponsored && !winner && !lost">
+  <div class="quiz__welcome" *ngIf="!showQuiz&&!sponsored">
     <img src="assets/images/logo/icon-orange.png" class="logo" alt="">
 
     <h2 class="title">Choose your mode</h2>
 
     <div class="buttons">
-      <button (click)="startSingleplay()">Single Player</button>
-      <button (click)="startMultiplayer()">Multiplayers</button>
+      <button ion-button (click)="startSingleplay()">Single Player</button>
+      <button ion-button (click)="startMultiplayer()">Multiplayers</button>
     </div>
   </div>
 
-  <section class="quiz__game" *ngIf="quiz">
+  <section class="quiz__game" *ngIf="showQuiz">
     <div class="timer"></div>
 
-    <div class="quiz__game__questions" *ngFor="let quiz of quizzes">
-      <h2 class="title">{{ quiz.title }}</h2>
+    <div class="quiz__game__questions">
+      <h2 class="title">{{ currentQuiz.title }}</h2>
 
       <div class="options">
-        <button class="item" *ngFor="let option of quiz.options" 
+        <button class="item" *ngFor="let option of currentQuiz.options" 
         (click)="buttonQuestion()">{{ option.title }}</button>
       </div>
 
       <div class="action-buttons" *ngIf="buttons">
-        <button class="action-buttons__button action-buttons__button--confirm"
-         *ngIf="!next_question" (click)="quizConfirm()">Confirm</button>
+        <!-- <button class="action-buttons__button action-buttons__button--confirm"
+         *ngIf="!next_question" (click)="quizConfirm()">Confirm</button> -->
         <button class="action-buttons__button action-buttons__button--next" 
         *ngIf="next_question" (click)="quizNext()">Next Question</button>
       </div>
