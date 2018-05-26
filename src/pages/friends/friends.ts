@@ -16,7 +16,7 @@ export class FriendsPage {
 
   ionViewDidLoad() {
     this.friendsService.getFriends()
-                        .subscribe( friends => this.friends = friends,
+                        .subscribe( friends => this.friends = friends["data"],
                           error => this.errorMessage = <any>error,
                           () => console.log('done getFriends()'));
   }

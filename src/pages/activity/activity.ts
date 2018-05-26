@@ -17,8 +17,8 @@ export class ActivityPage {
   ionViewDidLoad() {
     var totalScore : number = 0;
     this.activityService.getActivities()
-                        .subscribe( (activities) => {this.activities = activities,
-                                          activities.map(activity => totalScore = totalScore + activity.score);
+                        .subscribe( (activities) => {this.activities = activities["data"],
+                                          this.activities.map(activity => totalScore = totalScore + activity.score);
                                           this.totalDonation = totalScore / 100 },
                                     (error) => this.errorMessage = error,
                                     () => console.log('done getActivities()'))
