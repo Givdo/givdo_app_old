@@ -1,5 +1,6 @@
 
-# Please read this intro document first! https://docs.google.com/document/d/1cE-5EABPdgQFbD_l5tprOXobIjQmlnEWTswsOUOayg0/edit
+# Please read this intro document first! 
+New Team Member Intro Document - https://docs.google.com/document/d/1cE-5EABPdgQFbD_l5tprOXobIjQmlnEWTswsOUOayg0/edit?usp=sharing
 
 # Givdo App Status as of December, 2017
 
